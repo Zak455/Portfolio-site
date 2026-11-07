@@ -1,0 +1,21 @@
+{
+  "name": "fuzail-asset-tools",
+  "private": true,
+  "type": "module",
+  "description": "One-off asset tooling (3D renders, image optimisation, fonts). Not used by the site build.",
+  "scripts": {
+    "render": "node render-objects.mjs",
+    "images": "node optimize-images.mjs",
+    "fonts": "node copy-fonts.mjs",
+    "og": "node render-og.mjs"
+  },
+  "devDependencies": {
+    "@fontsource-variable/bricolage-grotesque": "^5.1.0",
+    "@fontsource-variable/inter": "^5.1.0",
+    "@fontsource/instrument-serif": "^5.1.0",
+    "@fontsource/jetbrains-mono": "^5.1.0",
+    "gsap": "^3.12.5",
+    "sharp": "^0.33.5",
+    "three": "^0.170.0"
+  }
+}
