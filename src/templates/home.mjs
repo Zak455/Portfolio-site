@@ -200,8 +200,8 @@ function credentials(education, publications, certifications) {
     <div class="tabs" role="toolbar" aria-label="Filter credentials" data-filter>
       ${tabs.map(([k, l, n], i) => `<button type="button" class="tab mono" data-filter-key="${k}" aria-pressed="${i === 0}">${l} <span>${n}</span></button>`).join('')}
     </div>
-    <ol class="cred-list" role="list">${items
-      .map((it) => `<li class="cred" data-type="${it.type}" data-reveal><span class="mono cred-date">${esc(it.date)}</span><span class="cred-title">${esc(it.title)}</span><span class="cred-by">${esc(it.by)}</span><span class="mono cred-type">${esc(it.label)}</span></li>`)
+    <ol class="cred-list" role="list" data-reveal>${items
+      .map((it) => `<li class="cred" data-type="${it.type}"><span class="mono cred-date">${esc(it.date)}</span><span class="cred-title">${esc(it.title)}</span><span class="cred-by">${esc(it.by)}</span><span class="mono cred-type">${esc(it.label)}</span></li>`)
       .join('')}</ol>
   </div>
 </section>`;

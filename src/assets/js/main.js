@@ -93,7 +93,6 @@
         items.forEach(function (it) {
           var show = key === 'all' || it.getAttribute('data-type') === key;
           it.hidden = !show;
-          if (show) { it.style.opacity = ''; it.style.transform = ''; }
         });
         if (window.ScrollTrigger) window.ScrollTrigger.refresh();
       });
