@@ -3,7 +3,7 @@ import { esc, arrow, pixelBand, pixelGlyph, splitChars } from './components.mjs'
 const navItems = [
   ['Work', '/#work', 'work'],
   ['About', '/#about', 'about'],
-  ['Toolkit', '/#toolkit', 'toolkit'],
+  ['Services', '/#services', 'services'],
   ['Experience', '/#experience', 'experience'],
   ['Contact', '#contact', 'contact'],
 ];
@@ -24,6 +24,9 @@ export function nav(site, { home = true } = {}) {
   </a>
   <button class="bar-grid mono" type="button" aria-pressed="false" data-grid-toggle>
     Grid <span data-grid-state>Off</span>
+  </button>
+  <button class="bar-grid bar-sound mono" type="button" aria-pressed="false" data-sound-toggle>
+    Sound <span data-sound-state>Off</span>
   </button>
   <div class="bar-strip">${pixelBand({ seq: ['anchor', 'cross', 'node', 'cross'], cell: 2, className: 'band--strip' })}</div>
   ${site.availability?.enabled ? `<p class="bar-status mono"><span class="status-dot" aria-hidden="true"></span>${esc(site.availability.label)}</p>` : ''}
@@ -52,13 +55,20 @@ export function footer(site) {
   const year = new Date().getFullYear();
   return `<footer class="foot" id="contact" data-section="contact" aria-labelledby="contact-title">
   ${pixelBand({ seq: ['f', 'cross', 'node', 'cross', 'pen', 'cross', 'anchor', 'cross'] })}
-  <p class="caption wrap mono">Frame 07 · “Contact” — drawn on a 4px grid in ${esc(site.place.short)}</p>
+  <p class="caption wrap mono">Frame 10 · “Contact” — drawn on a 4px grid in ${esc(site.place.short)}</p>
   <div class="foot-inner wrap">
-    <h2 class="foot-title" id="contact-title" data-split>Have something interesting in mind?</h2>
+    <p class="mono foot-kicker">Have something interesting in mind? Good work starts with a conversation.</p>
+    <h2 class="foot-title" id="contact-title">
+      <a class="foot-cta" href="${mailOr(site, c.linkedin)}"${c.email ? '' : ' target="_blank" rel="noopener"'}>
+        <span class="foot-cta-line">Let’s make</span>
+        <span class="foot-cta-line">something <span class="foot-cta-tail"><span class="foot-cta-em">real.</span><span class="foot-cta-arrow" aria-hidden="true">${arrow}</span></span></span>
+      </a>
+    </h2>
     <div class="foot-grid">
       <div class="foot-col">
         <p class="mono foot-label">Based in ${esc(site.place.short)} · ${esc(site.place.timezone)}</p>
         <a class="btn-pixel" href="${mailOr(site, c.linkedin)}"${c.email ? '' : ' target="_blank" rel="noopener"'}>${c.email ? 'Send an email' : 'Message on LinkedIn'} ${arrow}</a>
+        ${c.email ? `<button class="copy-btn mono" type="button" data-copy="${esc(c.email)}"><span data-copy-label>Copy email</span></button>` : ''}
       </div>
       <div class="foot-col">
         <p class="mono foot-label">Direct</p>

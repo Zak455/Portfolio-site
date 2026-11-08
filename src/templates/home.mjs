@@ -37,7 +37,7 @@ function hero(site, about) {
         <span class="portrait-sel" aria-hidden="true"><i></i><i></i><i></i><i></i><b class="mono">Fuzail Khan · 1000 × 1500</b></span>
       </div>
       ${pixelBand({ seq: ['cross', 'f', 'cross', 'anchor'], cell: 3, className: 'band--portrait' })}
-      <a class="scroll-cue mono" href="#about">Scroll</a>
+      <a class="scroll-cue mono" href="#story">Scroll</a>
     </figure>
     <div class="hero-right" data-fade>
       <p class="mono">Designing since</p>
@@ -47,6 +47,30 @@ function hero(site, about) {
   <h1 class="hero-name" id="hero-name"><span class="sr-only">${esc(site.name)} — ${esc(site.title)}</span>
     <span class="hero-name-l" aria-hidden="true" data-name-l>FUZ</span><span class="hero-name-r" aria-hidden="true" data-name-r>AIL.</span>
   </h1>
+</section>`;
+}
+
+/* ── Story: three chapters that pin and swap as you scroll ────────────────── */
+function storySection(story) {
+  const chapters = story
+    .map((c, i) => `<article class="chapter${i === 0 ? ' is-active' : ''}" data-chapter="${i}" aria-labelledby="ch-${i}">
+      <p class="mono chapter-meta"><span>${String(i + 1).padStart(2, '0')}</span>${esc(c.label)} · ${esc(c.period)}</p>
+      <h3 class="chapter-title" id="ch-${i}">${esc(c.title)}</h3>
+      <p class="chapter-text">${esc(c.text)}</p>
+    </article>`)
+    .join('');
+  return `<section class="story" id="story" aria-labelledby="story-title" data-story style="--chapters:${story.length}">
+  <div class="story-pin">
+    <div class="wrap story-inner">
+      <div class="story-side">
+        <p class="caption mono">Frame 02 · “Story”</p>
+        <h2 class="story-heading" id="story-title">Researcher.<br>Designer.<br><em>Maker.</em></h2>
+        <ol class="story-steps" role="list" aria-hidden="true">${story.map((c, i) => `<li data-step="${i}"${i === 0 ? ' class="is-active"' : ''}><span class="mono">${String(i + 1).padStart(2, '0')}</span>${pixelGlyph(c.glyph, { cell: 3 })}</li>`).join('')}</ol>
+        <p class="mono story-hint">Scroll to unfold ↓</p>
+      </div>
+      <div class="story-stage">${chapters}</div>
+    </div>
+  </div>
 </section>`;
 }
 
@@ -65,12 +89,12 @@ function aboutSection(site, about) {
   return `<section class="about section" id="about" aria-labelledby="about-title" data-section="about">
   <div class="wrap about-grid">
     <aside class="inspector" aria-label="Profile details" data-reveal>
-      <div class="inspector-head mono"><span>${pixelGlyph('node', { cell: 2 })} Inspector</span><span>Frame 02</span></div>
+      <div class="inspector-head mono"><span>${pixelGlyph('node', { cell: 2 })} Inspector</span><span>Frame 04</span></div>
       <dl>${rows.map(([k, v]) => `<div><dt class="mono">${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
       <div class="inspector-swatches mono"><span class="sw sw--lime"></span>C6FF3D <span class="sw sw--ink"></span>0A0A0B</div>
     </aside>
     <div class="about-copy">
-      <p class="caption mono">Frame 02 · “About”</p>
+      <p class="caption mono">Frame 04 · “About”</p>
       <h2 class="sr-only" id="about-title">About</h2>
       <p class="reading" data-words>Hello! ${splitWords(about.lead)} ${splitWords(about.body[0])}</p>
       <p class="about-body" data-reveal>${esc(about.body[1])}</p>
@@ -96,31 +120,30 @@ function toolkit(capabilities, tools) {
   return `<section class="toolkit section--flush" id="toolkit" aria-labelledby="toolkit-title" data-section="toolkit">
   ${pixelBand({ seq: ['cursor', 'cross', 'pen', 'cross', 'node', 'cross'] })}
   <div class="field">
-    <div class="wrap">${frameHead({ n: '03', name: 'Toolkit', title: 'Toolkit', count: `${total} skills · ${capabilities.length + 1} disciplines`, id: 'toolkit-title' })}</div>
+    <div class="wrap">${frameHead({ n: '05', name: 'Toolkit', title: 'Toolkit', count: `${total} skills · ${capabilities.length + 1} disciplines`, id: 'toolkit-title' })}</div>
   </div>
   <div class="wrap tk-body">${groups}${toolRow}</div>
 </section>`;
 }
 
-/* ── Work ─────────────────────────────────────────────────────────────────── */
-function workRow(p, i) {
-  return `<article class="work-row${i % 2 ? ' work-row--flip' : ''}" aria-labelledby="w-${esc(p.slug)}" data-project>
-  <a class="work-visual" href="/work/${esc(p.slug)}/" tabindex="-1" aria-hidden="true" data-reveal="image">
+/* ── Work: pinned horizontal carousel (native swipe on touch / no motion) ── */
+function workCard(p) {
+  return `<article class="card" aria-labelledby="w-${esc(p.slug)}" data-card>
+  <a class="card-visual" href="/work/${esc(p.slug)}/" tabindex="-1" aria-hidden="true">
     ${pixelBand({ seq: ['f', 'cross', 'anchor', 'cross'], cell: 3, className: 'band--card' })}
     <span class="work-canvas" style="--accent:${esc(p.theme?.accent || '#c6ff3d')}">
       <span class="work-num">${esc(p.number)}</span>
-      <span class="work-obj" data-parallax>${objectImage(p.object, { sizes: '(min-width: 960px) 40vw, 90vw', className: 'work-img' })}</span>
+      <span class="work-obj">${objectImage(p.object, { sizes: '(min-width: 960px) 34vw, 80vw', className: 'work-img' })}</span>
       <span class="work-sel"><i></i><i></i><i></i><i></i></span>
     </span>
-    <span class="work-view mono">Read the case ${arrow}</span>
+    <span class="work-view mono">Explore project ${arrow}</span>
   </a>
-  <div class="work-text" data-reveal>
+  <div class="card-text">
     <p class="mono work-meta">${esc(p.number)} · ${esc(p.category)}</p>
     <h3 class="work-title" id="w-${esc(p.slug)}"><a href="/work/${esc(p.slug)}/">${esc(p.name)}</a></h3>
-    <p class="mono work-role">${esc(p.role)}</p>
     <p class="work-summary">${esc(p.summary)}</p>
     ${p.teamNote ? `<p class="work-team">${esc(p.teamNote)}</p>` : ''}
-    <ul class="tags" role="list">${p.tags.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+    <p class="mono work-role">My role — ${esc(p.role)}</p>
     ${liveLinks(p.links)}
     <a class="link-arrow mono" href="/work/${esc(p.slug)}/">Read the case ${arrowRight}<span class="sr-only">: ${esc(p.name)}</span></a>
   </div>
@@ -128,14 +151,53 @@ function workRow(p, i) {
 }
 
 function work(projects, extra) {
-  return `<section class="work section" id="work" aria-labelledby="work-title" data-section="work">
+  const total = String(projects.length).padStart(2, '0');
+  return `<section class="work" id="work" aria-labelledby="work-title" data-section="work">
+  <div class="wrap work-head">
+    ${frameHead({ n: '03', name: 'Work', title: 'Work', count: `${total} projects`, id: 'work-title' })}
+  </div>
+  <div class="carousel" data-carousel>
+    <div class="carousel-bar wrap">
+      <p class="mono carousel-count" aria-live="polite"><b data-carousel-index>01</b> / ${total}</p>
+      <p class="mono carousel-hint">Scroll to discover →</p>
+      <div class="carousel-progress" aria-hidden="true"><span data-carousel-progress></span></div>
+    </div>
+    <div class="carousel-viewport" data-carousel-viewport tabindex="0" aria-label="Selected projects — scroll or swipe horizontally">
+      <div class="carousel-track" data-carousel-track>${projects.map(workCard).join('')}<div class="card card--end" aria-hidden="true"><p class="mono">End of selected work</p><p class="card-end-title">More in the archive ↓</p></div></div>
+    </div>
+  </div>
   <div class="wrap">
-    ${frameHead({ n: '04', name: 'Work', title: 'Work', count: `${String(projects.length).padStart(2, '0')} projects`, id: 'work-title' })}
-    <div class="work-list">${projects.map(workRow).join('')}</div>
     <div class="archive" data-reveal>
       <p class="mono">Also in the archive</p>
       <p>${esc(extra.body)}</p>
       <ul class="tags" role="list">${extra.productAreas.map((a) => `<li>${esc(a)}</li>`).join('')}</ul>
+    </div>
+  </div>
+</section>`;
+}
+
+/* ── Services + FAQ ───────────────────────────────────────────────────────── */
+function servicesSection(services, faq, site) {
+  return `<section class="services section" id="services" aria-labelledby="services-title" data-section="services">
+  <div class="wrap">
+    ${frameHead({ n: '06', name: 'Services', title: 'How I work', id: 'services-title' })}
+    <ol class="svc-list" role="list">${services
+      .map((s) => `<li class="svc" data-reveal>
+        <p class="mono svc-n">${esc(s.n)} /</p>
+        <h3 class="svc-title">${esc(s.title)}</h3>
+        <p class="svc-text">${esc(s.text)}</p>
+        <ul class="tags" role="list">${s.items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>
+      </li>`)
+      .join('')}</ol>
+    <div class="faq" id="faq">
+      <div class="faq-side" data-reveal>
+        <p class="caption mono">Frame 07 · “FAQ”</p>
+        <h3 class="faq-title">Before we begin — <em>a few answers.</em></h3>
+        <a class="link-arrow mono" href="${site.contact.email ? `mailto:${esc(site.contact.email)}` : '#contact'}">Something else? Ask me ${arrow}</a>
+      </div>
+      <div class="faq-list" data-reveal>${faq
+        .map((f, i) => `<details class="faq-item"${i === 0 ? ' open' : ''}><summary><span class="mono">${String(i + 1).padStart(2, '0')}</span><span class="faq-q">${esc(f.q)}</span><span class="xp-toggle" aria-hidden="true"></span></summary><p class="faq-a">${esc(f.a)}</p></details>`)
+        .join('')}</div>
     </div>
   </div>
 </section>`;
@@ -170,7 +232,7 @@ function experienceSection(experience) {
   return `<section class="experience section--flush" id="experience" aria-labelledby="xp-title" data-section="experience">
   ${pixelBand({ seq: ['node', 'cross', 'f', 'cross', 'node', 'pen'] })}
   <div class="wrap section-pad">
-    ${frameHead({ n: '05', name: 'Experience', title: 'Experience', count: `${String(experience.length).padStart(2, '0')} entries`, id: 'xp-title' })}
+    ${frameHead({ n: '08', name: 'Experience', title: 'Experience', count: `${String(experience.length).padStart(2, '0')} entries`, id: 'xp-title' })}
     <div class="xp-head mono" aria-hidden="true"><span>No.</span><span>Company</span><span>Role</span><span>Period</span><span>Status</span><span></span></div>
     <ol class="xp-table" role="list">${rows}</ol>
   </div>
@@ -196,7 +258,7 @@ function credentials(education, publications, certifications) {
   ];
   return `<section class="creds section" id="credentials" aria-labelledby="creds-title">
   <div class="wrap">
-    ${frameHead({ n: '06', name: 'Credentials', title: 'Credentials', id: 'creds-title' })}
+    ${frameHead({ n: '09', name: 'Credentials', title: 'Credentials', id: 'creds-title' })}
     <div class="tabs" role="toolbar" aria-label="Filter credentials" data-filter>
       ${tabs.map(([k, l, n], i) => `<button type="button" class="tab mono" data-filter-key="${k}" aria-pressed="${i === 0}">${l} <span>${n}</span></button>`).join('')}
     </div>
@@ -211,25 +273,27 @@ function credentials(education, publications, certifications) {
 function playgroundSection(items) {
   if (items.length) {
     return `<section class="section" id="playground" aria-labelledby="lab-title"><div class="wrap">
-      ${frameHead({ n: '06b', name: 'Playground', title: 'Playground', count: `${items.length} experiments`, id: 'lab-title' })}
+      ${frameHead({ n: '09b', name: 'Playground', title: 'Playground', count: `${items.length} experiments`, id: 'lab-title' })}
       <ul class="lab-grid" role="list">${items.map((it) => `<li data-reveal="image">${picture({ base: it.image, widths: it.widths, sizes: '(min-width: 960px) 33vw, 92vw', alt: `${it.title} — ${it.medium}`, ratio: it.ratio })}<p class="mono">${esc(it.title)} · ${esc(it.medium)}</p></li>`).join('')}</ul>
     </div></section>`;
   }
   return `<section class="lab-empty" id="playground" aria-label="Playground">
     <div class="wrap lab-empty-row" data-reveal>
-      <p class="mono">Frame 06b · “Playground”</p>
+      <p class="mono">Frame 09b · “Playground”</p>
       <p class="lab-empty-text">Motion, type and interface experiments are on the artboard. ${pixelGlyph('cursor', { cell: 2 })}</p>
       <p class="mono">Coming soon</p>
     </div>
   </section>`;
 }
 
-export function homePage({ site, projects, additionalWork, about, experience, education = [], publications = [], certifications = [], capabilities, tools, playground }) {
+export function homePage({ site, projects, additionalWork, about, experience, education = [], publications = [], certifications = [], capabilities, tools, playground, story = [], services = [], faq = [] }) {
   return [
     hero(site, about),
+    storySection(story),
+    work(projects, additionalWork),
     aboutSection(site, about),
     toolkit(capabilities, tools),
-    work(projects, additionalWork),
+    servicesSection(services, faq, site),
     experienceSection(experience),
     credentials(education, publications, certifications),
     playgroundSection(playground),

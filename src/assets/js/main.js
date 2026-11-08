@@ -136,6 +136,78 @@
     }
   }
 
+  /* ── Copy email ─────────────────────────────────────────────────────── */
+  $$('[data-copy]').forEach(function (btn) {
+    var label = $('[data-copy-label]', btn);
+    btn.addEventListener('click', function () {
+      var text = btn.getAttribute('data-copy');
+      var done = function () { if (label) { label.textContent = 'Copied ✓'; setTimeout(function () { label.textContent = 'Copy email'; }, 2000); } };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () {});
+      else { var t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); done(); } catch (e) {} t.remove(); }
+    });
+  });
+
+  /* ── Interface sounds (off by default, generated with Web Audio) ────── */
+  var soundBtn = $('[data-sound-toggle]');
+  var soundState = $('[data-sound-state]');
+  var audio = null, soundOn = store.get('fz-sound') === '1', lastBlip = 0;
+  function ctx() {
+    if (!audio) { var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return null; audio = new AC(); }
+    if (audio.state === 'suspended') audio.resume();
+    return audio;
+  }
+  function tone(freq, dur, gain, type, when) {
+    var a = ctx(); if (!a) return;
+    var t = a.currentTime + (when || 0);
+    var o = a.createOscillator(), g = a.createGain();
+    o.type = type || 'sine'; o.frequency.setValueAtTime(freq, t);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(gain, t + 0.006); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g).connect(a.destination); o.start(t); o.stop(t + dur + 0.02);
+  }
+  function syncSound() {
+    if (soundBtn) soundBtn.setAttribute('aria-pressed', String(soundOn));
+    if (soundState) soundState.textContent = soundOn ? 'On' : 'Off';
+  }
+  if (soundBtn) {
+    syncSound();
+    soundBtn.addEventListener('click', function () {
+      soundOn = !soundOn; store.set('fz-sound', soundOn ? '1' : '0'); syncSound();
+      if (soundOn) { tone(660, 0.12, 0.05, 'triangle'); tone(990, 0.16, 0.04, 'triangle', 0.08); }
+    });
+    if (finePointer) {
+      document.addEventListener('pointerover', function (e) {
+        if (!soundOn) return;
+        var el = e.target.closest && e.target.closest('a, button, summary');
+        if (!el || el.contains(e.relatedTarget)) return;
+        var now = performance.now(); if (now - lastBlip < 70) return; lastBlip = now;
+        tone(1320, 0.05, 0.016, 'sine');
+      });
+    }
+    document.addEventListener('click', function (e) {
+      if (!soundOn || e.target.closest('[data-sound-toggle]')) return;
+      if (e.target.closest('a, button, summary')) tone(520, 0.08, 0.035, 'triangle');
+    });
+  }
+
+  /* ── Work carousel: counter + progress (native scroll mode) ─────────── */
+  var carousel = $('[data-carousel]');
+  var cTrack = $('[data-carousel-track]'), cView = $('[data-carousel-viewport]');
+  var cIndex = $('[data-carousel-index]'), cProg = $('[data-carousel-progress]');
+  var cCards = $$('[data-card]');
+  function setCarousel(p) {
+    p = Math.max(0, Math.min(1, p));
+    var i = Math.min(cCards.length, Math.round(p * (cCards.length - 1)) + 1);
+    if (cIndex) cIndex.textContent = String(i).padStart(2, '0');
+    if (cProg) cProg.style.setProperty('--p', Math.max(0.04, p).toFixed(3));
+  }
+  if (carousel && cView) {
+    cView.addEventListener('scroll', function () {
+      if (carousel.classList.contains('is-pinned')) return;
+      var max = cView.scrollWidth - cView.clientWidth;
+      setCarousel(max > 0 ? cView.scrollLeft / max : 0);
+    }, { passive: true });
+  }
+
   /* ── Motion ─────────────────────────────────────────────────────────── */
   if (reduce || !root.classList.contains('motion')) { window.__motion = true; return; }
   if (!window.gsap || !window.ScrollTrigger || root.classList.contains('motion-failed')) { root.classList.add('motion-failed'); return; }
@@ -208,6 +280,45 @@
   $$('[data-parallax]').forEach(function (o) {
     gsap.fromTo(o, { yPercent: 8 }, { yPercent: -8, ease: 'none', scrollTrigger: { trigger: o.parentNode, start: 'top bottom', end: 'bottom top', scrub: true } });
   });
+
+  // Story: pin the three chapters on wide screens and swap them as you scroll.
+  var story = $('[data-story]');
+  var wide = window.matchMedia('(min-width: 960px)');
+  if (story && wide.matches) {
+    story.classList.add('story--pinned');
+    var chapters = $$('[data-chapter]', story), steps = $$('[data-step]', story), cur = -1;
+    ST.create({
+      trigger: story, start: 'top top+=56', end: 'bottom bottom',
+      onUpdate: function (self) {
+        var i = Math.min(chapters.length - 1, Math.floor(self.progress * chapters.length));
+        if (i === cur) return; cur = i;
+        chapters.forEach(function (c, j) { c.classList.toggle('is-active', j === i); });
+        steps.forEach(function (c, j) { c.classList.toggle('is-active', j <= i); });
+      },
+    });
+  }
+
+  // Work: pin the carousel and translate the track horizontally with scroll.
+  if (carousel && cTrack && wide.matches) {
+    carousel.classList.add('is-pinned');
+    var dist = function () { return Math.max(0, cTrack.scrollWidth - cView.clientWidth); };
+    var tween = gsap.to(cTrack, {
+      x: function () { return -dist(); }, ease: 'none',
+      scrollTrigger: {
+        trigger: carousel, start: 'top top+=56', end: function () { return '+=' + dist(); },
+        pin: true, scrub: 0.6, invalidateOnRefresh: true, anticipatePin: 1,
+        onUpdate: function (self) { setCarousel(self.progress); },
+      },
+    });
+    // Keyboard: tabbing into a card scrolls the page to where that card is in view.
+    cTrack.addEventListener('focusin', function (e) {
+      var card = e.target.closest('[data-card]'); if (!card) return;
+      cView.scrollLeft = 0;
+      var st = tween.scrollTrigger, d = dist(); if (!st || !d) return;
+      var target = Math.min(d, Math.max(0, card.offsetLeft - parseFloat(getComputedStyle(cTrack).paddingLeft)));
+      window.scrollTo({ top: st.start + (target / d) * (st.end - st.start), behavior: 'instant' });
+    });
+  }
 
   // Footer: title lines settle, dot-matrix name scales up.
   var ft = $('.foot-title');

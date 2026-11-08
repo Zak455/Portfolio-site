@@ -116,7 +116,7 @@ em { font-style: normal; color: var(--accent); }
 /* ── Top bar ───────────────────────────────────────────────────────────── */
 .bar {
   position: fixed; inset: 0 0 auto; z-index: 100; height: var(--bar-h);
-  display: grid; grid-template-columns: auto auto minmax(40px, 1fr) auto auto; align-items: center; gap: clamp(12px, 2vw, 28px);
+  display: flex; align-items: center; gap: clamp(12px, 2vw, 28px);
   padding-inline: var(--gutter); background: rgba(10, 10, 11, 0.88); border-bottom: 1px solid var(--line);
   transition: transform var(--dur-3) var(--ease-out);
 }
@@ -128,12 +128,12 @@ em { font-style: normal; color: var(--accent); }
 .bar-grid { color: var(--text-3); padding: 6px 0; }
 .bar-grid span { color: var(--text); }
 .bar-grid[aria-pressed='true'] span { color: var(--accent); }
-.bar-strip { min-width: 0; overflow: hidden; }
+.bar-strip { flex: 1 1 auto; min-width: 24px; overflow: hidden; }
 .bar-status { display: inline-flex; align-items: center; gap: 10px; color: var(--text-2); }
 .bar-menu { height: 34px; padding: 0 14px; border: 1px solid var(--line-2); color: var(--text); transition: background-color var(--dur-2), color var(--dur-2); }
 .bar-menu:hover, .bar-menu[aria-expanded='true'] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 @media (max-width: 959px) { .bar-status { display: none; } }
-@media (max-width: 639px) { .bar-grid { display: none; } .bar { grid-template-columns: auto 1fr auto; } }
+@media (max-width: 639px) { .bar-grid { display: none; } }
 
 .menu {
   position: fixed; inset: var(--bar-h) 0 0; z-index: -1; display: flex; flex-direction: column; justify-content: space-between;
@@ -522,3 +522,104 @@ details[open] .xp-toggle::after { transform: translate(-50%, -50%) rotate(0deg);
 }
 @media print { .bar, .grid-overlay, .intro, body::after, .band { display: none !important; } body { background: #fff; color: #000; } }
 .xp-head span:nth-child(5) { justify-self: end; }
+
+/* ── Story: three chapters (pinned on desktop with motion, stacked otherwise) ── */
+.story { position: relative; border-top: 1px solid var(--line); }
+.story-pin { padding-block: var(--section); }
+.story-inner { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--col-gap); row-gap: 40px; align-items: center; }
+.story-side { grid-column: 1 / span 5; display: grid; gap: 22px; align-content: center; }
+.story-heading { font-family: var(--font-display); font-weight: 800; font-stretch: 125%; text-transform: uppercase; font-size: clamp(2rem, 0.4rem + 3.6vw, 4.6rem); line-height: 0.9; letter-spacing: -0.03em; }
+.story-steps { display: flex; gap: 10px; }
+.story-steps li { display: inline-flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--line-2); color: var(--text-3); transition: color var(--dur-2), border-color var(--dur-2), background-color var(--dur-2); }
+.story-steps li.is-active { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+.story-hint { color: var(--text-3); }
+.story-stage { grid-column: 7 / -1; display: grid; gap: 48px; }
+.chapter { display: grid; gap: 16px; padding-top: 18px; border-top: 1px solid var(--line-2); }
+.chapter-meta { display: flex; gap: 14px; color: var(--accent); }
+.chapter-meta span { color: var(--text-3); }
+.chapter-title { font-family: var(--font-display); font-weight: 800; font-stretch: 112%; text-transform: uppercase; font-size: clamp(1.9rem, 0.9rem + 2.8vw, 4rem); line-height: 0.95; letter-spacing: -0.02em; }
+.chapter-text { color: var(--text-2); font-size: var(--fs-lg); line-height: 1.4; max-width: 40ch; }
+/* Pinned mode — JS adds .story--pinned only when motion is on and the screen is wide. */
+.story--pinned { height: calc(var(--chapters) * 85vh + 30vh); }
+.story--pinned .story-pin { position: sticky; top: var(--bar-h); height: calc(100svh - var(--bar-h)); display: flex; align-items: center; padding-block: 0; }
+.story--pinned .story-inner { width: 100%; }
+.story--pinned .story-stage { position: relative; min-height: 26rem; display: block; }
+.story--pinned .chapter { position: absolute; inset: 0 0 auto; opacity: 0; transform: translateY(32px); transition: opacity 600ms var(--ease-out), transform 800ms var(--ease-out); pointer-events: none; }
+.story--pinned .chapter.is-active { opacity: 1; transform: none; pointer-events: auto; }
+.story:not(.story--pinned) .story-steps, .story:not(.story--pinned) .story-hint { display: none; }
+@media (max-width: 959px) { .story-side, .story-stage { grid-column: 1 / -1; } }
+
+/* ── Work carousel ─────────────────────────────────────────────────────── */
+.work { padding-top: var(--section); }
+.work-head .frame-head { margin-bottom: 28px; }
+.carousel { position: relative; }
+.carousel-bar { display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: center; padding-bottom: 18px; }
+.carousel-count { color: var(--text-3); }
+.carousel-count b { color: var(--accent); font-weight: 400; font-size: 1rem; }
+.carousel-hint { color: var(--text-3); justify-self: end; grid-column: 3; }
+.carousel-progress { grid-column: 2; grid-row: 1; height: 2px; background: var(--line); }
+.carousel-progress span { display: block; height: 100%; background: var(--accent); transform-origin: 0 50%; transform: scaleX(var(--p, 0.04)); transition: transform 200ms linear; }
+.carousel-viewport { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: var(--accent) transparent; outline-offset: -2px; }
+.carousel-track { --edge: max(var(--gutter), calc((100vw - var(--maxw)) / 2 + var(--gutter))); display: flex; gap: calc(var(--col-gap) * 2); padding-inline: var(--edge); padding-bottom: 28px; width: max-content; }
+.card { position: relative; flex: 0 0 auto; width: clamp(300px, 74vw, 1120px); display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(18px, 2.4vw, 40px); align-items: center; scroll-snap-align: start; scroll-margin-left: var(--edge); }
+.card-visual { position: relative; display: block; border: 1px solid var(--line); overflow: hidden; }
+.card-visual:hover .work-img { transform: scale(1.06) rotate(-2deg); }
+.card-visual:hover .work-sel { opacity: 1; inset: 8% 18%; }
+.card-visual:hover .work-view, .card-visual:focus-visible .work-view { transform: none; }
+.card-text { display: grid; gap: 14px; justify-items: start; align-content: center; }
+.card--end { width: clamp(240px, 26vw, 420px); display: grid; place-content: center; gap: 10px; border: 1px dashed var(--line-2); align-self: stretch; padding: 24px; text-align: center; }
+.card--end .mono { color: var(--text-3); }
+.card-end-title { font-family: var(--font-display); font-weight: 700; font-stretch: 112%; font-size: var(--fs-lg); }
+.carousel.is-pinned .carousel-viewport { overflow: hidden; scroll-snap-type: none; }
+.carousel.is-pinned { padding-top: 16px; }
+.work .archive { margin-top: clamp(48px, 7vw, 100px); }
+@media (max-width: 959px) {
+  .card { width: 84vw; grid-template-columns: 1fr; }
+  .card--end { width: 60vw; }
+  .carousel-hint { display: none; }
+  .carousel-bar { grid-template-columns: auto 1fr; }
+  .card .work-view { transform: none; }
+}
+
+/* ── Services + FAQ ────────────────────────────────────────────────────── */
+.svc-list { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line-2); }
+.svc { display: grid; gap: 14px; align-content: start; padding: 26px 24px 34px; border-left: 1px solid var(--line); }
+.svc:first-child { border-left: 0; padding-left: 0; }
+.svc-n { color: var(--accent); }
+.svc-title { font-family: var(--font-display); font-weight: 800; font-stretch: 118%; text-transform: uppercase; font-size: clamp(1.6rem, 1rem + 1.6vw, 2.6rem); line-height: 1; letter-spacing: -0.02em; }
+.svc-text { color: var(--text-2); max-width: 38ch; }
+.faq { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--col-gap); row-gap: 32px; margin-top: var(--section); }
+.faq-side { grid-column: 1 / span 4; display: grid; gap: 18px; align-content: start; justify-items: start; position: sticky; top: calc(var(--bar-h) + 24px); align-self: start; }
+.faq-title { font-family: var(--font-display); font-weight: 800; font-stretch: 112%; text-transform: uppercase; font-size: clamp(1.8rem, 1rem + 2.2vw, 3.2rem); line-height: 0.95; }
+.faq-list { grid-column: 6 / -1; border-top: 1px solid var(--line-2); }
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-item summary { display: grid; grid-template-columns: 3rem 1fr 28px; gap: 12px; align-items: center; padding: 20px 0; cursor: pointer; list-style: none; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary .mono { color: var(--text-3); }
+.faq-q { font-family: var(--font-display); font-weight: 600; font-stretch: 105%; font-size: var(--fs-lg); line-height: 1.2; transition: color var(--dur-2); }
+.faq-item summary:hover .faq-q { color: var(--accent); }
+.faq-item[open] .faq-q { color: var(--accent); }
+.faq-a { padding: 0 40px 24px 3.75rem; color: var(--text-2); max-width: 64ch; }
+@media (max-width: 959px) {
+  .svc-list { grid-template-columns: 1fr; }
+  .svc { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); }
+  .svc:first-child { border-top: 0; }
+  .faq-side, .faq-list { grid-column: 1 / -1; position: static; }
+  .faq-a { padding-left: 0; padding-right: 0; }
+}
+
+/* ── Closing CTA ───────────────────────────────────────────────────────── */
+.foot-kicker { color: rgba(10, 10, 11, 0.7); margin-bottom: 18px; max-width: 46ch; }
+.foot-cta { display: inline-block; position: relative; }
+.foot-cta-line { display: block; }
+.foot-cta-em { color: transparent; -webkit-text-stroke: 2px var(--accent-ink); transition: color var(--dur-3); }
+.foot-cta:hover .foot-cta-em, .foot-cta:focus-visible .foot-cta-em { color: var(--accent-ink); }
+.foot-cta-arrow { display: inline-grid; place-items: center; width: 0.7em; height: 0.7em; margin-left: 0.1em; vertical-align: -0.02em; background: var(--accent-ink); color: var(--accent); transition: transform var(--dur-3) var(--ease-out); }
+.foot-cta-arrow .icon-arrow { width: 50%; height: 50%; }
+.foot-cta:hover .foot-cta-arrow { transform: rotate(45deg); }
+.foot-cta-tail { white-space: nowrap; }
+.copy-btn { padding: 10px 14px; border: 1px solid var(--accent-ink); transition: background-color var(--dur-2), color var(--dur-2); }
+.copy-btn:hover { background: var(--accent-ink); color: var(--accent); }
+.bar-sound span { color: var(--text); }
+.bar-sound[aria-pressed='true'] span { color: var(--accent); }
+@media (max-width: 959px) { .bar-sound { display: none; } }

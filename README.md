@@ -12,6 +12,7 @@ content/            ← EDIT THESE to update the site
   projects.mjs      selected work + full case study content
   profile.mjs       about, experience, capabilities, tools
   playground.mjs    experiments / personal work
+  studio.mjs        story chapters, services and FAQ
 src/
   templates/        HTML components (layout, home, case study)
   assets/css/       design system (tokens at the top of main.css)
@@ -39,6 +40,7 @@ Requires Node 18+. The site itself has **no npm dependencies**.
 | --- | --- |
 | Hide / change the "Open to opportunities" badge | `content/site.mjs` → `availability` |
 | Change location / coordinates shown in corners | `content/site.mjs` → `place` |
+| Edit the story chapters, services or FAQ | `content/studio.mjs` |
 | Add certifications or a publication | `content/profile.mjs` → `certifications`, `publications` |
 | Add my email | `content/site.mjs` → `contact.email` (CTAs switch from LinkedIn to email automatically) |
 | Add a CV download | Put the PDF in `src/assets/cv/` and set `contact.cv` in `content/site.mjs` |

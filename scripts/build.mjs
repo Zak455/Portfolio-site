@@ -6,6 +6,7 @@ import { site } from '../content/site.mjs';
 import { projects, sectionOrder, additionalWork } from '../content/projects.mjs';
 import { about, experience, education, publications, certifications, capabilities, tools } from '../content/profile.mjs';
 import { playground } from '../content/playground.mjs';
+import { story, services, faq } from '../content/studio.mjs';
 import { layout } from '../src/templates/layout.mjs';
 import { homePage } from '../src/templates/home.mjs';
 import { caseStudyPage, notFoundPage } from '../src/templates/case-study.mjs';
@@ -33,7 +34,7 @@ const write = async (path, html) => {
 
 await write('/', layout({
   site, path: '/', assetVersion, bodyClass: 'page-home',
-  body: homePage({ site, projects, additionalWork, about, experience, education, publications, certifications, capabilities, tools, playground }),
+  body: homePage({ site, projects, additionalWork, about, experience, education, publications, certifications, capabilities, tools, playground, story, services, faq }),
 }));
 
 for (const [i, project] of projects.entries()) {
