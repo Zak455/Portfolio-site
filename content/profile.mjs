@@ -5,7 +5,7 @@
 export const about = {
   lead: "I'm a multidisciplinary designer working where product, experience, visual communication and technology meet.",
   body: [
-    'I specialise in enterprise SaaS — UX research, competitor analysis, design systems and motion design across web and mobile — where the products are complex and the details matter.',
+    'I specialise in UX research and competitor analysis for enterprise SaaS — translating insights from user behaviour, market trends and competitor research into intuitive UI systems and motion-driven experiences across web and mobile.',
     'I enjoy understanding complex products, finding the opportunity inside them and translating it into experiences that are intuitive and visually compelling. I can take a product from research and ideation through interface design and branding, and stay in the room with development teams while it gets built.',
   ],
   philosophy: 'Great design exists where usability, aesthetics and purpose meet.',
@@ -15,24 +15,29 @@ export const about = {
     { title: 'Build it together', text: 'Design decisions made with development and R&D, not handed over the wall.' },
   ],
   collaboration:
-    'I work closely with developers, R&D and stakeholders — sharing early, explaining the reasoning behind decisions and adjusting to engineering realities.',
+    'I work closely with product managers, developers, R&D and stakeholders so design decisions are research-backed, scalable and aligned with business goals — sharing early and adjusting to engineering realities.',
   portrait: { src: '/assets/img/about/portrait', alt: 'Portrait of Fuzail Khan' },
 };
 
-// Source: latest CV (Senior UI-UX Designer — Fuzail Khan).
+// Source: LinkedIn profile export (latest). `roles` lists a progression within one company.
 export const experience = [
   {
-    company: 'Spintly India Private Limited',
-    role: 'Senior UI/UX Designer',
-    period: '2023 — Present',
+    company: 'Spintly',
+    period: 'Mar 2023 — Present',
+    roles: [
+      { title: 'Senior UI/UX Designer', period: 'Jan 2026 — Present' },
+      { title: 'Senior User Interface Designer', period: 'Aug 2025 — Jan 2026' },
+      { title: 'UI / Graphic Designer', period: 'Aug 2023 — Aug 2025' },
+      { title: 'Web Designer', period: 'Mar 2023 — Aug 2023' },
+    ],
     summary:
       'Designing across Spintly’s smart access products — product UI, UX architecture, branding, website and motion — with product, development and R&D teams.',
     focus: [
-      'UX research and competitor analysis',
+      'UX research, heuristic analysis and competitor benchmarking',
       'Product and UI design for web and mobile',
-      'Design systems and responsive UI',
+      'Design systems, responsive and accessibility-first UI',
       'Motion design, micro-interactions and onboarding animations',
-      'Product branding and rebranding',
+      'Product branding, rebranding and marketing creatives',
       'Cross-functional collaboration with development and R&D',
     ],
     highlights: [
@@ -44,19 +49,34 @@ export const experience = [
     ],
   },
   {
-    company: 'Spintly India Private Limited',
-    role: 'UI/UX Designer Intern',
-    period: '2022 — 2023',
-    summary:
-      'UI mockups, prototypes, product visuals and marketing creatives for web and mobile; supported branding, motion design, website UI improvements and cross-functional product work.',
+    company: 'Tangentia',
+    role: 'Marketing Intern',
+    period: 'Aug 2022 — Oct 2022',
+    summary: 'UI/UX improvements, SEO optimisation, client presentations, tutorials and marketing assets.',
     focus: [],
     highlights: [],
   },
   {
-    company: 'Tangentia India Pvt. Ltd.',
-    role: 'Marketing Intern / Web Developer',
-    period: '2021 — 2022',
-    summary: 'UI/UX improvements, SEO optimisation, client presentations, tutorials and marketing assets.',
+    company: 'Design and Code',
+    role: 'Graphic Design Lead',
+    period: 'Mar 2022 — Dec 2022',
+    summary: '',
+    focus: [],
+    highlights: [],
+  },
+  {
+    company: 'Team Phoenix',
+    role: 'Head of Media Production',
+    period: 'Apr 2020 — Apr 2023',
+    summary: '',
+    focus: [],
+    highlights: [],
+  },
+  {
+    company: 'Fiverr',
+    role: 'Freelance Graphic Designer',
+    period: 'Jan 2020 — Dec 2023',
+    summary: '',
     focus: [],
     highlights: [],
   },
@@ -70,26 +90,37 @@ export const education = [
   },
 ];
 
+export const publications = [
+  'Driving Web Traffic: Employing Machine Learning Technique with Google’s PageSpeed for Search Engine Optimization',
+];
+
+export const certifications = [
+  'Adobe After Effects CC 2025 Bootcamp: Beginner to Advanced',
+  'Graphic Design — TastyTuts',
+  '3D Art with Blender',
+  'HTML, CSS & JavaScript — Certification Course for Beginners',
+];
+
 export const capabilities = [
   {
     index: '01',
     title: 'Product & UX',
-    items: ['UX Research', 'Competitor Analysis', 'Information Architecture', 'User Flows', 'Wireframing', 'Prototyping', 'Product Thinking'],
+    items: ['UX Research', 'Competitor Analysis', 'Heuristic Analysis', 'Market Benchmarking', 'Information Architecture', 'User Flows', 'Wireframing & Prototyping'],
   },
   {
     index: '02',
     title: 'Interface Design',
-    items: ['SaaS Interfaces', 'Web UI', 'Mobile UI', 'Responsive Design', 'Scalable Design Systems', 'Visual Hierarchy'],
+    items: ['SaaS Interfaces', 'Web & Mobile UI', 'Scalable Design Systems', 'Responsive Layouts', 'Accessibility-first Design', 'Visual Hierarchy'],
   },
   {
     index: '03',
     title: 'Visual Design',
-    items: ['Brand Identity', 'Rebranding', 'Graphic Design', 'Art Direction', 'Marketing Creatives', 'Presentations'],
+    items: ['Brand Identity', 'Rebranding', 'Brand Visuals', 'Marketing Creatives', 'Digital Assets', 'Presentations'],
   },
   {
     index: '04',
     title: 'Motion & Technology',
-    items: ['Motion Graphics', 'Micro-interactions', 'Onboarding Animations', 'Interaction Design', 'Web Development Collaboration'],
+    items: ['Micro-interactions', 'Transitions & UI Animations', 'Onboarding Animations', 'Motion Graphics', 'Web Development Collaboration'],
   },
 ];
 

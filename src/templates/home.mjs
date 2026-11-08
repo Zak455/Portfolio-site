@@ -86,15 +86,17 @@ function work(projects, extra) {
 }
 
 /* ── About + Experience + Capabilities ────────────────────────────────────── */
-function aboutSection(site, about, experience, education, capabilities, tools) {
+function aboutSection(site, about, experience, education, publications, certifications, capabilities, tools) {
   const exp = experience
     .map(
       (e) => `<li class="exp" data-reveal>
       <p class="exp-period mono">${esc(e.period)}</p>
       <div class="exp-main">
         <h4 class="exp-company">${esc(e.company)}</h4>
-        <p class="exp-role">${esc(e.role)}</p>
-        <p class="exp-summary">${esc(e.summary)}</p>
+        ${e.roles?.length
+          ? `<ol class="exp-roles" role="list">${e.roles.map((r, i) => `<li${i === 0 ? ' class="is-current"' : ''}><span class="exp-role">${esc(r.title)}</span><span class="mono">${esc(r.period)}</span></li>`).join('')}</ol>`
+          : `<p class="exp-role">${esc(e.role)}</p>`}
+        ${e.summary ? `<p class="exp-summary">${esc(e.summary)}</p>` : ''}
       </div>
       ${e.focus.length || e.highlights.length ? `<div class="exp-detail">
         ${e.focus.length ? `<div><p class="mono exp-label">Focus</p><ul role="list">${e.focus.map((f) => `<li>${esc(f)}</li>`).join('')}</ul></div>` : ''}
@@ -153,6 +155,14 @@ function aboutSection(site, about, experience, education, capabilities, tools) {
     ${education.length ? `<div class="edu" data-reveal>
       <p class="mono edu-label">Education</p>
       <ul role="list">${education.map((e) => `<li><span class="mono">${esc(e.period)}</span><span class="edu-degree">${esc(e.degree)}</span><span class="edu-school">${esc(e.school)}</span></li>`).join('')}</ul>
+    </div>` : ''}
+    ${publications.length ? `<div class="edu" data-reveal>
+      <p class="mono edu-label">Publication</p>
+      <ul role="list">${publications.map((t) => `<li class="edu-wide"><span class="edu-degree">${esc(t)}</span></li>`).join('')}</ul>
+    </div>` : ''}
+    ${certifications.length ? `<div class="edu" data-reveal>
+      <p class="mono edu-label">Certifications</p>
+      <ul role="list" class="certs">${certifications.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
     </div>` : ''}
   </div>
 
@@ -229,11 +239,11 @@ function contact(site) {
 </section>`;
 }
 
-export function homePage({ site, projects, additionalWork, about, experience, education = [], capabilities, tools, playground }) {
+export function homePage({ site, projects, additionalWork, about, experience, education = [], publications = [], certifications = [], capabilities, tools, playground }) {
   return [
     hero(site),
     work(projects, additionalWork),
-    aboutSection(site, about, experience, education, capabilities, tools),
+    aboutSection(site, about, experience, education, publications, certifications, capabilities, tools),
     playgroundSection(playground),
     contact(site),
   ].join('\n');
