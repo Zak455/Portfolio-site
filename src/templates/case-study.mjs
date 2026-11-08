@@ -45,6 +45,7 @@ export function caseStudyPage({ site, project: p, next, sectionOrder }) {
   <!-- Sections waiting for content (edit content/projects.mjs): ${pending.map((s) => s.title).join(', ') || 'none'} -->
   <header class="cs-hero">
     <div class="wrap">
+      <p class="mono caption" style="margin-bottom:10px">Frame ${esc(p.number)} · “Case study”</p>
       <nav class="crumbs mono" aria-label="Breadcrumb"><a href="/#work">Work</a><span aria-hidden="true">/</span><span aria-current="page">${esc(p.number)} — ${esc(p.name)}</span></nav>
       <p class="cs-num" aria-hidden="true">${esc(p.number)}</p>
       <h1 class="cs-name"><span class="mask"><span class="mask-inner" data-hero-line>${esc(p.name)}</span></span></h1>
@@ -95,9 +96,9 @@ export function caseStudyPage({ site, project: p, next, sectionOrder }) {
 
 export function notFoundPage() {
   return `<section class="nf wrap">
-    <p class="mono">(404)</p>
-    <h1 class="nf-title"><span class="mask"><span class="mask-inner" data-hero-line>Lost <em>beyond</em></span></span><span class="mask"><span class="mask-inner" data-hero-line>the interface.</span></span></h1>
+    <p class="mono caption">Frame 404 · “Missing layer”</p>
+    <h1 class="nf-title"><span class="mask"><span class="mask-inner" data-hero-line>Layer</span></span><span class="mask"><span class="mask-inner" data-hero-line>not found.</span></span></h1>
     <p>This page doesn’t exist — but the work does.</p>
-    <a class="btn btn-primary" href="/"><span class="btn-label" data-label="Back home">Back home</span>${arrowRight}</a>
+    <a class="btn-pixel" href="/">Back to the canvas ${arrowRight}</a>
   </section>`;
 }

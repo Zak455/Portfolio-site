@@ -13,6 +13,9 @@ export const site = {
   company: 'Spintly India Private Limited',
   experienceYears: 3,
   location: 'Goa, India',
+  // Shown in the corner labels and footer caption.
+  place: { short: 'Goa, IN', city: 'Madgaon, Goa', coords: '15°16′N 73°57′E', timezone: 'UTC+5:30' },
+  designingSince: 2020,
 
   // Availability badge in the hero and contact sections.
   // Set `enabled: false` to hide it entirely, or change the label.

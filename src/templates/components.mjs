@@ -137,3 +137,66 @@ export function mediaFrame(m, slug) {
     </div>
   </figure>`;
 }
+
+/* ── Pixel system ──────────────────────────────────────────────────────────
+   Bands, marks and dividers are drawn from tiny bitmaps on a 4px grid — the
+   designer's version of a woven border: built from the tools of the trade. */
+
+const GLYPHS = {
+  // The FUZAIL. mark: F with the sheared terminal, plus the full stop.
+  f: ['######.', '#####..', '##.....', '####...', '##.....', '##...##', '##...##'],
+  cursor: ['#......', '##.....', '###....', '####...', '#####..', '##.#...', '#...#..'],
+  anchor: ['...#...', '..#.#..', '.#...#.', '#..#..#', '.#...#.', '..#.#..', '...#...'],
+  node: ['##...##', '#.....#', '..###..', '..#.#..', '..###..', '#.....#', '##...##'],
+  cross: ['...#...', '...#...', '.......', '##.#.##', '.......', '...#...', '...#...'],
+  pen: ['...#...', '..#.#..', '.#...#.', '.#.#.#.', '.#.#.#.', '..#.#..', '...#...'],
+};
+
+function bitmapPath(rows, x0, y0, s) {
+  let d = '';
+  rows.forEach((row, y) => {
+    for (let x = 0; x < row.length; x++) if (row[x] === '#') d += `M${x0 + x * s} ${y0 + y * s}h${s}v${s}h-${s}z`;
+  });
+  return d;
+}
+
+let bandId = 0;
+// A repeating band. `seq` is the glyph order for one tile.
+export function pixelBand({ seq = ['f', 'cursor', 'anchor', 'node', 'pen', 'anchor', 'cross'], cell = 4, className = '', label } = {}) {
+  const gap = 4; // cells between glyphs
+  const h = 7 + 6; // glyph rows + padding/borders
+  let x = 2, solid = '', faint = '';
+  for (const g of seq) {
+    solid += bitmapPath(GLYPHS[g], x * cell, 3 * cell, cell);
+    // stitch dots in the gap
+    for (let i = 1; i < gap; i += 2) faint += `M${(x + 7 + i) * cell} ${6 * cell}h${cell}v${cell}h-${cell}z`;
+    x += 7 + gap;
+  }
+  const tileW = x * cell, H = h * cell;
+  // borders: a solid rule top & bottom, a dotted rule inside
+  for (let i = 0; i < x; i += 2) faint += `M${i * cell} ${cell}h${cell}v${cell / 2}h-${cell}z M${i * cell} ${(h - 1.5) * cell}h${cell}v${cell / 2}h-${cell}z`;
+  const id = `band-${++bandId}`;
+  return `<div class="band ${className}"${label ? '' : ' aria-hidden="true"'}${label ? ` role="img" aria-label="${esc(label)}"` : ''}><svg width="100%" height="${H}" preserveAspectRatio="none" focusable="false">
+    <defs><pattern id="${id}" width="${tileW}" height="${H}" patternUnits="userSpaceOnUse">
+      <path d="${solid}" fill="currentColor"/><path d="${faint}" fill="currentColor" opacity=".38"/>
+      <rect x="0" y="0" width="${tileW}" height="${cell / 2}" fill="currentColor"/>
+      <rect x="0" y="${H - cell / 2}" width="${tileW}" height="${cell / 2}" fill="currentColor"/>
+    </pattern></defs>
+    <rect width="100%" height="100%" fill="url(#${id})"/>
+  </svg></div>`;
+}
+
+// A single glyph as an inline SVG (logo square, bullets, intro mark).
+export function pixelGlyph(name = 'f', { cell = 4, className = '' } = {}) {
+  const rows = GLYPHS[name];
+  const w = rows[0].length * cell, h = rows.length * cell;
+  return `<svg class="glyph ${className}" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" aria-hidden="true" focusable="false"><path d="${bitmapPath(rows, 0, 0, cell)}" fill="currentColor"/></svg>`;
+}
+
+// Split text into spans for word / character animation (no-JS: plain text).
+export const splitWords = (text) =>
+  esc(text).split(/\s+/).map((w) => `<span class="w">${w}</span>`).join(' ');
+export const splitChars = (text) =>
+  `<span class="sr-only">${esc(text)}</span><span aria-hidden="true" class="chars">${[...text]
+    .map((c) => (c === ' ' ? '<span class="c c--space"> </span>' : `<span class="c">${esc(c)}</span>`))
+    .join('')}</span>`;

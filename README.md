@@ -1,6 +1,8 @@
 # FUZAIL. — Portfolio of Fuzail Khan
 
-Senior UI Designer · Product & Visual Designer. Live at **https://fuzailgfx.vercel.app**.
+Senior UI/UX Designer · Goa, India. Live at **https://fuzailgfx.vercel.app**.
+
+**Design system — “frames on a canvas”:** lime on near-black; every section is an artboard with a frame caption (`Frame 03 · “Toolkit”`), separated by pixel bands drawn from design-tool glyphs (the cut-F mark, cursor, bezier anchor, selected node, crosshair) on a 4px grid. The top bar has a layout-grid toggle, About is a design-tool inspector panel, and experience is a status table. The bands are generated in `src/templates/components.mjs` (`pixelBand`, `pixelGlyph`).
 
 A static site: content lives in plain data files, a zero-dependency Node script renders it to HTML, and Vercel deploys it on every push to `main`.
 
@@ -15,7 +17,7 @@ src/
   assets/css/       design system (tokens at the top of main.css)
   assets/js/        navigation + motion (GSAP & ScrollTrigger, self-hosted)
   assets/img/       optimised WebP images & chrome renders
-  assets/fonts/     self-hosted WOFF2 (Bricolage Grotesque, Inter, Instrument Serif, JetBrains Mono)
+  assets/fonts/     self-hosted WOFF2 (Archivo variable width/weight, Inter, JetBrains Mono)
   public/           favicons (copied to the site root)
 scripts/build.mjs   content + templates → dist/
 tools/              one-off asset tooling (3D renders, image optimisation, OG image)
@@ -36,6 +38,8 @@ Requires Node 18+. The site itself has **no npm dependencies**.
 | I want to… | Do this |
 | --- | --- |
 | Hide / change the "Open to opportunities" badge | `content/site.mjs` → `availability` |
+| Change location / coordinates shown in corners | `content/site.mjs` → `place` |
+| Add certifications or a publication | `content/profile.mjs` → `certifications`, `publications` |
 | Add my email | `content/site.mjs` → `contact.email` (CTAs switch from LinkedIn to email automatically) |
 | Add a CV download | Put the PDF in `src/assets/cv/` and set `contact.cv` in `content/site.mjs` |
 | Write a case study section | `content/projects.mjs` → the project's `sections`. A section with `body: null` and no media stays hidden. |
@@ -53,6 +57,7 @@ cd tools && npm install
 npm run render     # re-render the chrome 3D objects (Three.js in headless Chromium)
 npm run images     # re-optimise source artwork into responsive WebP
 node render-icons.mjs
+node duotone.mjs   # lime duotone portrait from assets/source/img-2.png
 node render-og.mjs # needs `npm run dev` running in the repo root
 ```
 

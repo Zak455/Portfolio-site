@@ -22,7 +22,7 @@ const server = createServer(async (req, res) => {
 const port = server.address().port;
 
 const objects = [
-  { name: 'monogram', size: 1600, widths: [1400, 800] },
+  // { name: 'monogram', size: 1600, widths: [1400, 800] }, // F monogram (not used in the current design)
   { name: 'layers', size: 1200, widths: [1000, 600] },
   { name: 'globe', size: 1200, widths: [1000, 600] },
   { name: 'rings', size: 1200, widths: [1000, 600] },

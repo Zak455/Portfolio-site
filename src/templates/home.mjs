@@ -1,250 +1,237 @@
 import {
-  esc, wordmark, availability, sectionHeading, button, objectImage, projectCover, tagList, liveLinks, picture, arrow, arrowRight,
+  esc, arrow, arrowRight, objectImage, picture, pixelBand, pixelGlyph, splitWords, splitChars, liveLinks,
 } from './components.mjs';
 
-/* ── Hero ──────────────────────────────────────────────────────────────────── */
-function hero(site) {
-  const h = site.hero;
-  const lines = h.headline
-    .map((line) => {
-      const html = esc(line).replace(esc(h.accentWord), `<em>${esc(h.accentWord)}</em>`);
-      return `<span class="mask"><span class="mask-inner" data-hero-line>${html}</span></span>`;
-    })
-    .join('');
-  const collab = site.contact.email ? `mailto:${site.contact.email}?subject=Let%E2%80%99s%20collaborate` : '#contact';
-  return `<section class="hero" aria-labelledby="hero-title" data-hero>
-  <div class="hero-stage" aria-hidden="true">
-    <span class="hero-glow"></span>
-    <span class="hero-rule hero-rule--v"></span>
-    <span class="hero-rule hero-rule--h"></span>
-    <div class="hero-object" data-hero-object>${objectImage('monogram', { priority: true, sizes: '(min-width: 960px) 42vw, 78vw', className: 'hero-object-img' })}</div>
-  </div>
-  <div class="hero-inner wrap">
-    <div class="hero-meta" data-hero-fade>
-      <p class="mono">(Portfolio)</p>
-      <p class="mono hero-meta-role">${esc(site.designation)}</p>
-      ${availability(site)}
+// Giant section title with a frame caption above it — every section reads like
+// an artboard on a canvas: "Frame 03 · “Toolkit”".
+function frameHead({ n, name, title, count, id, tone = '' }) {
+  return `<header class="frame-head ${tone}">
+    <p class="caption mono">Frame ${n} · “${esc(name)}”</p>
+    <div class="frame-row">
+      <h2 class="giant" id="${id}" data-giant>${splitChars(title)}</h2>
+      ${count ? `<p class="mono frame-count">${esc(count)}</p>` : ''}
     </div>
-    <h1 class="hero-title" id="hero-title"><span class="sr-only">${esc(site.name)}, ${esc(site.title)}. </span>${lines}</h1>
-    <div class="hero-foot">
-      <div class="hero-copy" data-hero-fade>
-        <p class="hero-intro">${esc(h.intro)}</p>
-        <p class="hero-statement">${esc(h.statement)}</p>
-      </div>
-      <div class="hero-actions" data-hero-fade>
-        ${button({ href: '#work', label: 'Explore selected work', icon: arrowRight })}
-        ${button({ href: collab, label: 'Let’s collaborate', variant: 'ghost' })}
-        <a class="text-link" href="${esc(site.contact.linkedin)}" target="_blank" rel="noopener">LinkedIn ↗<span class="sr-only"> (opens in a new tab)</span></a>
+  </header>`;
+}
+
+/* ── Hero ─────────────────────────────────────────────────────────────────── */
+function hero(site, about) {
+  const since = String(site.designingSince).slice(-2);
+  return `<section class="hero" aria-labelledby="hero-name" data-hero>
+  <div class="hero-grid wrap">
+    <div class="hero-left" data-fade>
+      <p class="badge badge--solid mono">${esc(site.title)} @ Spintly</p>
+      <p class="badge mono">UX Strategy · UI · Motion · Visual</p>
+      <p class="hero-intro">${esc(site.name)} — turning research into high-impact interfaces, from ${esc(site.place.city)}.</p>
+      <p class="hero-tag">Designing <em>beyond</em> the interface.</p>
+      <div class="hero-links">
+        <a class="link-arrow mono" href="#work">Selected work ${arrowRight}</a>
+        <a class="link-arrow mono" href="${site.contact.email ? `mailto:${esc(site.contact.email)}` : '#contact'}">Let’s collaborate ${arrow}</a>
       </div>
     </div>
+    <figure class="hero-portrait" data-portrait>
+      ${pixelBand({ seq: ['anchor', 'cross', 'f', 'cross'], cell: 3, className: 'band--portrait' })}
+      <div class="portrait-frame">
+        ${picture({ base: about.portrait.src, widths: [560, 1000], sizes: '(min-width: 960px) 30vw, 70vw', alt: about.portrait.alt, ratio: [1000, 1501], className: 'portrait-img', priority: true })}
+        <span class="portrait-dots" aria-hidden="true"></span>
+        <span class="portrait-sel" aria-hidden="true"><i></i><i></i><i></i><i></i><b class="mono">Fuzail Khan · 1000 × 1500</b></span>
+      </div>
+      ${pixelBand({ seq: ['cross', 'f', 'cross', 'anchor'], cell: 3, className: 'band--portrait' })}
+      <a class="scroll-cue mono" href="#about">Scroll</a>
+    </figure>
+    <div class="hero-right" data-fade>
+      <p class="mono">Designing since</p>
+      <p class="hero-since">’${since}</p>
+    </div>
   </div>
-  <div class="hero-mark" data-hero-mark>${wordmark({ animate: true, className: 'wm--hero' })}</div>
-  <a class="scroll-cue" href="#work" data-hero-fade><span class="scroll-cue-line" aria-hidden="true"></span><span class="mono">Scroll</span></a>
+  <h1 class="hero-name" id="hero-name"><span class="sr-only">${esc(site.name)} — ${esc(site.title)}</span>
+    <span class="hero-name-l" aria-hidden="true" data-name-l>FUZ</span><span class="hero-name-r" aria-hidden="true" data-name-r>AIL.</span>
+  </h1>
 </section>`;
 }
 
-/* ── Work ──────────────────────────────────────────────────────────────────── */
-function projectRow(p, i, all) {
-  return `<article class="project project--${esc(p.theme?.layout || 'split')}" data-project aria-labelledby="p-${esc(p.slug)}">
-  <a class="project-visual" href="/work/${esc(p.slug)}/" tabindex="-1" aria-hidden="true" data-reveal="image">
-    ${projectCover(p)}
-    <span class="project-view" aria-hidden="true">View case ${arrow}</span>
+/* ── About: inspector panel + reading paragraph ───────────────────────────── */
+function aboutSection(site, about) {
+  const rows = [
+    ['Layer', site.name],
+    ['Role', site.title],
+    ['Company', site.company],
+    ['Location', site.place.city],
+    ['Position', site.place.coords],
+    ['Designing since', String(site.designingSince)],
+    ['Product design', `${site.experienceYears}+ years`],
+    ['Status', site.availability?.enabled ? site.availability.label : '—'],
+  ];
+  return `<section class="about section" id="about" aria-labelledby="about-title" data-section="about">
+  <div class="wrap about-grid">
+    <aside class="inspector" aria-label="Profile details" data-reveal>
+      <div class="inspector-head mono"><span>${pixelGlyph('node', { cell: 2 })} Inspector</span><span>Frame 02</span></div>
+      <dl>${rows.map(([k, v]) => `<div><dt class="mono">${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
+      <div class="inspector-swatches mono"><span class="sw sw--lime"></span>C6FF3D <span class="sw sw--ink"></span>0A0A0B</div>
+    </aside>
+    <div class="about-copy">
+      <p class="caption mono">Frame 02 · “About”</p>
+      <h2 class="sr-only" id="about-title">About</h2>
+      <p class="reading" data-words>Hello! ${splitWords(about.lead)} ${splitWords(about.body[0])}</p>
+      <p class="about-body" data-reveal>${esc(about.body[1])}</p>
+      <blockquote class="quote" data-reveal><p>“${esc(about.philosophy)}”</p></blockquote>
+      <ol class="principles" role="list">${about.principles
+        .map((p, i) => `<li data-reveal><span class="mono">0${i + 1}</span><h3>${esc(p.title)}</h3><p>${esc(p.text)}</p></li>`)
+        .join('')}</ol>
+      <p class="collab" data-reveal><span class="mono">How I collaborate</span>${esc(about.collaboration)}</p>
+    </div>
+  </div>
+</section>`;
+}
+
+/* ── Toolkit ──────────────────────────────────────────────────────────────── */
+function toolkit(capabilities, tools) {
+  const total = capabilities.reduce((n, c) => n + c.items.length, 0) + tools.length;
+  const groups = capabilities
+    .map((c) => `<div class="tk-row" data-reveal><p class="mono tk-label">${esc(c.title)}</p>
+      <ul class="chips" role="list">${c.items.map((i) => `<li>${pixelGlyph('cross', { cell: 1 })}${esc(i)}</li>`).join('')}</ul></div>`)
+    .join('');
+  const toolRow = `<div class="tk-row" data-reveal><p class="mono tk-label">Tools</p>
+    <ul class="chips" role="list">${tools.map((t) => `<li><span>${esc(t.name)}</span><span class="chip-level mono" title="${esc(t.label)}">${'■'.repeat(t.level)}${'□'.repeat(3 - t.level)}<span class="sr-only"> — ${esc(t.label)}</span></span></li>`).join('')}</ul></div>`;
+  return `<section class="toolkit section--flush" id="toolkit" aria-labelledby="toolkit-title" data-section="toolkit">
+  ${pixelBand({ seq: ['cursor', 'cross', 'pen', 'cross', 'node', 'cross'] })}
+  <div class="field">
+    <div class="wrap">${frameHead({ n: '03', name: 'Toolkit', title: 'Toolkit', count: `${total} skills · ${capabilities.length + 1} disciplines`, id: 'toolkit-title' })}</div>
+  </div>
+  <div class="wrap tk-body">${groups}${toolRow}</div>
+</section>`;
+}
+
+/* ── Work ─────────────────────────────────────────────────────────────────── */
+function workRow(p, i) {
+  return `<article class="work-row${i % 2 ? ' work-row--flip' : ''}" aria-labelledby="w-${esc(p.slug)}" data-project>
+  <a class="work-visual" href="/work/${esc(p.slug)}/" tabindex="-1" aria-hidden="true" data-reveal="image">
+    ${pixelBand({ seq: ['f', 'cross', 'anchor', 'cross'], cell: 3, className: 'band--card' })}
+    <span class="work-canvas" style="--accent:${esc(p.theme?.accent || '#c6ff3d')}">
+      <span class="work-num">${esc(p.number)}</span>
+      <span class="work-obj" data-parallax>${objectImage(p.object, { sizes: '(min-width: 960px) 40vw, 90vw', className: 'work-img' })}</span>
+      <span class="work-sel"><i></i><i></i><i></i><i></i></span>
+    </span>
+    <span class="work-view mono">Read the case ${arrow}</span>
   </a>
-  <div class="project-body" data-reveal>
-    <p class="project-num mono">${esc(p.number)} <span>/ ${String(all.length).padStart(2, '0')}</span></p>
-    <h3 class="project-title" id="p-${esc(p.slug)}"><a href="/work/${esc(p.slug)}/">${esc(p.name)}</a></h3>
-    <p class="project-cat mono">${esc(p.category)}</p>
-    <p class="project-summary">${esc(p.summary)}</p>
-    <dl class="project-meta">
-      <div><dt>My role</dt><dd>${esc(p.role)}</dd></div>
-      ${p.teamNote ? `<div><dt>Team</dt><dd>${esc(p.teamNote)}</dd></div>` : ''}
-    </dl>
-    ${tagList(p.tags)}
+  <div class="work-text" data-reveal>
+    <p class="mono work-meta">${esc(p.number)} · ${esc(p.category)}</p>
+    <h3 class="work-title" id="w-${esc(p.slug)}"><a href="/work/${esc(p.slug)}/">${esc(p.name)}</a></h3>
+    <p class="mono work-role">${esc(p.role)}</p>
+    <p class="work-summary">${esc(p.summary)}</p>
+    ${p.teamNote ? `<p class="work-team">${esc(p.teamNote)}</p>` : ''}
+    <ul class="tags" role="list">${p.tags.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
     ${liveLinks(p.links)}
-    <a class="project-link" href="/work/${esc(p.slug)}/"><span>Read the case study</span>${arrowRight}<span class="sr-only">: ${esc(p.name)}</span></a>
+    <a class="link-arrow mono" href="/work/${esc(p.slug)}/">Read the case ${arrowRight}<span class="sr-only">: ${esc(p.name)}</span></a>
   </div>
 </article>`;
 }
 
 function work(projects, extra) {
-  const marquee = extra.productAreas.map((a) => `<span>${esc(a)}</span><span class="marquee-sep" aria-hidden="true">✦</span>`).join('');
-  return `<section class="section work" id="work" aria-labelledby="work-title" data-section="work">
+  return `<section class="work section" id="work" aria-labelledby="work-title" data-section="work">
   <div class="wrap">
-    ${sectionHeading({ index: '01', label: 'Selected work', title: 'Products, brands & the systems between them.', accent: 'systems', id: 'work-title', intro: `${projects.length} case studies from enterprise SaaS, mobile, web and brand — each one shows what I did and what the team did.` })}
-    <div class="projects">${projects.map(projectRow).join('')}</div>
-  </div>
-  <div class="archive">
-    <div class="wrap archive-inner" data-reveal>
-      <p class="eyebrow"><span class="eyebrow-index">(+)</span><span>${esc(extra.title)}</span></p>
-      <p class="archive-body">${esc(extra.body)}</p>
-    </div>
-    <div class="marquee" aria-label="Product areas I have designed for: ${esc(extra.productAreas.join(', '))}">
-      <div class="marquee-track" aria-hidden="true">${marquee}${marquee}</div>
+    ${frameHead({ n: '04', name: 'Work', title: 'Work', count: `${String(projects.length).padStart(2, '0')} projects`, id: 'work-title' })}
+    <div class="work-list">${projects.map(workRow).join('')}</div>
+    <div class="archive" data-reveal>
+      <p class="mono">Also in the archive</p>
+      <p>${esc(extra.body)}</p>
+      <ul class="tags" role="list">${extra.productAreas.map((a) => `<li>${esc(a)}</li>`).join('')}</ul>
     </div>
   </div>
 </section>`;
 }
 
-/* ── About + Experience + Capabilities ────────────────────────────────────── */
-function aboutSection(site, about, experience, education, publications, certifications, capabilities, tools) {
-  const exp = experience
-    .map(
-      (e) => `<li class="exp" data-reveal>
-      <p class="exp-period mono">${esc(e.period)}</p>
-      <div class="exp-main">
-        <h4 class="exp-company">${esc(e.company)}</h4>
-        ${e.roles?.length
-          ? `<ol class="exp-roles" role="list">${e.roles.map((r, i) => `<li${i === 0 ? ' class="is-current"' : ''}><span class="exp-role">${esc(r.title)}</span><span class="mono">${esc(r.period)}</span></li>`).join('')}</ol>`
-          : `<p class="exp-role">${esc(e.role)}</p>`}
-        ${e.summary ? `<p class="exp-summary">${esc(e.summary)}</p>` : ''}
-      </div>
-      ${e.focus.length || e.highlights.length ? `<div class="exp-detail">
-        ${e.focus.length ? `<div><p class="mono exp-label">Focus</p><ul role="list">${e.focus.map((f) => `<li>${esc(f)}</li>`).join('')}</ul></div>` : ''}
-        ${e.highlights.length ? `<div><p class="mono exp-label">Selected work</p><ul role="list">${e.highlights.map((f) => `<li>${esc(f)}</li>`).join('')}</ul></div>` : ''}
-      </div>` : '<div class="exp-detail"></div>'}
-    </li>`,
-    )
+/* ── Experience table ─────────────────────────────────────────────────────── */
+function experienceSection(experience) {
+  const rows = experience
+    .map((e, i) => {
+      const current = /present/i.test(e.period);
+      const status = current ? 'On duty' : 'Logged';
+      const role = e.roles?.length ? e.roles[0].title : e.role;
+      const detail = [
+        e.summary ? `<p class="xp-summary">${esc(e.summary)}</p>` : '',
+        e.roles?.length
+          ? `<ol class="xp-roles" role="list">${e.roles.map((r, j) => `<li${j === 0 ? ' class="is-current"' : ''}><span class="mono">${esc(r.period)}</span><span>${esc(r.title)}</span></li>`).join('')}</ol>`
+          : '',
+        e.highlights?.length ? `<div><p class="mono xp-label">Selected work</p><ul class="xp-list" role="list">${e.highlights.map((h) => `<li>${esc(h)}</li>`).join('')}</ul></div>` : '',
+        e.focus?.length ? `<div><p class="mono xp-label">Focus</p><ul class="xp-list" role="list">${e.focus.map((h) => `<li>${esc(h)}</li>`).join('')}</ul></div>` : '',
+      ].join('');
+      const hasDetail = detail.trim().length > 0;
+      const summaryRow = `<span class="mono xp-no">${String(i + 1).padStart(2, '0')}</span>
+          <span class="xp-company">${esc(e.company)}</span>
+          <span class="mono xp-role">${esc(role)}</span>
+          <span class="mono xp-period">${esc(e.period)}</span>
+          <span class="mono xp-status${current ? ' is-on' : ''}"><i aria-hidden="true"></i>${status}</span>`;
+      return hasDetail
+        ? `<li data-reveal><details class="xp"${i === 0 ? ' open' : ''}><summary class="xp-row">${summaryRow}<span class="xp-toggle" aria-hidden="true"></span></summary><div class="xp-detail">${detail}</div></details></li>`
+        : `<li data-reveal><div class="xp"><div class="xp-row">${summaryRow}<span class="xp-toggle xp-toggle--none" aria-hidden="true"></span></div></div></li>`;
+    })
     .join('');
-
-  const caps = capabilities
-    .map(
-      (c) => `<div class="cap" data-reveal>
-      <p class="cap-index mono">${esc(c.index)}</p>
-      <h4 class="cap-title">${esc(c.title)}</h4>
-      <ul role="list">${c.items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>
-    </div>`,
-    )
-    .join('');
-
-  const toolList = tools
-    .map(
-      (t) => `<li><span class="tool-name">${esc(t.name)}</span><span class="tool-level" aria-label="${esc(t.label)}">${[1, 2, 3]
-        .map((n) => `<i class="${n <= t.level ? 'on' : ''}"></i>`)
-        .join('')}</span><span class="tool-label mono">${esc(t.label)}</span></li>`,
-    )
-    .join('');
-
-  return `<section class="section about" id="about" aria-labelledby="about-title" data-section="about">
-  <div class="wrap">
-    ${sectionHeading({ index: '02', label: 'About', title: 'The designer behind the work.', accent: 'behind', id: 'about-title' })}
-    <div class="about-grid">
-      <figure class="about-portrait" data-reveal="image">
-        ${picture({ base: about.portrait.src, widths: [560, 1000], sizes: '(min-width: 960px) 30vw, 70vw', alt: about.portrait.alt, ratio: [1000, 1501], className: 'portrait-img' })}
-        <figcaption class="mono">${esc(site.name)} — ${esc(site.title)}, ${esc(site.company)}</figcaption>
-      </figure>
-      <div class="about-text">
-        <p class="about-lead" data-reveal>${esc(about.lead)}</p>
-        ${about.body.map((b) => `<p class="about-body" data-reveal>${esc(b)}</p>`).join('')}
-        <blockquote class="philosophy" data-reveal><p>“${esc(about.philosophy)}”</p></blockquote>
-        <dl class="about-facts" data-reveal>
-          <div><dt>Experience</dt><dd>${esc(site.experienceYears)}+ years</dd></div>
-          <div><dt>Currently</dt><dd>${esc(site.title)}, ${esc(site.company)}</dd></div>
-          <div><dt>Based in</dt><dd>${esc(site.location)}</dd></div>
-        </dl>
-      </div>
-    </div>
-    <div class="principles">
-      ${about.principles.map((p, i) => `<div class="principle" data-reveal><p class="mono">0${i + 1}</p><h3>${esc(p.title)}</h3><p>${esc(p.text)}</p></div>`).join('')}
-    </div>
-    <p class="collab" data-reveal><span class="mono">How I collaborate</span>${esc(about.collaboration)}</p>
-  </div>
-
-  <div class="wrap sub-section" id="experience">
-    ${sectionHeading({ index: '03', label: 'Experience', title: 'Where I’ve been building.', accent: 'building', level: 3 })}
-    <ol class="timeline" role="list">${exp}</ol>
-    ${education.length ? `<div class="edu" data-reveal>
-      <p class="mono edu-label">Education</p>
-      <ul role="list">${education.map((e) => `<li><span class="mono">${esc(e.period)}</span><span class="edu-degree">${esc(e.degree)}</span><span class="edu-school">${esc(e.school)}</span></li>`).join('')}</ul>
-    </div>` : ''}
-    ${publications.length ? `<div class="edu" data-reveal>
-      <p class="mono edu-label">Publication</p>
-      <ul role="list">${publications.map((t) => `<li class="edu-wide"><span class="edu-degree">${esc(t)}</span></li>`).join('')}</ul>
-    </div>` : ''}
-    ${certifications.length ? `<div class="edu" data-reveal>
-      <p class="mono edu-label">Certifications</p>
-      <ul role="list" class="certs">${certifications.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
-    </div>` : ''}
-  </div>
-
-  <div class="wrap sub-section" id="capabilities">
-    ${sectionHeading({ index: '04', label: 'Capabilities', title: 'From research to the last pixel.', accent: 'last pixel', level: 3 })}
-    <div class="caps">${caps}</div>
-    <div class="tools" data-reveal>
-      <p class="mono tools-label">Tools that support the work</p>
-      <ul role="list" class="tool-list">${toolList}</ul>
-    </div>
+  return `<section class="experience section--flush" id="experience" aria-labelledby="xp-title" data-section="experience">
+  ${pixelBand({ seq: ['node', 'cross', 'f', 'cross', 'node', 'pen'] })}
+  <div class="wrap section-pad">
+    ${frameHead({ n: '05', name: 'Experience', title: 'Experience', count: `${String(experience.length).padStart(2, '0')} entries`, id: 'xp-title' })}
+    <div class="xp-head mono" aria-hidden="true"><span>No.</span><span>Company</span><span>Role</span><span>Period</span><span>Status</span><span></span></div>
+    <ol class="xp-table" role="list">${rows}</ol>
   </div>
 </section>`;
 }
 
-/* ── Playground ───────────────────────────────────────────────────────────── */
+/* ── Credentials (education, publication, certifications) ─────────────────── */
+function credentials(education, publications, certifications) {
+  const items = [
+    ...education.map((e) => ({ type: 'education', label: 'Degree', date: e.period, title: e.degree, by: e.school })),
+    ...publications.map((t) => ({ type: 'publication', label: 'Publication', date: '—', title: t, by: '' })),
+    ...certifications.map((t) => {
+      const [title, by = ''] = t.split(' — ');
+      return { type: 'certification', label: 'Certificate', date: '—', title, by };
+    }),
+  ];
+  const count = (t) => String(items.filter((i) => i.type === t).length).padStart(2, '0');
+  const tabs = [
+    ['all', 'All', String(items.length).padStart(2, '0')],
+    ['education', 'Education', count('education')],
+    ['publication', 'Publication', count('publication')],
+    ['certification', 'Certifications', count('certification')],
+  ];
+  return `<section class="creds section" id="credentials" aria-labelledby="creds-title">
+  <div class="wrap">
+    ${frameHead({ n: '06', name: 'Credentials', title: 'Credentials', id: 'creds-title' })}
+    <div class="tabs" role="toolbar" aria-label="Filter credentials" data-filter>
+      ${tabs.map(([k, l, n], i) => `<button type="button" class="tab mono" data-filter-key="${k}" aria-pressed="${i === 0}">${l} <span>${n}</span></button>`).join('')}
+    </div>
+    <ol class="cred-list" role="list">${items
+      .map((it) => `<li class="cred" data-type="${it.type}" data-reveal><span class="mono cred-date">${esc(it.date)}</span><span class="cred-title">${esc(it.title)}</span><span class="cred-by">${esc(it.by)}</span><span class="mono cred-type">${esc(it.label)}</span></li>`)
+      .join('')}</ol>
+  </div>
+</section>`;
+}
+
+/* ── Playground (compact until there's work to show) ──────────────────────── */
 function playgroundSection(items) {
-  const content = items.length
-    ? `<ul class="lab-grid" role="list">${items
-        .map(
-          (it, i) => `<li class="lab-item lab-item--${esc(it.shape)}" data-reveal="image">
-          <figure>
-            <div class="lab-frame">${picture({ base: it.image, widths: it.widths, sizes: it.shape === 'wide' ? '(min-width: 960px) 60vw, 92vw' : '(min-width: 960px) 30vw, 92vw', alt: `${it.title} — ${it.medium}`, ratio: it.ratio })}</div>
-            <figcaption><span class="mono">EXP-${String(i + 1).padStart(2, '0')}</span><span class="lab-title">${esc(it.title)}</span><span class="mono lab-medium">${esc(it.medium)}</span></figcaption>
-          </figure>
-        </li>`,
-        )
-        .join('')}</ul>`
-    : `<div class="lab-empty" data-reveal><p class="mono">EXP-00</p><p class="lab-empty-title">Experiments are brewing.</p><p>Motion studies, type explorations and interface experiments will land here.</p></div>`;
-  return `<section class="section lab" id="playground" aria-labelledby="lab-title" data-section="playground">
-  <div class="wrap">
-    <div class="lab-head">
-      ${sectionHeading({ index: '05', label: 'Playground', title: 'Off the clock, on the canvas.', accent: 'on the canvas', id: 'lab-title', intro: 'Experiments outside client and product work — motion, type, interface and 3D studies. Curiosity is where the craft gets sharpened.' })}
-      ${items.length ? `<p class="lab-stamp mono" aria-hidden="true">LAB / ${String(items.length).padStart(2, '0')} PIECES</p>` : ''}
+  if (items.length) {
+    return `<section class="section" id="playground" aria-labelledby="lab-title"><div class="wrap">
+      ${frameHead({ n: '06b', name: 'Playground', title: 'Playground', count: `${items.length} experiments`, id: 'lab-title' })}
+      <ul class="lab-grid" role="list">${items.map((it) => `<li data-reveal="image">${picture({ base: it.image, widths: it.widths, sizes: '(min-width: 960px) 33vw, 92vw', alt: `${it.title} — ${it.medium}`, ratio: it.ratio })}<p class="mono">${esc(it.title)} · ${esc(it.medium)}</p></li>`).join('')}</ul>
+    </div></section>`;
+  }
+  return `<section class="lab-empty" id="playground" aria-label="Playground">
+    <div class="wrap lab-empty-row" data-reveal>
+      <p class="mono">Frame 06b · “Playground”</p>
+      <p class="lab-empty-text">Motion, type and interface experiments are on the artboard. ${pixelGlyph('cursor', { cell: 2 })}</p>
+      <p class="mono">Coming soon</p>
     </div>
-    ${content}
-  </div>
-</section>`;
-}
-
-/* ── Contact ──────────────────────────────────────────────────────────────── */
-function contact(site) {
-  const c = site.contact;
-  const inquiry = c.email ? `mailto:${c.email}?subject=Project%20inquiry` : c.linkedin;
-  const external = !c.email;
-  return `<section class="section contact" id="contact" aria-labelledby="contact-title" data-section="contact">
-  <div class="wrap">
-    <p class="eyebrow" data-reveal><span class="eyebrow-index">(06)</span><span>Contact</span></p>
-    <h2 class="contact-title" id="contact-title"><span class="mask"><span class="mask-inner">Have something</span></span><span class="mask"><span class="mask-inner"><em>interesting</em> in mind?</span></span></h2>
-    <p class="contact-sub" data-reveal>Let’s create something meaningful together.</p>
-    ${availability(site, 'status--contact')}
-    <div class="paths">
-      <div class="path" data-reveal>
-        <p class="mono path-for">For founders & businesses</p>
-        <h3>Start a project</h3>
-        <p>Product design, brand identity, websites and creative direction — for teams who care about the details.</p>
-        ${button({ href: inquiry, label: c.email ? 'Send a work inquiry' : 'Send an inquiry on LinkedIn', external })}
-      </div>
-      <div class="path" data-reveal>
-        <p class="mono path-for">For recruiters & hiring teams</p>
-        <h3>Hiring a designer?</h3>
-        <p>Senior UI/UX and product design roles. ${site.experienceYears}+ years of experience, currently ${esc(site.title)} at ${esc(site.company)}, based in ${esc(site.location)}.</p>
-        <div class="path-actions">
-          ${button({ href: c.linkedin, label: 'View LinkedIn profile', variant: 'ghost', external: true })}
-          ${c.cv ? button({ href: c.cv, label: 'View CV', variant: 'ghost', external: true }) : ''}
-        </div>
-      </div>
-    </div>
-    <ul class="channels" role="list" data-reveal>
-      <li><span class="mono">Email</span>${c.email ? `<a href="mailto:${esc(c.email)}">${esc(c.email)}</a>` : '<span class="channel-pending">Coming soon — reach me on LinkedIn</span>'}</li>
-      <li><span class="mono">LinkedIn</span><a href="${esc(c.linkedin)}" target="_blank" rel="noopener">linkedin.com/in/fuzail-360 ↗</a></li>
-      ${c.github ? `<li><span class="mono">GitHub</span><a href="${esc(c.github)}" target="_blank" rel="noopener">${esc(c.github.replace('https://', ''))} ↗</a></li>` : ''}
-    </ul>
-  </div>
-</section>`;
+  </section>`;
 }
 
 export function homePage({ site, projects, additionalWork, about, experience, education = [], publications = [], certifications = [], capabilities, tools, playground }) {
   return [
-    hero(site),
+    hero(site, about),
+    aboutSection(site, about),
+    toolkit(capabilities, tools),
     work(projects, additionalWork),
-    aboutSection(site, about, experience, education, publications, certifications, capabilities, tools),
+    experienceSection(experience),
+    credentials(education, publications, certifications),
     playgroundSection(playground),
-    contact(site),
   ].join('\n');
 }
