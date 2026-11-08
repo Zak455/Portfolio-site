@@ -4,7 +4,7 @@ import { rm, mkdir, cp, writeFile, readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { site } from '../content/site.mjs';
 import { projects, sectionOrder, additionalWork } from '../content/projects.mjs';
-import { about, experience, capabilities, tools } from '../content/profile.mjs';
+import { about, experience, education, capabilities, tools } from '../content/profile.mjs';
 import { playground } from '../content/playground.mjs';
 import { layout } from '../src/templates/layout.mjs';
 import { homePage } from '../src/templates/home.mjs';
@@ -33,7 +33,7 @@ const write = async (path, html) => {
 
 await write('/', layout({
   site, path: '/', assetVersion, bodyClass: 'page-home',
-  body: homePage({ site, projects, additionalWork, about, experience, capabilities, tools, playground }),
+  body: homePage({ site, projects, additionalWork, about, experience, education, capabilities, tools, playground }),
 }));
 
 for (const [i, project] of projects.entries()) {

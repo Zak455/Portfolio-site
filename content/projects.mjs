@@ -8,6 +8,8 @@
 //    • No invented metrics, user numbers, awards or testimonials.
 //    • "My contribution" is only what I did; team work is described as team work.
 //
+//  `links`: optional live links [{ label, href }] shown on the project and case study.
+//
 //  Case study sections:
 //    • A section with `body: null` and no `media` is NOT shown on the site.
 //      Fill in `body` (an array of paragraphs) and/or `list` to publish it.
@@ -27,14 +29,18 @@ export const projects = [
     category: 'SaaS Product Design / Rebranding',
     year: null, // e.g. '2024'
     summary:
-      "Ideating, designing and rebranding Spintly's software suite into OptiSpaces.ai — one product identity across web, mobile and product pages.",
-    role: 'Product identity, visual direction & SaaS product design',
+      "Contributing to the ideation, branding, UX architecture and interface design of OptiSpaces.ai — Spintly's software suite under one product identity, across web and mobile.",
+    role: 'Ideation, branding, UX architecture & interface design',
+    links: [
+      { label: 'OptiSpaces.ai dashboard', href: 'https://dashboard.optispaces.ai/login' },
+      { label: 'App Store', href: 'https://apps.apple.com/in/app/optispaces-ai-by-spintly/id1462730510' },
+    ],
     contribution: [
-      'Product identity and visual direction',
-      'SaaS product design',
-      'Mobile application design',
-      'Web portal and product pages',
-      'Product experience and visual consistency',
+      'Product ideation',
+      'Product identity, branding and visual direction',
+      'UX architecture',
+      'Interface design for the web portal and mobile application',
+      'Product pages, experience and visual consistency',
     ],
     tags: ['Access Control', 'Time & Attendance', 'Locker Management', 'Visitor Management'],
     object: 'layers',
@@ -42,7 +48,7 @@ export const projects = [
     sections: {
       introduction: {
         body: [
-          "OptiSpaces.ai is the identity I ideated, designed and brought to life for Spintly's software suite — bringing its product experiences under a single, coherent brand.",
+          "OptiSpaces.ai brings Spintly's software suite under a single, coherent product brand. I contributed to its ideation, branding, UX architecture and interface design across mobile and web.",
         ],
       },
       context: {
@@ -83,13 +89,14 @@ export const projects = [
     category: 'Website Design / UX Research',
     year: null,
     summary:
-      "Transforming Spintly's website into a global-facing digital experience — grounded in competitor analysis and UX research.",
-    role: 'UX research, information architecture & UI design',
+      "Leading the redesign of Spintly's website into a modern, global digital experience — grounded in UX research, competitor analysis and scalable UI systems.",
+    role: 'Led the redesign — UX research, information architecture & UI',
+    links: [{ label: 'Visit the website', href: 'https://spintly.com/global-site-v2/' }],
     contribution: [
       'Competitor analysis',
       'UX research',
       'Website experience and information architecture',
-      'UI design',
+      'UI design and scalable UI systems',
       'Visual presentation and product communication',
     ],
     tags: ['Website', 'UX Research', 'Information Architecture'],
@@ -97,7 +104,7 @@ export const projects = [
     theme: { accent: '#d9dee8', layout: 'split' },
     sections: {
       introduction: {
-        body: ["A redesign of Spintly's website to present the company and its product range to a global audience."],
+        body: ["I led the redesign of Spintly's website — turning it into a modern, global digital experience for the company and its product range, built on UX research, competitor analysis and scalable UI systems."],
       },
       context: { body: tbd },
       problem: { body: tbd },
@@ -106,6 +113,7 @@ export const projects = [
           'Understand how comparable companies present similar products',
           'Structure the site so a global audience can find the right product quickly',
           'Communicate the products clearly and visually',
+          'Build the UI on a scalable system that can grow with the site',
         ],
       },
       role: { useContribution: true },
@@ -129,20 +137,21 @@ export const projects = [
     category: 'Branding / Product Design',
     year: null,
     summary:
-      "Rebranding Spintly's credential management platform as Scypher — a distinct identity for enterprise software.",
-    role: 'Product branding & visual identity',
+      "Rebranding and redesigning Spintly's credential management platform as Scypher — aligning UI/UX, product positioning and marketing visuals.",
+    role: 'Rebrand & redesign — UI/UX, positioning & marketing visuals',
+    links: [{ label: 'Scypher', href: 'https://spintly.com/scypher/' }],
     contribution: [
-      'Product branding',
-      'Visual identity',
-      'Enterprise software positioning',
-      'Interface and visual consistency',
+      'Product branding and visual identity',
+      'UI/UX redesign',
+      'Product positioning for enterprise software',
+      'Marketing visuals',
     ],
     tags: ['Digital Credentials', 'Mobile Credentialing', 'Enterprise'],
     object: 'rings',
     theme: { accent: '#c6ff3d', layout: 'offset' },
     sections: {
       introduction: {
-        body: ["Scypher is the rebrand of Spintly's credential management platform — giving it its own identity and positioning as enterprise software."],
+        body: ["Scypher is the rebrand and redesign of Spintly's credential management platform. I aligned its UI/UX, product positioning and marketing visuals into one identity, to improve usability and how the platform is positioned."],
       },
       context: { body: tbd },
       problem: { body: tbd },
@@ -173,21 +182,22 @@ export const projects = [
     name: 'Spintly V3',
     category: 'Mobile Product Design',
     year: null,
-    summary: 'Rebranding the Spintly mobile application into its V3 experience — a refreshed visual language and interface.',
-    role: 'Mobile UI/UX & product visual language',
-    contribution: ['Mobile UI/UX', 'Product visual language', 'Interface design', 'Experience consistency'],
+    summary: 'Collaborating on the redesign of the Spintly V3 mobile app — cleaner layouts, improved navigation and usability, and modern interaction patterns.',
+    role: 'Mobile UI/UX — collaborative redesign',
+    contribution: ['Mobile UI/UX', 'Navigation and usability improvements', 'Interaction patterns', 'Product visual language and consistency'],
+    teamNote: 'A collaborative redesign — I worked on the mobile UI/UX alongside the wider product team.',
     tags: ['Mobile', 'Access Control', 'Mobile Credentialing'],
     object: 'device',
     theme: { accent: '#e8e8e8', layout: 'split-reverse' },
     sections: {
-      introduction: { body: ['The V3 rebrand of the Spintly mobile application.'] },
+      introduction: { body: ['Spintly V3 is the redesign of the Spintly mobile application, which I collaborated on — with cleaner layouts, improved navigation and usability, and modern interaction patterns.'] },
       context: { body: tbd },
       problem: { body: tbd },
       objectives: {
-        list: ['Refresh the product’s visual language', 'Redesign the interface for V3', 'Keep the experience consistent across the app'],
+        list: ['Improve navigation and usability', 'Introduce cleaner layouts and modern interaction patterns', 'Keep the experience consistent across the app'],
       },
       role: { useContribution: true },
-      team: { body: tbd },
+      team: { body: ['The V3 redesign was a team effort; I collaborated on the mobile UI/UX within it.'] },
       research: { body: tbd },
       competitors: { body: tbd },
       flows: { body: tbd, media: [{ placeholder: 'Core app flows' }] },
@@ -207,8 +217,9 @@ export const projects = [
     category: 'Product Experience / Collaboration',
     year: null,
     summary:
-      'Collaborating with development and R&D teams to bring Apple Wallet integration to the product ecosystem.',
+      'Working with development and R&D teams to support Apple Wallet integration within the Spintly ecosystem.',
     role: 'Product experience & engineering collaboration',
+    links: [{ label: 'Apple Wallet at Spintly', href: 'https://spintly.com/apple-wallet-india/' }],
     contribution: [
       'Product experience considerations',
       'Digital credential experience',

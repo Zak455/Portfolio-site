@@ -99,6 +99,13 @@ export function projectCover(p, { priority = false, sizes } = {}) {
   </div>`;
 }
 
+export const liveLinks = (links = [], className = 'live-links') =>
+  links.length
+    ? `<ul class="${className}" role="list">${links
+        .map((l) => `<li><a href="${esc(l.href)}" target="_blank" rel="noopener">${esc(l.label)} ↗<span class="sr-only"> (opens in a new tab)</span></a></li>`)
+        .join('')}</ul>`
+    : '';
+
 export const tagList = (tags = []) =>
   tags.length ? `<ul class="tags" role="list">${tags.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>` : '';
 

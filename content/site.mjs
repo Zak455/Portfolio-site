@@ -8,11 +8,11 @@ export const site = {
   url: 'https://fuzailgfx.vercel.app',
   name: 'Fuzail Khan',
   brand: 'FUZAIL.',
-  title: 'Senior UI Designer',
-  designation: 'Senior UI Designer | Product & Visual Designer',
+  title: 'Senior UI/UX Designer',
+  designation: 'Senior UI/UX Designer — Product Design · UX Research · Motion Design',
   company: 'Spintly India Private Limited',
   experienceYears: 3,
-  location: 'India',
+  location: 'Goa, India',
 
   // Availability badge in the hero and contact sections.
   // Set `enabled: false` to hide it entirely, or change the label.
@@ -30,20 +30,18 @@ export const site = {
   },
 
   contact: {
-    // TODO: add your email address (e.g. 'hello@yourdomain.com').
-    // While this is null, contact CTAs point to LinkedIn instead.
-    email: null,
+    // While email is null, contact CTAs point to LinkedIn instead.
+    email: 'fuzailgfx@gmail.com',
     linkedin: 'https://www.linkedin.com/in/fuzail-360',
     github: 'https://github.com/Zak455',
-    // TODO: add an up-to-date CV as src/assets/cv/fuzail-khan-cv.pdf and set:
-    // cv: '/assets/cv/fuzail-khan-cv.pdf'
-    // (The 2021 student CV in assets/source/ is intentionally not published.)
-    cv: null,
+    // Latest CV (Google Drive). Update the file in Drive and this link keeps working.
+    // Set to null to hide the "Download CV" buttons.
+    cv: 'https://drive.google.com/file/d/1deHri4UkiQQMjXGjTzT7joos5s_oi7A6/view',
   },
 
   seo: {
     description:
-      'Fuzail Khan — Senior UI Designer, product & visual designer. Enterprise SaaS, mobile apps, websites, branding and motion. Designing beyond the interface.',
+      'Fuzail Khan — Senior UI/UX Designer in Goa, India. Enterprise SaaS product design, UX research, design systems, branding and motion. Designing beyond the interface.',
     ogImage: '/assets/img/meta/og.jpg',
   },
 };

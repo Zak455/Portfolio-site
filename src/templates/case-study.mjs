@@ -1,4 +1,4 @@
-import { esc, projectCover, tagList, mediaFrame, arrowRight } from './components.mjs';
+import { esc, projectCover, tagList, liveLinks, mediaFrame, arrowRight } from './components.mjs';
 
 // Returns only the sections that have something to show; empty ones are listed
 // in an HTML comment so they're easy to find and fill in.
@@ -55,6 +55,7 @@ export function caseStudyPage({ site, project: p, next, sectionOrder }) {
         <div><dt>Company</dt><dd>${esc(site.company)}</dd></div>
         ${p.year ? `<div><dt>Year</dt><dd>${esc(p.year)}</dd></div>` : ''}
         <div><dt>Areas</dt><dd>${tagList(p.tags)}</dd></div>
+        ${p.links?.length ? `<div><dt>Live</dt><dd>${liveLinks(p.links)}</dd></div>` : ''}
       </dl>
     </div>
     <div class="cs-cover wrap" data-reveal="image">${projectCover(p, { priority: true, sizes: '(min-width: 960px) 80vw, 100vw' })}</div>

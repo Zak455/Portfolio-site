@@ -24,7 +24,7 @@ const html = `<!doctype html><html><head><base href="${base}/"><link rel="styles
 <div class="og">
   <span class="og-glow"></span>
   <img class="og-obj" src="/assets/img/objects/monogram-800.webp" alt="">
-  <div class="og-top"><span class="mono" style="color:var(--text-2)">Fuzail Khan — Senior UI Designer | Product &amp; Visual Designer</span></div>
+  <div class="og-top"><span class="mono" style="color:var(--text-2)">Fuzail Khan — Senior UI/UX Designer · Goa, India</span></div>
   <span class="og-rule"></span>
   <h1 class="og-title">Designing <em>beyond</em> the interface.</h1>
   <div class="og-mark"><span class="wm"><span class="wm-l wm-f">F</span><span class="wm-l">U</span><span class="wm-l">Z</span><span class="wm-l">A</span><span class="wm-l">I</span><span class="wm-l">L</span><span class="wm-l wm-dot">.</span></span></div>

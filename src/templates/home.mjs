@@ -1,5 +1,5 @@
 import {
-  esc, wordmark, availability, sectionHeading, button, objectImage, projectCover, tagList, picture, arrow, arrowRight,
+  esc, wordmark, availability, sectionHeading, button, objectImage, projectCover, tagList, liveLinks, picture, arrow, arrowRight,
 } from './components.mjs';
 
 /* ── Hero ──────────────────────────────────────────────────────────────────── */
@@ -60,6 +60,7 @@ function projectRow(p, i, all) {
       ${p.teamNote ? `<div><dt>Team</dt><dd>${esc(p.teamNote)}</dd></div>` : ''}
     </dl>
     ${tagList(p.tags)}
+    ${liveLinks(p.links)}
     <a class="project-link" href="/work/${esc(p.slug)}/"><span>Read the case study</span>${arrowRight}<span class="sr-only">: ${esc(p.name)}</span></a>
   </div>
 </article>`;
@@ -85,7 +86,7 @@ function work(projects, extra) {
 }
 
 /* ── About + Experience + Capabilities ────────────────────────────────────── */
-function aboutSection(site, about, experience, capabilities, tools) {
+function aboutSection(site, about, experience, education, capabilities, tools) {
   const exp = experience
     .map(
       (e) => `<li class="exp" data-reveal>
@@ -134,7 +135,7 @@ function aboutSection(site, about, experience, capabilities, tools) {
         ${about.body.map((b) => `<p class="about-body" data-reveal>${esc(b)}</p>`).join('')}
         <blockquote class="philosophy" data-reveal><p>“${esc(about.philosophy)}”</p></blockquote>
         <dl class="about-facts" data-reveal>
-          <div><dt>Experience</dt><dd>${esc(site.experienceYears)} years</dd></div>
+          <div><dt>Experience</dt><dd>${esc(site.experienceYears)}+ years</dd></div>
           <div><dt>Currently</dt><dd>${esc(site.title)}, ${esc(site.company)}</dd></div>
           <div><dt>Based in</dt><dd>${esc(site.location)}</dd></div>
         </dl>
@@ -149,6 +150,10 @@ function aboutSection(site, about, experience, capabilities, tools) {
   <div class="wrap sub-section" id="experience">
     ${sectionHeading({ index: '03', label: 'Experience', title: 'Where I’ve been building.', accent: 'building', level: 3 })}
     <ol class="timeline" role="list">${exp}</ol>
+    ${education.length ? `<div class="edu" data-reveal>
+      <p class="mono edu-label">Education</p>
+      <ul role="list">${education.map((e) => `<li><span class="mono">${esc(e.period)}</span><span class="edu-degree">${esc(e.degree)}</span><span class="edu-school">${esc(e.school)}</span></li>`).join('')}</ul>
+    </div>` : ''}
   </div>
 
   <div class="wrap sub-section" id="capabilities">
@@ -208,10 +213,10 @@ function contact(site) {
       <div class="path" data-reveal>
         <p class="mono path-for">For recruiters & hiring teams</p>
         <h3>Hiring a designer?</h3>
-        <p>Senior UI/UX, product and visual design roles. ${site.experienceYears} years of experience, currently at ${esc(site.company)}.</p>
+        <p>Senior UI/UX and product design roles. ${site.experienceYears}+ years of experience, currently ${esc(site.title)} at ${esc(site.company)}, based in ${esc(site.location)}.</p>
         <div class="path-actions">
           ${button({ href: c.linkedin, label: 'View LinkedIn profile', variant: 'ghost', external: true })}
-          ${c.cv ? button({ href: c.cv, label: 'Download CV', variant: 'ghost', download: true }) : ''}
+          ${c.cv ? button({ href: c.cv, label: 'View CV', variant: 'ghost', external: true }) : ''}
         </div>
       </div>
     </div>
@@ -224,11 +229,11 @@ function contact(site) {
 </section>`;
 }
 
-export function homePage({ site, projects, additionalWork, about, experience, capabilities, tools, playground }) {
+export function homePage({ site, projects, additionalWork, about, experience, education = [], capabilities, tools, playground }) {
   return [
     hero(site),
     work(projects, additionalWork),
-    aboutSection(site, about, experience, capabilities, tools),
+    aboutSection(site, about, experience, education, capabilities, tools),
     playgroundSection(playground),
     contact(site),
   ].join('\n');
