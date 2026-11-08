@@ -10,53 +10,14 @@
 //  If the list is empty, the section shows an "experiments loading" empty state.
 // ─────────────────────────────────────────────────────────────────────────────
 
-export const playground = [
-  {
-    title: 'The Witcher',
-    medium: 'Concept art · Photo-manipulation',
-    image: '/assets/img/playground/witcher',
-    widths: [720, 1400],
-    ratio: [1400, 2100],
-    shape: 'tall',
-  },
-  {
-    title: 'Cthulhu Extermination',
-    medium: 'Concept art · Photo-manipulation',
-    image: '/assets/img/playground/cthulhu',
-    widths: [800, 1600],
-    ratio: [1600, 900],
-    shape: 'wide',
-  },
-  {
-    title: 'Basilisk Snake Hunter',
-    medium: 'Concept art · Photo-manipulation',
-    image: '/assets/img/playground/basilisk',
-    widths: [720, 1400],
-    ratio: [1400, 1750],
-    shape: 'tall',
-  },
-  {
-    title: 'Thalassophobia',
-    medium: 'Concept art · Photo-manipulation',
-    image: '/assets/img/playground/thalassophobia',
-    widths: [800, 1600],
-    ratio: [1600, 900],
-    shape: 'wide',
-  },
-  {
-    title: 'Dead Rhino',
-    medium: 'Concept art · Photo-manipulation',
-    image: '/assets/img/playground/dead-rhino',
-    widths: [800, 1600],
-    ratio: [1600, 1129],
-    shape: 'wide',
-  },
-  {
-    title: 'Moonrise',
-    medium: 'Illustration',
-    image: '/assets/img/playground/moonrise',
-    widths: [720, 1400],
-    ratio: [1400, 1867],
-    shape: 'tall',
-  },
-];
+// Example entry:
+//   {
+//     title: 'Motion study 01',
+//     medium: 'Motion · Typography',
+//     image: '/assets/img/playground/motion-study-01',
+//     widths: [800, 1600],
+//     ratio: [1600, 900],
+//     shape: 'wide',
+//   },
+
+export const playground = [];

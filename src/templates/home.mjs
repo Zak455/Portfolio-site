@@ -179,8 +179,8 @@ function playgroundSection(items) {
   return `<section class="section lab" id="playground" aria-labelledby="lab-title" data-section="playground">
   <div class="wrap">
     <div class="lab-head">
-      ${sectionHeading({ index: '05', label: 'Playground', title: 'Off the clock, on the canvas.', accent: 'on the canvas', id: 'lab-title', intro: 'Personal work outside product — concept art, photo-manipulation and illustration. Curiosity is where the craft gets sharpened.' })}
-      <p class="lab-stamp mono" aria-hidden="true">LAB / ${String(items.length).padStart(2, '0')} PIECES</p>
+      ${sectionHeading({ index: '05', label: 'Playground', title: 'Off the clock, on the canvas.', accent: 'on the canvas', id: 'lab-title', intro: 'Experiments outside client and product work — motion, type, interface and 3D studies. Curiosity is where the craft gets sharpened.' })}
+      ${items.length ? `<p class="lab-stamp mono" aria-hidden="true">LAB / ${String(items.length).padStart(2, '0')} PIECES</p>` : ''}
     </div>
     ${content}
   </div>
