@@ -1,9 +1,9 @@
-// Maps the portrait to a two-tone near-black → lime image (brand duotone).
+// Maps the portrait to a two-tone near-black → electric blue image (brand duotone).
 // Run: node duotone.mjs
 import sharp from 'sharp';
 const src = new URL('../assets/source/img-2.png', import.meta.url).pathname;
 const out = (w) => new URL(`../src/assets/img/about/portrait-duo-${w}.webp`, import.meta.url).pathname;
-const dark = [10, 10, 11], light = [198, 255, 61];
+const dark = [10, 10, 11], light = [79, 140, 255];
 const { data, info } = await sharp(src).rotate().resize({ width: 1000 }).grayscale().normalise()
   .linear(1.25, -28).raw().toBuffer({ resolveWithObject: true });
 const rgb = Buffer.alloc(info.width * info.height * 3);

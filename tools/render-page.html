@@ -15,7 +15,7 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 
-const LIME = 0xc6ff3d;
+const ACCENT = 0x4f8cff;
 
 // --- A dark photographic studio used only as a reflection environment.
 // Chrome reads as "luxury" when it reflects mostly darkness with a few crisp softboxes.
@@ -40,7 +40,7 @@ function studioEnv(renderer, { accent = true } = {}) {
   strip(10, 0.6, 0xffffff, 1.2, [0, -6, 8], [-Math.PI / 3, 0, 0]);        // low fill
   strip(18, 9, 0x8a8f99, 0.55, [-2, 2, 13], [0, Math.PI, 0]);            // broad dim front fill (gives flat faces gradation)
   strip(6, 6, 0xffffff, 0.9, [-8, 6, 8], [0, Math.PI * 0.8, 0]);         // soft upper-left box
-  if (accent) strip(0.7, 9, LIME, 2.2, [9, -1, 6], [0, -Math.PI / 1.6, 0]); // restrained lime kicker
+  if (accent) strip(0.7, 9, ACCENT, 2.2, [9, -1, 6], [0, -Math.PI / 1.6, 0]); // restrained blue kicker
   const pmrem = new THREE.PMREMGenerator(renderer);
   return pmrem.fromScene(env, 0.02).texture;
 }
@@ -156,7 +156,7 @@ window.renderObject = (name, size = 1400, fov = 30, dist = 11) => {
   const obj = builders[name]();
   scene.add(obj);
   const key = new THREE.DirectionalLight(0xffffff, 1.2); key.position.set(-4, 6, 6); scene.add(key);
-  const rim = new THREE.DirectionalLight(LIME, 0.6); rim.position.set(6, -2, -4); scene.add(rim);
+  const rim = new THREE.DirectionalLight(ACCENT, 0.6); rim.position.set(6, -2, -4); scene.add(rim);
 
   // Frame the object
   const box = new THREE.Box3().setFromObject(obj);

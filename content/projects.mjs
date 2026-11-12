@@ -44,7 +44,7 @@ export const projects = [
     ],
     tags: ['Access Control', 'Time & Attendance', 'Locker Management', 'Visitor Management'],
     object: 'layers',
-    theme: { accent: '#c6ff3d', layout: 'wide' },
+    theme: { accent: '#4f8cff', layout: 'wide' },
     sections: {
       introduction: {
         body: [
@@ -148,7 +148,7 @@ export const projects = [
     ],
     tags: ['Digital Credentials', 'Mobile Credentialing', 'Enterprise'],
     object: 'rings',
-    theme: { accent: '#c6ff3d', layout: 'offset' },
+    theme: { accent: '#4f8cff', layout: 'offset' },
     sections: {
       introduction: {
         body: ["Scypher is the rebrand and redesign of Spintly's credential management platform. I aligned its UI/UX, product positioning and marketing visuals into one identity, to improve usability and how the platform is positioned."],
@@ -227,7 +227,7 @@ export const projects = [
     ],
     tags: ['Digital Credentials', 'Mobile Credentialing'],
     object: 'cards',
-    theme: { accent: '#c6ff3d', layout: 'wide' },
+    theme: { accent: '#4f8cff', layout: 'wide' },
     // Team project: the integration itself was engineered by development & R&D.
     teamNote: 'A team effort — the integration was engineered by development and R&D; my part was the product and credential experience.',
     sections: {

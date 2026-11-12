@@ -41,7 +41,7 @@ export function caseStudyPage({ site, project: p, next, sectionOrder }) {
   const toc = shown
     .map((s, i) => `<li><a href="#s-${s.key}" data-toc="s-${s.key}"><span class="mono">${String(i + 1).padStart(2, '0')}</span>${esc(s.title)}</a></li>`)
     .join('');
-  return `<article class="cs" style="--cover-accent:${esc(p.theme?.accent || '#c6ff3d')}">
+  return `<article class="cs" style="--cover-accent:${esc(p.theme?.accent || '#4f8cff')}">
   <!-- Sections waiting for content (edit content/projects.mjs): ${pending.map((s) => s.title).join(', ') || 'none'} -->
   <header class="cs-hero">
     <div class="wrap">

@@ -1,6 +1,6 @@
 /* ==========================================================================
    FUZAIL. — Design system v2 · "Frames on a canvas"
-   Lime on near-black. Every section is an artboard with a frame caption,
+   Electric blue on near-black. Every section is an artboard with a frame caption,
    bordered by pixel bands drawn from design-tool glyphs on a 4px grid.
    Breakpoints: 640 · 960 · 1280 (px)
    ========================================================================== */
@@ -19,7 +19,7 @@
   --text-3: #85858c;
   --line: rgba(255, 255, 255, 0.1);
   --line-2: rgba(255, 255, 255, 0.2);
-  --accent: #c6ff3d;
+  --accent: #4f8cff;
   --accent-ink: #0a0a0b;
 
   --font-display: 'Archivo', 'Inter', system-ui, sans-serif;
@@ -87,7 +87,7 @@ em { font-style: normal; color: var(--accent); }
 .grid-overlay { position: fixed; inset: 0; z-index: 120; pointer-events: none; opacity: 0; transition: opacity var(--dur-2); }
 .show-grid .grid-overlay { opacity: 1; }
 .grid-cols { height: 100%; display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--col-gap); }
-.grid-cols span { background: rgba(198, 255, 61, 0.05); border-inline: 1px solid rgba(198, 255, 61, 0.16); }
+.grid-cols span { background: rgba(79, 140, 255, 0.05); border-inline: 1px solid rgba(79, 140, 255, 0.16); }
 @media (max-width: 639px) { .grid-cols { grid-template-columns: repeat(4, 1fr); } .grid-cols span:nth-child(n + 5) { display: none; } }
 
 /* Status dot */
@@ -232,7 +232,7 @@ body.menu-open { overflow: hidden; }
 .inspector dd { font-size: var(--fs-sm); }
 .inspector-swatches { display: flex; align-items: center; gap: 8px; padding: 12px 14px; color: var(--text-2); }
 .sw { width: 14px; height: 14px; border: 1px solid var(--line-2); }
-.sw--lime { background: var(--accent); }
+.sw--accent { background: var(--accent); }
 .sw--ink { background: var(--ink); margin-left: 12px; }
 .about-copy { grid-column: 6 / -1; display: grid; gap: 32px; align-content: start; }
 .reading { font-family: var(--font-display); font-weight: 500; font-stretch: 100%; font-size: clamp(1.6rem, 0.9rem + 2.3vw, 3rem); line-height: 1.16; letter-spacing: -0.02em; }
@@ -282,7 +282,7 @@ body.menu-open { overflow: hidden; }
 .work-num { position: absolute; left: 18px; bottom: -0.16em; font-family: var(--font-display); font-weight: 800; font-stretch: 125%; font-size: clamp(6rem, 16vw, 15rem); line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.16); }
 .work-obj { position: absolute; inset: 10% 22%; display: grid; place-items: center; }
 .work-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.6)); transition: transform 1100ms var(--ease-out); }
-.work-sel { position: absolute; inset: 12% 24%; border: 1px dashed rgba(198, 255, 61, 0.45); opacity: 0; transition: opacity var(--dur-2), inset var(--dur-3) var(--ease-out); }
+.work-sel { position: absolute; inset: 12% 24%; border: 1px dashed rgba(79, 140, 255, 0.45); opacity: 0; transition: opacity var(--dur-2), inset var(--dur-3) var(--ease-out); }
 .work-sel i { position: absolute; width: 7px; height: 7px; background: var(--bg); border: 1px solid var(--accent); }
 .work-sel i:nth-child(1) { left: -4px; top: -4px; } .work-sel i:nth-child(2) { right: -4px; top: -4px; }
 .work-sel i:nth-child(3) { left: -4px; bottom: -4px; } .work-sel i:nth-child(4) { right: -4px; bottom: -4px; }
@@ -379,7 +379,7 @@ details[open] .xp-toggle::after { transform: translate(-50%, -50%) rotate(0deg);
 .lab-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--col-gap); }
 @media (max-width: 959px) { .lab-empty-row { grid-template-columns: 1fr; } .lab-grid { grid-template-columns: 1fr; } }
 
-/* ── Footer / contact (lime field) ─────────────────────────────────────── */
+/* ── Footer / contact (blue field) ─────────────────────────────────────── */
 .foot { background: var(--accent); color: var(--accent-ink); padding-top: 0; overflow: hidden; }
 .foot .band { color: var(--accent-ink); }
 .foot .caption { color: rgba(10, 10, 11, 0.7); padding-block: 12px; }
@@ -421,7 +421,7 @@ details[open] .xp-toggle::after { transform: translate(-50%, -50%) rotate(0deg);
 .cs-facts dd { font-size: var(--fs-sm); }
 .cs-cover { margin-top: clamp(32px, 5vw, 64px); }
 .cover { --mx: 50%; --my: 45%; position: relative; aspect-ratio: 16 / 8; overflow: hidden; border: 1px solid var(--line);
-  background: radial-gradient(45% 55% at var(--mx) var(--my), color-mix(in srgb, var(--cover-accent, #c6ff3d) 12%, transparent), transparent 70%),
+  background: radial-gradient(45% 55% at var(--mx) var(--my), color-mix(in srgb, var(--cover-accent, #4f8cff) 12%, transparent), transparent 70%),
               linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 32px 32px, linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 32px 32px, var(--bg-2); }
 .cover-grid, .cover-light { display: none; }
 .cover-num { position: absolute; left: 18px; bottom: -0.16em; font-family: var(--font-display); font-weight: 800; font-stretch: 125%; font-size: clamp(6rem, 18vw, 18rem); line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.14); }

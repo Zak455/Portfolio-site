@@ -89,7 +89,7 @@ export function objectImage(name, { sizes = '(min-width: 960px) 40vw, 80vw', cla
 /* ── Project cover (shared by home showcase, case study hero & next-project) ─ */
 
 export function projectCover(p, { priority = false, sizes } = {}) {
-  return `<div class="cover cover--${esc(p.object)}" style="--cover-accent:${esc(p.theme?.accent || '#c6ff3d')}">
+  return `<div class="cover cover--${esc(p.object)}" style="--cover-accent:${esc(p.theme?.accent || '#4f8cff')}">
     <span class="cover-num" aria-hidden="true">${esc(p.number)}</span>
     <span class="cover-grid" aria-hidden="true"></span>
     <span class="cover-light" aria-hidden="true"></span>

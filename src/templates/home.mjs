@@ -91,7 +91,7 @@ function aboutSection(site, about) {
     <aside class="inspector" aria-label="Profile details" data-reveal>
       <div class="inspector-head mono"><span>${pixelGlyph('node', { cell: 2 })} Inspector</span><span>Frame 04</span></div>
       <dl>${rows.map(([k, v]) => `<div><dt class="mono">${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
-      <div class="inspector-swatches mono"><span class="sw sw--lime"></span>C6FF3D <span class="sw sw--ink"></span>0A0A0B</div>
+      <div class="inspector-swatches mono"><span class="sw sw--accent"></span>4F8CFF <span class="sw sw--ink"></span>0A0A0B</div>
     </aside>
     <div class="about-copy">
       <p class="caption mono">Frame 04 · “About”</p>
@@ -131,7 +131,7 @@ function workCard(p) {
   return `<article class="card" aria-labelledby="w-${esc(p.slug)}" data-card>
   <a class="card-visual" href="/work/${esc(p.slug)}/" tabindex="-1" aria-hidden="true">
     ${pixelBand({ seq: ['f', 'cross', 'anchor', 'cross'], cell: 3, className: 'band--card' })}
-    <span class="work-canvas" style="--accent:${esc(p.theme?.accent || '#c6ff3d')}">
+    <span class="work-canvas" style="--accent:${esc(p.theme?.accent || '#4f8cff')}">
       <span class="work-num">${esc(p.number)}</span>
       <span class="work-obj">${objectImage(p.object, { sizes: '(min-width: 960px) 34vw, 80vw', className: 'work-img' })}</span>
       <span class="work-sel"><i></i><i></i><i></i><i></i></span>
