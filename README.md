@@ -59,7 +59,7 @@ cd tools && npm install
 npm run render     # re-render the chrome 3D objects (Three.js in headless Chromium)
 npm run images     # re-optimise source artwork into responsive WebP
 node render-icons.mjs
-node duotone.mjs   # blue duotone portrait from assets/source/img-2.png
+node duotone.mjs   # blue duotone portrait from assets/source/portrait.webp
 node render-og.mjs # needs `npm run dev` running in the repo root
 ```
 
