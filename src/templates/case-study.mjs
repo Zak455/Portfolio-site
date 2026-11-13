@@ -57,7 +57,7 @@ export function caseStudyPage({ site, project: p, next, sectionOrder }) {
         ${p.links?.length ? `<div><dt>Live</dt><dd>${liveLinks(p.links)}</dd></div>` : ''}
       </dl>
     </div>
-    <div class="wrap cs-cover" data-fade>${productShot(p, { priority: true, caption: true, sizes: '(min-width: 1200px) 1140px, 94vw' })}</div>
+    <div class="wrap cs-cover" data-fade style="view-transition-name:shot-${esc(p.slug)}">${productShot(p, { priority: true, caption: true, sizes: '(min-width: 1200px) 1140px, 94vw' })}</div>
   </header>
 
   <div class="cs-layout wrap">

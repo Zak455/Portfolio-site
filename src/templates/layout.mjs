@@ -17,6 +17,7 @@ export function nav(site, { home = true } = {}) {
     .join('');
   return `<a class="skip" href="#main">Skip to content</a>
 <header class="nav" data-nav-root>
+  <span class="nav-progress" aria-hidden="true"><span data-progress></span></span>
   <div class="wrap nav-inner">
     <a class="brand" href="${home ? '#top' : '/'}" aria-label="${esc(site.name)} — home">
       <span class="brand-mark" aria-hidden="true">F</span>
@@ -24,7 +25,7 @@ export function nav(site, { home = true } = {}) {
     </a>
     <nav class="nav-menu" id="menu" aria-label="Primary" data-menu>
       <ul class="nav-list" role="list">${links}</ul>
-      <a class="btn btn-dark btn-sm nav-cta" href="#contact">Get in touch</a>
+      <a class="btn btn-dark btn-sm nav-cta" href="#contact" data-magnetic>Get in touch</a>
     </nav>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu" data-menu-btn>
       <span class="sr-only" data-menu-label>Open menu</span><span class="nav-toggle-bars" aria-hidden="true"><i></i><i></i></span>
@@ -45,7 +46,7 @@ export function footer(site) {
       <h2 class="foot-title" id="contact-title">Let’s make something <span class="accent">real.</span></h2>
       <p class="foot-lead">Have a product, a problem or a role in mind? Good work starts with a conversation.</p>
       <div class="btn-row">
-        <a class="btn btn-primary" href="${mailOr(site, c.linkedin)}"${ext}>${c.email ? 'Send an email' : 'Message on LinkedIn'} ${arrow}</a>
+        <a class="btn btn-primary btn-lg" href="${mailOr(site, c.linkedin)}"${ext} data-magnetic>${c.email ? 'Send an email' : 'Message on LinkedIn'} ${arrow}</a>
         ${c.email ? `<button class="btn btn-ghost-dark" type="button" data-copy="${esc(c.email)}"><span data-copy-label>Copy email</span></button>` : ''}
       </div>
     </div>
@@ -67,7 +68,10 @@ export function footer(site) {
     </div>
     <div class="foot-meta">
       <span>© ${year} ${esc(site.name)} · ${esc(site.title)}</span>
-      <a href="#top">Back to top ↑</a>
+      <span class="foot-meta-r">
+        <button class="motion-toggle" type="button" aria-pressed="true" data-motion-toggle>Motion <span data-motion-state>On</span></button>
+        <a href="#top">Back to top ↑</a>
+      </span>
     </div>
   </div>
 </footer>`;
@@ -110,7 +114,8 @@ export function layout({ site, title, description, path = '/', body, home = true
   // Content is visible by default; fades only apply once JS runs and motion is allowed.
   (function (d) {
     var r = d.documentElement; r.classList.add('js');
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) r.classList.add('motion');
+    var off = false; try { off = localStorage.getItem('fz-motion') === 'off'; } catch (e) {}
+    if (!off && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) r.classList.add('motion');
     setTimeout(function () { if (!window.__ready) r.classList.add('motion-failed'); }, 3000);
   })(document);
 </script>
@@ -131,6 +136,7 @@ ${nav(site, { home })}
 ${body}
 </main>
 ${footer(site)}
+<div class="cursor" aria-hidden="true" data-cursor-el><span data-cursor-label>View</span></div>
 <script src="/assets/js/main.js${v}" defer></script>
 </body>
 </html>

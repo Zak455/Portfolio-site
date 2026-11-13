@@ -2,7 +2,7 @@
 
 Senior UI/UX Designer · Goa, India. Live at **https://fuzailgfx.vercel.app**.
 
-**Design system:** light and product-first: white canvas, soft grey panels, one blue (`#2563eb` on white, `#4f8cff` on black), black for the Services and Contact sections, Inter throughout. Project cards show real screenshots of the live products (`src/assets/img/work/`, captured Nov 2026); a project without one shows a labelled “Visuals coming soon” panel. Motion is a gentle fade-up with no dependencies. Tokens are at the top of `src/assets/css/main.css`.
+**Design system:** light and product-first: white canvas, soft grey panels, one blue (`#2563eb` on white, `#4f8cff` on black), black for the Services and Contact sections, Inter throughout. Project cards show real screenshots of the live products (`src/assets/img/work/`, captured Nov 2026); a project without one shows a labelled “Visuals coming soon” panel. Motion (no dependencies): masked hero headline, pointer spotlight, product-area marquee, stacking project cards, scroll-lit About statement, bento grid with live Goa time, cursor label on project images, magnetic buttons, cross-page transitions. Everything respects reduced-motion, and visitors can switch motion off from the footer. Tokens are at the top of `src/assets/css/main.css`.
 
 A static site: content lives in plain data files, a zero-dependency Node script renders it to HTML, and Vercel deploys it on every push to `main`.
 

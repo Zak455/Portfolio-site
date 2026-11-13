@@ -13,14 +13,15 @@ const mail = (site) => (site.contact.email ? `mailto:${esc(site.contact.email)}`
 
 /* ── Hero ─────────────────────────────────────────────────────────────────── */
 function hero(site, about) {
-  return `<section class="hero" aria-labelledby="hero-title">
+  return `<section class="hero" aria-labelledby="hero-title" data-spotlight>
+  <div class="hero-dots" aria-hidden="true"></div>
   <div class="wrap hero-grid">
     <div class="hero-copy" data-fade>
       ${site.availability?.enabled ? `<p class="pill"><span class="pill-dot" aria-hidden="true"></span>${esc(site.availability.label)}</p>` : ''}
-      <h1 class="hero-title" id="hero-title">Designing <span class="accent">beyond</span> the interface.</h1>
+      <h1 class="hero-title" id="hero-title"><span class="line"><span>Designing</span></span> <span class="line"><span><span class="accent">beyond</span> the</span></span> <span class="line"><span>interface.</span></span></h1>
       <p class="hero-lead">I’m ${esc(site.name)}, ${esc(site.title)} at Spintly. I turn research into clear, high-impact product experiences for enterprise SaaS — across web and mobile.</p>
       <div class="btn-row">
-        <a class="btn btn-primary" href="#work">View my work ${arrowRight}</a>
+        <a class="btn btn-primary" href="#work" data-magnetic>View my work ${arrowRight}</a>
         <a class="btn btn-secondary" href="${mail(site)}">Get in touch</a>
       </div>
       <dl class="hero-facts">
@@ -32,27 +33,30 @@ function hero(site, about) {
     <figure class="hero-photo" data-fade>
       ${picture({ base: '/assets/img/about/portrait-photo', widths: [560, 1000], sizes: '(min-width: 960px) 34vw, 88vw', alt: about.portrait.alt, ratio: [1000, 1501], className: 'hero-img', priority: true })}
       <figcaption class="hero-badge"><strong>${esc(site.name)}</strong><span>${esc(site.title)} · Spintly</span></figcaption>
+      <p class="hero-chip hero-chip--time" aria-label="Local time in Goa"><span class="pill-dot" aria-hidden="true"></span>Goa · <time data-clock>IST</time></p>
+      <p class="hero-chip hero-chip--tag" aria-hidden="true">UX research → UI → motion</p>
     </figure>
   </div>
 </section>`;
 }
 
-/* ── Product areas strip ──────────────────────────────────────────────────── */
+/* ── Product areas marquee ──────────────────────────────────────────────── */
 function areas(extra) {
+  const items = extra.productAreas.map((a) => `<li>${esc(a)}</li>`).join('<li class="sep" aria-hidden="true">✦</li>');
   return `<section class="areas" aria-label="Product areas I design for">
-  <div class="wrap areas-inner" data-fade>
-    <p class="areas-label">Product areas I design for</p>
-    <ul class="areas-list" role="list">${extra.productAreas.map((a) => `<li>${esc(a)}</li>`).join('')}</ul>
+  <p class="sr-only">Product areas I design for: ${esc(extra.productAreas.join(', '))}</p>
+  <div class="marquee" aria-hidden="true">
+    <ul class="marquee-track" role="list">${items}<li class="sep">✦</li>${items}<li class="sep">✦</li></ul>
   </div>
 </section>`;
 }
 
 /* ── Work ─────────────────────────────────────────────────────────────────── */
-function workCard(p, i) {
-  return `<article class="work-card${i === 0 ? ' work-card--lead' : ''}" aria-labelledby="w-${esc(p.slug)}" data-fade>
-  <a class="work-visual" href="/work/${esc(p.slug)}/" tabindex="-1" aria-hidden="true">${productShot(p, { sizes: i === 0 ? '(min-width: 960px) 62vw, 92vw' : '(min-width: 960px) 46vw, 92vw' })}</a>
+function workCard(p, i, all) {
+  return `<article class="work-card" style="--i:${i}" aria-labelledby="w-${esc(p.slug)}" data-stack>
+  <a class="work-visual" href="/work/${esc(p.slug)}/" tabindex="-1" aria-hidden="true" data-cursor="View case" style="view-transition-name:shot-${esc(p.slug)}">${productShot(p, { sizes: '(min-width: 960px) 58vw, 92vw' })}</a>
   <div class="work-text">
-    <p class="work-meta"><span>${esc(p.number)}</span>${esc(p.category)}</p>
+    <p class="work-meta"><span>${esc(p.number)} / ${String(all.length).padStart(2, '0')}</span>${esc(p.category)}</p>
     <h3 class="work-title" id="w-${esc(p.slug)}"><a href="/work/${esc(p.slug)}/">${esc(p.name)}</a></h3>
     <p class="work-summary">${esc(p.summary)}</p>
     <p class="work-role"><strong>My role:</strong> ${esc(p.role)}</p>
@@ -66,7 +70,7 @@ function work(projects, extra) {
   return `<section class="section" id="work" aria-labelledby="work-title" data-section="work">
   <div class="wrap">
     ${head({ eyebrow: 'Selected work', title: 'Products I’ve helped shape.', intro: 'Enterprise access-control products at Spintly — from brand and website to web portals and mobile apps. Screenshots are of the live products.', id: 'work-title' })}
-    <div class="work-grid">${projects.map(workCard).join('')}</div>
+    <div class="work-stack">${projects.map(workCard).join('')}</div>
     <div class="archive" data-fade>
       <p class="eyebrow">Also in the archive</p>
       <p>${esc(extra.body)}</p>
@@ -75,21 +79,22 @@ function work(projects, extra) {
 </section>`;
 }
 
-/* ── About ────────────────────────────────────────────────────────────────── */
-function aboutSection(about) {
+/* ── About: scroll-lit statement + bento grid ─────────────────────────────── */
+function aboutSection(site, about) {
+  const words = (t) => esc(t).split(/\s+/).map((w) => `<span class="w">${w}</span>`).join(' ');
   return `<section class="section section--soft" id="about" aria-labelledby="about-title" data-section="about">
   <div class="wrap">
-    <div class="about-grid">
-      ${head({ eyebrow: 'About', title: 'Research first. <span class="accent">Then pixels.</span>', id: 'about-title' })}
-      <div class="about-copy" data-fade>
-        <p class="about-lead">${esc(about.lead)}</p>
-        ${about.body.map((b) => `<p>${esc(b)}</p>`).join('')}
-        <blockquote class="quote">“${esc(about.philosophy)}”</blockquote>
-      </div>
+    <p class="eyebrow" data-fade>About</p>
+    <h2 class="sr-only" id="about-title">About</h2>
+    <p class="statement" data-scrub>${words(about.lead + ' ' + about.body[0])}</p>
+    <div class="bento">
+      <div class="tile tile--wide" data-fade><p class="tile-label">How I work</p><p class="tile-text">${esc(about.body[1])}</p></div>
+      <div class="tile tile--blue" data-fade><p class="tile-label">Designing since</p><p class="tile-big" data-count="${esc(site.designingSince)}">${esc(site.designingSince)}</p></div>
+      <div class="tile" data-fade><p class="tile-label">Product design</p><p class="tile-big"><span data-count="${esc(site.experienceYears)}">${esc(site.experienceYears)}</span>+ yrs</p></div>
+      <div class="tile tile--dark" data-fade><p class="tile-label">Right now in Goa</p><p class="tile-big"><time data-clock>IST</time></p><p class="tile-small">${esc(site.place.coords)} · ${esc(site.place.timezone)}</p></div>
+      <blockquote class="tile tile--quote" data-fade><p>“${esc(about.philosophy)}”</p></blockquote>
+      ${about.principles.map((p, i) => `<div class="tile" data-fade><span class="card-num">0${i + 1}</span><h3 class="card-title">${esc(p.title)}</h3><p class="tile-text">${esc(p.text)}</p></div>`).join('')}
     </div>
-    <ul class="card-grid card-grid--3" role="list">${about.principles
-      .map((p, i) => `<li class="card" data-fade><span class="card-num">0${i + 1}</span><h3 class="card-title">${esc(p.title)}</h3><p>${esc(p.text)}</p></li>`)
-      .join('')}</ul>
   </div>
 </section>`;
 }
@@ -117,7 +122,7 @@ function servicesSection(services) {
   <div class="wrap">
     ${head({ eyebrow: 'Services', title: 'How I can help.', intro: 'Three ways I work with product teams and founders — together or on their own.', id: 'services-title', dark: true })}
     <ol class="card-grid card-grid--3" role="list">${services
-      .map((s) => `<li class="card card--dark" data-fade>
+      .map((s) => `<li class="card card--dark" data-fade data-glow>
         <span class="card-num">${esc(s.n)}</span>
         <h3 class="card-title">${esc(s.title)}</h3>
         <p>${esc(s.text)}</p>
@@ -214,7 +219,7 @@ export function homePage({ site, projects, additionalWork, about, experience, ed
     hero(site, about),
     areas(additionalWork),
     work(projects, additionalWork),
-    aboutSection(about),
+    aboutSection(site, about),
     storySection(story),
     servicesSection(services),
     toolkit(capabilities, tools),
