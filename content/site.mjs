@@ -9,7 +9,7 @@ export const site = {
   name: 'Fuzail Khan',
   brand: 'FUZAIL.',
   title: 'Senior UI/UX Designer',
-  designation: 'Senior UI/UX Designer — UX Strategy · UI, Motion & Visual Design',
+  designation: 'Senior UI/UX Designer · UX Strategy, UI, Motion & Visual Design',
   company: 'Spintly India Private Limited',
   experienceYears: 3,
   location: 'Goa, India',
@@ -29,7 +29,7 @@ export const site = {
     // Word(s) from the headline rendered in the editorial italic serif.
     accentWord: 'beyond',
     statement: 'I turn complex ideas into meaningful digital experiences through research, design and technology.',
-    intro: "I'm Fuzail Khan — a Senior UI/UX Designer working across product experiences, visual identities and digital products.",
+    intro: "I'm Fuzail Khan, a Senior UI/UX Designer working across product experiences, visual identities and digital products.",
   },
 
   contact: {
@@ -44,7 +44,7 @@ export const site = {
 
   seo: {
     description:
-      'Fuzail Khan — Senior UI/UX Designer in Goa, India. UX strategy, competitor analysis, UI, motion and visual design for enterprise SaaS. Turning research into high-impact interfaces.',
+      'Fuzail Khan is a Senior UI/UX Designer in Goa, India. UX strategy, competitor analysis, UI, motion and visual design for enterprise SaaS. Turning research into high-impact interfaces.',
     ogImage: '/assets/img/meta/og.jpg',
   },
 };

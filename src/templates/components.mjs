@@ -21,7 +21,7 @@ export function wordmark({ className = '', animate = false } = {}) {
 }
 
 export const brandLink = (href = '/') =>
-  `<a class="brand" href="${href}" aria-label="FUZAIL. — home">${wordmark()}</a>`;
+  `<a class="brand" href="${href}" aria-label="FUZAIL. home">${wordmark()}</a>`;
 
 export function availability(site, extra = '') {
   if (!site.availability?.enabled) return '';

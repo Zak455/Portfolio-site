@@ -1,4 +1,5 @@
 import { esc, productShot, tagList, liveLinks, mediaFrame, arrowRight } from './components.mjs';
+import { caseArt } from './case-art.mjs';
 
 // Returns only the sections that have something to show; empty ones are listed
 // in an HTML comment so they're easy to find and fill in.
@@ -18,7 +19,7 @@ function sectionBlock(s, i, p) {
   const id = `s-${s.key}`;
   const body = (s.body || []).map((b) => `<p>${esc(b)}</p>`).join('');
   const list = s.list?.length
-    ? `<ul class="cs-list" role="list">${s.list.map((l) => `<li>${esc(l)}</li>`).join('')}</ul>`
+    ? `<ul class="cs-list" role="list">${s.list.map((l, j) => `<li style="--j:${j}"><svg class="tick" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.4l2.7 2.7L14.2 7.6" pathLength="1"/></svg>${esc(l)}</li>`).join('')}</ul>`
     : '';
   const isRole = s.key === 'role';
   const media = s.media?.length ? `<div class="cs-media">${s.media.map((m) => mediaFrame(m, p.slug)).join('')}</div>` : '';
@@ -46,9 +47,14 @@ export function caseStudyPage({ site, project: p, next, sectionOrder }) {
   <header class="cs-hero">
     <div class="wrap">
       <nav class="crumbs" aria-label="Breadcrumb"><a href="/#work">Work</a><span aria-hidden="true">/</span><span aria-current="page">${esc(p.name)}</span></nav>
-      <p class="eyebrow" data-fade>${esc(p.number)} · ${esc(p.category)}</p>
-      <h1 class="cs-name" data-fade>${esc(p.name)}</h1>
-      <p class="cs-summary" data-fade>${esc(p.summary)}</p>
+      <div class="cs-head-grid">
+        <div class="cs-head-copy">
+          <p class="eyebrow" data-fade>${esc(p.number)} · ${esc(p.category)}</p>
+          <h1 class="cs-name" data-fade>${esc(p.name)}</h1>
+          <p class="cs-summary" data-fade>${esc(p.summary)}</p>
+        </div>
+        <div data-fade>${caseArt(p)}</div>
+      </div>
       <dl class="cs-facts" data-fade>
         <div><dt>My role</dt><dd>${esc(p.role)}</dd></div>
         <div><dt>Company</dt><dd>${esc(site.company)}</dd></div>
@@ -72,7 +78,7 @@ export function caseStudyPage({ site, project: p, next, sectionOrder }) {
       ${shown.map((s, i) => sectionBlock(s, i, p)).join('')}
       <aside class="cs-wip" data-fade>
         <p class="eyebrow">Case study in progress</p>
-        <p>The full process story — research, explorations, wireframes and outcomes — is being written up. Want the walkthrough now? I’m happy to take you through it on a call.</p>
+        <p>The full process story, covering research, explorations, wireframes and outcomes, is being written up. Want the walkthrough now? I’m happy to take you through it on a call.</p>
         <a class="text-link" href="#contact">Get in touch ${arrowRight}</a>
       </aside>
     </div>
@@ -96,7 +102,7 @@ export function notFoundPage() {
   return `<section class="nf wrap">
     <p class="eyebrow">404</p>
     <h1 class="nf-title">Page not found.</h1>
-    <p>This page doesn’t exist — but the work does.</p>
+    <p>This page doesn’t exist, but the work does.</p>
     <a class="btn btn-primary" href="/">Back to home ${arrowRight}</a>
   </section>`;
 }

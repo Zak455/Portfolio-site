@@ -20,7 +20,7 @@ function hero(site, about) {
     <div class="hero-copy" data-fade>
       ${site.availability?.enabled ? `<p class="pill"><span class="pill-dot" aria-hidden="true"></span>${esc(site.availability.label)}</p>` : ''}
       <h1 class="hero-title" id="hero-title"><span class="line"><span>Designing</span></span> <span class="line"><span><span class="accent">beyond</span> the</span></span> <span class="line"><span>interface.</span></span></h1>
-      <p class="hero-lead">I’m ${esc(site.name)}, ${esc(site.title)} at Spintly. I turn research into clear, high-impact product experiences for enterprise SaaS — across web and mobile.</p>
+      <p class="hero-lead">I’m ${esc(site.name)}, ${esc(site.title)} at Spintly. I turn research into clear, high-impact product experiences for enterprise SaaS, across web and mobile.</p>
       <div class="btn-row">
         <a class="btn btn-primary" href="#work" data-magnetic>View my work ${arrowRight}</a>
         <a class="btn btn-secondary" href="${mail(site)}">Get in touch</a>
@@ -70,7 +70,7 @@ function workCard(p, i, all) {
 function work(projects, extra) {
   return `<section class="section" id="work" aria-labelledby="work-title" data-section="work">
   <div class="wrap">
-    ${head({ eyebrow: 'Selected work', title: 'Products I’ve helped shape.', intro: 'Enterprise access-control products at Spintly — from brand and website to web portals and mobile apps. Screenshots are of the live products.', id: 'work-title' })}
+    ${head({ eyebrow: 'Selected work', title: 'Products I’ve helped shape.', intro: 'Enterprise access-control products at Spintly, from brand and website to web portals and mobile apps. Screenshots are of the live products.', id: 'work-title' })}
     <div class="work-stack">${projects.map(workCard).join('')}</div>
     <div class="archive" data-fade>
       <p class="eyebrow">Also in the archive</p>
@@ -104,7 +104,7 @@ function aboutSection(site, about) {
 function processSection() {
   return `<section class="section" id="process" aria-labelledby="process-title">
   <div class="wrap">
-    ${head({ eyebrow: 'Process', title: 'From research to release.', intro: 'How a product idea moves through my hands — three stages, one continuous thread.', id: 'process-title' })}
+    ${head({ eyebrow: 'Process', title: 'From research to release.', intro: 'How a product idea moves through my hands: three stages, one continuous thread.', id: 'process-title' })}
     <div data-fade>${processGraphic()}</div>
   </div>
 </section>`;
@@ -131,7 +131,7 @@ function storySection(story) {
 function servicesSection(services) {
   return `<section class="section section--dark" id="services" aria-labelledby="services-title" data-section="services">
   <div class="wrap">
-    ${head({ eyebrow: 'Services', title: 'How I can help.', intro: 'Three ways I work with product teams and founders — together or on their own.', id: 'services-title', dark: true })}
+    ${head({ eyebrow: 'Services', title: 'How I can help.', intro: 'Three ways I work with product teams and founders, together or on their own.', id: 'services-title', dark: true })}
     <ol class="card-grid card-grid--3" role="list">${services
       .map((s, i) => `<li class="card card--dark" data-fade data-glow>
         <div class="card-top"><span class="card-num">${esc(s.n)}</span><span class="mg" data-mg>${serviceIcon(i)}</span></div>
@@ -206,7 +206,7 @@ function credentials(education, publications, certifications) {
     ...education.map((e) => ({ type: 'education', label: 'Degree', title: e.degree, by: `${e.school} · ${e.period}` })),
     ...publications.map((t) => ({ type: 'publication', label: 'Publication', title: t, by: '' })),
     ...certifications.map((t) => {
-      const [title, by = ''] = t.split(' — ');
+      const [title, by = ''] = t.split(' · ');
       return { type: 'certification', label: 'Certificate', title, by };
     }),
   ];

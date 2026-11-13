@@ -19,7 +19,7 @@ export function nav(site, { home = true } = {}) {
 <header class="nav" data-nav-root>
   <span class="nav-progress" aria-hidden="true"><span data-progress></span></span>
   <div class="wrap nav-inner">
-    <a class="brand" href="${home ? '#top' : '/'}" aria-label="${esc(site.name)} — home">
+    <a class="brand" href="${home ? '#top' : '/'}" aria-label="${esc(site.name)}, home">
       <span class="brand-mark" aria-hidden="true">F</span>
       <span class="brand-name">${esc(site.name)}</span>
     </a>
@@ -80,7 +80,7 @@ export function footer(site) {
 export function layout({ site, title, description, path = '/', body, home = true, assetVersion = '', ogImage, bodyClass = '' }) {
   const url = site.url + path;
   const og = site.url + (ogImage || site.seo.ogImage);
-  const fullTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.title}`;
+  const fullTitle = title ? `${title} · ${site.name}` : `${site.name} · ${site.title}`;
   const desc = description || site.seo.description;
   const v = assetVersion ? `?v=${assetVersion}` : '';
   return `<!doctype html>

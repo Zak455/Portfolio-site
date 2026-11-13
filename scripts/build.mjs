@@ -41,7 +41,7 @@ for (const [i, project] of projects.entries()) {
   const next = projects[(i + 1) % projects.length];
   await write(`/work/${project.slug}/`, layout({
     site, path: `/work/${project.slug}/`, home: false, assetVersion, bodyClass: 'page-case',
-    title: `${project.name} — ${project.category}`,
+    title: `${project.name} · ${project.category}`,
     description: `${project.summary} Case study by ${site.name}.`,
     body: caseStudyPage({ site, project, next, sectionOrder }),
   }));

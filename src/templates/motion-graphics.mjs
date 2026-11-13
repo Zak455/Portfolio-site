@@ -66,7 +66,7 @@ function interfaceSvg() {
 
 export function processGraphic() {
   const steps = [
-    ['01', 'Research', 'Interviews, competitors and data — clustered into the themes that matter.', researchSvg()],
+    ['01', 'Research', 'Interviews, competitors and data, clustered into the themes that matter.', researchSvg()],
     ['02', 'Structure', 'Flows and wireframes that settle the hard questions before any polish.', wireframeSvg()],
     ['03', 'Interface & motion', 'The final UI, with interactions that explain themselves.', interfaceSvg()],
   ];

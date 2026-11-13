@@ -25,13 +25,13 @@ export const projects = [
   {
     slug: 'optispaces',
     // Screenshot of the live page, captured Nov 2026 (tools: see README).
-    shot: { base: '/assets/img/work/optispaces', alt: 'OptiSpaces.ai dashboard sign-in page', caption: 'Live product — dashboard.optispaces.ai sign-in, captured Nov 2026' },
+    shot: { base: '/assets/img/work/optispaces', alt: 'OptiSpaces.ai dashboard sign-in page', caption: 'Live product: dashboard.optispaces.ai sign-in, captured Nov 2026' },
     number: '01',
     name: 'OptiSpaces.ai',
     category: 'SaaS Product Design / Rebranding',
     year: null, // e.g. '2024'
     summary:
-      "Contributing to the ideation, branding, UX architecture and interface design of OptiSpaces.ai — Spintly's software suite under one product identity, across web and mobile.",
+      "Contributing to the ideation, branding, UX architecture and interface design of OptiSpaces.ai, which brings Spintly's software suite under one product identity, across web and mobile.",
     role: 'Ideation, branding, UX architecture & interface design',
     links: [
       { label: 'OptiSpaces.ai dashboard', href: 'https://dashboard.optispaces.ai/login' },
@@ -55,7 +55,7 @@ export const projects = [
       },
       context: {
         body: [
-          "Spintly builds smart access and workspace products — access control, time & attendance, locker management, elevator access, visitor management and mobile credentials. The software suite needed an identity that could carry all of it.",
+          "Spintly builds smart access and workspace products: access control, time & attendance, locker management, elevator access, visitor management and mobile credentials. The software suite needed an identity that could carry all of it.",
         ],
       },
       problem: { body: tbd },
@@ -75,10 +75,10 @@ export const projects = [
       research: { body: tbd },
       competitors: { body: tbd },
       flows: { body: tbd, media: [{ placeholder: 'User flows / information architecture of the OptiSpaces.ai platform' }] },
-      explorations: { body: tbd, media: [{ placeholder: 'Early identity explorations — wordmark and visual direction sketches' }, { placeholder: 'Alternative directions considered' }] },
+      explorations: { body: tbd, media: [{ placeholder: 'Early identity explorations: wordmark and visual direction sketches' }, { placeholder: 'Alternative directions considered' }] },
       wireframes: { body: tbd },
-      visual: { body: tbd, media: [{ placeholder: 'Visual direction board — colour, type, components' }] },
-      final: { body: tbd, media: [{ placeholder: 'Final web portal — hero screen', wide: true }, { placeholder: 'Mobile application screens' }, { placeholder: 'Product page' }] },
+      visual: { body: tbd, media: [{ placeholder: 'Visual direction board: colour, type, components' }] },
+      final: { body: tbd, media: [{ placeholder: 'Final web portal: hero screen', wide: true }, { placeholder: 'Mobile application screens' }, { placeholder: 'Product page' }] },
       decisions: { body: tbd },
       implementation: { body: tbd },
       learnings: { body: tbd },
@@ -87,14 +87,14 @@ export const projects = [
   {
     slug: 'spintly-global-website',
     // Screenshot of the live page, captured Nov 2026 (tools: see README).
-    shot: { base: '/assets/img/work/spintly-global-website', alt: 'Spintly global website hero section', caption: 'Live site — spintly.com global website, captured Nov 2026' },
+    shot: { base: '/assets/img/work/spintly-global-website', alt: 'Spintly global website hero section', caption: 'Live site: spintly.com global website, captured Nov 2026' },
     number: '02',
     name: 'Spintly Global Website',
     category: 'Website Design / UX Research',
     year: null,
     summary:
-      "Leading the redesign of Spintly's website into a modern, global digital experience — grounded in UX research, competitor analysis and scalable UI systems.",
-    role: 'Led the redesign — UX research, information architecture & UI',
+      "Leading the redesign of Spintly's website into a modern, global digital experience, grounded in UX research, competitor analysis and scalable UI systems.",
+    role: 'Led the redesign: UX research, information architecture & UI',
     links: [{ label: 'Visit the website', href: 'https://spintly.com/global-site-v2/' }],
     contribution: [
       'Competitor analysis',
@@ -108,7 +108,7 @@ export const projects = [
     theme: { accent: '#d9dee8', layout: 'split' },
     sections: {
       introduction: {
-        body: ["I led the redesign of Spintly's website — turning it into a modern, global digital experience for the company and its product range, built on UX research, competitor analysis and scalable UI systems."],
+        body: ["I led the redesign of Spintly's website, turning it into a modern, global digital experience for the company and its product range, built on UX research, competitor analysis and scalable UI systems."],
       },
       context: { body: tbd },
       problem: { body: tbd },
@@ -128,7 +128,7 @@ export const projects = [
       explorations: { body: tbd },
       wireframes: { body: tbd, media: [{ placeholder: 'Key page wireframes' }] },
       visual: { body: tbd },
-      final: { body: tbd, media: [{ placeholder: 'Homepage — final design', wide: true }, { placeholder: 'Product page — final design' }] },
+      final: { body: tbd, media: [{ placeholder: 'Homepage: final design', wide: true }, { placeholder: 'Product page: final design' }] },
       decisions: { body: tbd },
       implementation: { body: tbd },
       learnings: { body: tbd },
@@ -137,14 +137,14 @@ export const projects = [
   {
     slug: 'scypher',
     // Screenshot of the live page, captured Nov 2026 (tools: see README).
-    shot: { base: '/assets/img/work/scypher', alt: 'Scypher credential management platform page', caption: 'Live page — spintly.com/scypher, captured Nov 2026' },
+    shot: { base: '/assets/img/work/scypher', alt: 'Scypher credential management platform page', caption: 'Live page: spintly.com/scypher, captured Nov 2026' },
     number: '03',
     name: 'Scypher',
     category: 'Branding / Product Design',
     year: null,
     summary:
-      "Rebranding and redesigning Spintly's credential management platform as Scypher — aligning UI/UX, product positioning and marketing visuals.",
-    role: 'Rebrand & redesign — UI/UX, positioning & marketing visuals',
+      "Rebranding and redesigning Spintly's credential management platform as Scypher, aligning UI/UX, product positioning and marketing visuals.",
+    role: 'Rebrand & redesign: UI/UX, positioning & marketing visuals',
     links: [{ label: 'Scypher', href: 'https://spintly.com/scypher/' }],
     contribution: [
       'Product branding and visual identity',
@@ -175,7 +175,7 @@ export const projects = [
       flows: { body: tbd },
       explorations: { body: tbd, media: [{ placeholder: 'Logo and identity explorations' }] },
       wireframes: { body: tbd },
-      visual: { body: tbd, media: [{ placeholder: 'Brand system — logo, colour, typography', wide: true }] },
+      visual: { body: tbd, media: [{ placeholder: 'Brand system: logo, colour, typography', wide: true }] },
       final: { body: tbd, media: [{ placeholder: 'Scypher interface applying the new identity' }, { placeholder: 'Brand applications' }] },
       decisions: { body: tbd },
       implementation: { body: tbd },
@@ -188,15 +188,15 @@ export const projects = [
     name: 'Spintly V3',
     category: 'Mobile Product Design',
     year: null,
-    summary: 'Collaborating on the redesign of the Spintly V3 mobile app — cleaner layouts, improved navigation and usability, and modern interaction patterns.',
-    role: 'Mobile UI/UX — collaborative redesign',
+    summary: 'Collaborating on the redesign of the Spintly V3 mobile app, with cleaner layouts, improved navigation and usability, and modern interaction patterns.',
+    role: 'Mobile UI/UX in a collaborative redesign',
     contribution: ['Mobile UI/UX', 'Navigation and usability improvements', 'Interaction patterns', 'Product visual language and consistency'],
-    teamNote: 'A collaborative redesign — I worked on the mobile UI/UX alongside the wider product team.',
+    teamNote: 'A collaborative redesign: I worked on the mobile UI/UX alongside the wider product team.',
     tags: ['Mobile', 'Access Control', 'Mobile Credentialing'],
     object: 'device',
     theme: { accent: '#e8e8e8', layout: 'split-reverse' },
     sections: {
-      introduction: { body: ['Spintly V3 is the redesign of the Spintly mobile application, which I collaborated on — with cleaner layouts, improved navigation and usability, and modern interaction patterns.'] },
+      introduction: { body: ['Spintly V3 is the redesign of the Spintly mobile application, which I collaborated on. It brings cleaner layouts, improved navigation and usability, and modern interaction patterns.'] },
       context: { body: tbd },
       problem: { body: tbd },
       objectives: {
@@ -210,7 +210,7 @@ export const projects = [
       explorations: { body: tbd },
       wireframes: { body: tbd },
       visual: { body: tbd },
-      final: { body: tbd, media: [{ placeholder: 'Before / after — previous app vs V3', wide: true }, { placeholder: 'V3 key screens' }] },
+      final: { body: tbd, media: [{ placeholder: 'Before / after: previous app vs V3', wide: true }, { placeholder: 'V3 key screens' }] },
       decisions: { body: tbd },
       implementation: { body: tbd },
       learnings: { body: tbd },
@@ -219,7 +219,7 @@ export const projects = [
   {
     slug: 'apple-wallet-integration',
     // Screenshot of the live page, captured Nov 2026 (tools: see README).
-    shot: { base: '/assets/img/work/apple-wallet-integration', alt: 'Spintly Apple Wallet page hero', caption: 'Live page — spintly.com/apple-wallet-india, captured Nov 2026' },
+    shot: { base: '/assets/img/work/apple-wallet-integration', alt: 'Spintly Apple Wallet page hero', caption: 'Live page: spintly.com/apple-wallet-india, captured Nov 2026' },
     number: '05',
     name: 'Apple Wallet Integration',
     category: 'Product Experience / Collaboration',
@@ -237,7 +237,7 @@ export const projects = [
     object: 'cards',
     theme: { accent: '#4f8cff', layout: 'wide' },
     // Team project: the integration itself was engineered by development & R&D.
-    teamNote: 'A team effort — the integration was engineered by development and R&D; my part was the product and credential experience.',
+    teamNote: 'A team effort. The integration was engineered by development and R&D; my part was the product and credential experience.',
     sections: {
       introduction: {
         body: ['Bringing Apple Wallet integration to the product ecosystem, so credentials can live where people already keep their cards.'],
@@ -257,7 +257,7 @@ export const projects = [
       explorations: { body: tbd },
       wireframes: { body: tbd },
       visual: { body: tbd },
-      final: { body: tbd, media: [{ placeholder: 'Credential experience — final design', wide: true }] },
+      final: { body: tbd, media: [{ placeholder: 'Credential experience: final design', wide: true }] },
       decisions: { body: tbd },
       implementation: { body: tbd },
       learnings: { body: tbd },
