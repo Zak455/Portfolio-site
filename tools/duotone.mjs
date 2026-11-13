@@ -2,7 +2,7 @@
 // Run: node duotone.mjs
 import sharp from 'sharp';
 const src = new URL('../assets/source/portrait.webp', import.meta.url).pathname;
-const out = (w) => new URL(`../src/assets/img/about/portrait-duo-${w}.webp`, import.meta.url).pathname;
+const out = (w) => new URL(`../src/assets/img/about/portrait-2026-${w}.webp`, import.meta.url).pathname;
 const dark = [10, 10, 11], light = [79, 140, 255];
 const { data, info } = await sharp(src).rotate().extract({ left: 53, top: 0, width: 853, height: 1280 }).resize({ width: 1000 }).grayscale().normalise()
   .linear(1.25, -28).raw().toBuffer({ resolveWithObject: true });

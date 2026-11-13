@@ -30,7 +30,7 @@ const html = `<!doctype html><html><head><base href="${base}/"><link rel="styles
     <p class="t">FUZAIL.</p>
     <p class="s">Designing <em>beyond</em> the interface.</p>
   </div>
-  <div class="r"><img src="/assets/img/about/portrait-duo-1000.webp" alt=""><span class="dots"></span></div>
+  <div class="r"><img src="/assets/img/about/portrait-2026-1000.webp" alt=""><span class="dots"></span></div>
   <div class="b">${pixelBand()}</div>
 </div></body></html>`;
 
