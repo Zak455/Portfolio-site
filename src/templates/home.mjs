@@ -1,4 +1,5 @@
 import { esc, arrow, arrowRight, picture, productShot } from './components.mjs';
+import { processGraphic, serviceIcon } from './motion-graphics.mjs';
 
 // One section heading style everywhere: small eyebrow, clear title, optional intro.
 function head({ eyebrow, title, intro, id, dark = false, center = false }) {
@@ -99,6 +100,16 @@ function aboutSection(site, about) {
 </section>`;
 }
 
+/* ── Process: motion graphic ──────────────────────────────────────────────── */
+function processSection() {
+  return `<section class="section" id="process" aria-labelledby="process-title">
+  <div class="wrap">
+    ${head({ eyebrow: 'Process', title: 'From research to release.', intro: 'How a product idea moves through my hands — three stages, one continuous thread.', id: 'process-title' })}
+    <div data-fade>${processGraphic()}</div>
+  </div>
+</section>`;
+}
+
 /* ── Story ────────────────────────────────────────────────────────────────── */
 function storySection(story) {
   return `<section class="section" id="story" aria-labelledby="story-title">
@@ -122,8 +133,8 @@ function servicesSection(services) {
   <div class="wrap">
     ${head({ eyebrow: 'Services', title: 'How I can help.', intro: 'Three ways I work with product teams and founders — together or on their own.', id: 'services-title', dark: true })}
     <ol class="card-grid card-grid--3" role="list">${services
-      .map((s) => `<li class="card card--dark" data-fade data-glow>
-        <span class="card-num">${esc(s.n)}</span>
+      .map((s, i) => `<li class="card card--dark" data-fade data-glow>
+        <div class="card-top"><span class="card-num">${esc(s.n)}</span><span class="mg" data-mg>${serviceIcon(i)}</span></div>
         <h3 class="card-title">${esc(s.title)}</h3>
         <p>${esc(s.text)}</p>
         <ul class="chips chips--dark" role="list">${s.items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>
@@ -220,6 +231,7 @@ export function homePage({ site, projects, additionalWork, about, experience, ed
     areas(additionalWork),
     work(projects, additionalWork),
     aboutSection(site, about),
+    processSection(),
     storySection(story),
     servicesSection(services),
     toolkit(capabilities, tools),

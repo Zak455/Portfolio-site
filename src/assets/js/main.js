@@ -236,4 +236,15 @@
       syncMotionBtn();
     });
   }
+
+  /* Motion graphics play only while visible */
+  var mgs = $$('[data-mg]');
+  if (mgs.length && 'IntersectionObserver' in window) {
+    var mo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { en.target.classList.toggle('is-playing', en.isIntersecting); });
+    }, { rootMargin: '0px 0px -10% 0px' });
+    mgs.forEach(function (m) { mo.observe(m); });
+  } else {
+    mgs.forEach(function (m) { m.classList.add('is-playing'); });
+  }
 })();
