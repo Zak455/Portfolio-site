@@ -123,13 +123,27 @@ export const capabilities = [
     title: 'Motion & Technology',
     items: ['Micro-interactions', 'Transitions & UI Animations', 'Onboarding Animations', 'Motion Graphics', 'Web Development Collaboration'],
   },
+  {
+    index: '05',
+    title: 'AI Skills',
+    items: [
+      'AI-assisted UX Research & Synthesis',
+      'Prompt Design',
+      'AI-assisted Ideation & Concepting',
+      'Rapid AI Prototyping',
+      'Designing AI-powered Features',
+      'Conversational & Chat UI',
+      'Generative Visuals & Imagery',
+      'AI-assisted Copy & Microcopy',
+    ],
+  },
 ];
 
 // level: 3 = Advanced, 2 = Intermediate, 1 = Familiarity
 export const tools = [
   { name: 'Figma', level: 3, label: 'Advanced' },
   { name: 'Canva', level: 3, label: 'Advanced' },
-  { name: 'Adobe Photoshop', level: 2, label: 'Intermediate' },
-  { name: 'Adobe Illustrator', level: 2, label: 'Intermediate' },
-  { name: 'After Effects', level: 1, label: 'Familiarity' },
+  { name: 'Adobe Photoshop', level: 3, label: 'Advanced' },
+  { name: 'Adobe Illustrator', level: 3, label: 'Advanced' },
+  { name: 'After Effects', level: 3, label: 'Advanced' },
 ];

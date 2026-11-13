@@ -742,3 +742,7 @@ details[open] > summary .acc-icon::after { transform: translate(-50%, -50%) rota
 .tick path { fill: none; stroke: var(--blue); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 .motion .tick path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .5s var(--ease) calc(.25s + var(--j) * .12s); }
 .motion .is-in .tick path, .motion-failed .tick path { stroke-dashoffset: 0; }
+
+/* Toolkit: shared level badge */
+.card-title--badge { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.badge-level { font-size: .78rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--blue-tint); color: var(--blue); letter-spacing: 0; }

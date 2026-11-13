@@ -166,7 +166,7 @@ function toolkit(capabilities, tools) {
     ${head({ eyebrow: 'Toolkit', title: 'What I bring to a team.', id: 'toolkit-title' })}
     <div class="card-grid card-grid--2">
       ${capabilities.map((c) => `<div class="card" data-fade><h3 class="card-title">${esc(c.title)}</h3><ul class="chips" role="list">${c.items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul></div>`).join('')}
-      <div class="card" data-fade><h3 class="card-title">Tools</h3><ul class="chips" role="list">${tools.map((t) => `<li>${esc(t.name)}<span class="chip-note"> · ${esc(t.label)}</span></li>`).join('')}</ul></div>
+      <div class="card" data-fade><h3 class="card-title card-title--badge">Tools <span class="badge-level">Advanced in all</span></h3><ul class="chips" role="list">${tools.map((t) => `<li>${esc(t.name)}</li>`).join('')}</ul></div>
     </div>
   </div>
 </section>`;
