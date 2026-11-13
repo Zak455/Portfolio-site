@@ -2,7 +2,7 @@
 
 Senior UI/UX Designer · Goa, India. Live at **https://fuzailgfx.vercel.app**.
 
-**Design system — “frames on a canvas”:** electric blue on near-black; every section is an artboard with a frame caption (`Frame 03 · “Toolkit”`), separated by pixel bands drawn from design-tool glyphs (the cut-F mark, cursor, bezier anchor, selected node, crosshair) on a 4px grid. The top bar has a layout-grid toggle, About is a design-tool inspector panel, and experience is a status table. The bands are generated in `src/templates/components.mjs` (`pixelBand`, `pixelGlyph`).
+**Design system:** light and product-first: white canvas, soft grey panels, one blue (`#2563eb` on white, `#4f8cff` on black), black for the Services and Contact sections, Inter throughout. Project cards show real screenshots of the live products (`src/assets/img/work/`, captured Nov 2026); a project without one shows a labelled “Visuals coming soon” panel. Motion is a gentle fade-up with no dependencies. Tokens are at the top of `src/assets/css/main.css`.
 
 A static site: content lives in plain data files, a zero-dependency Node script renders it to HTML, and Vercel deploys it on every push to `main`.
 
@@ -16,7 +16,7 @@ content/            ← EDIT THESE to update the site
 src/
   templates/        HTML components (layout, home, case study)
   assets/css/       design system (tokens at the top of main.css)
-  assets/js/        navigation + motion (GSAP & ScrollTrigger, self-hosted)
+  assets/js/        navigation, filters, fade-ins (no dependencies)
   assets/img/       optimised WebP images & chrome renders
   assets/fonts/     self-hosted WOFF2 (Archivo variable width/weight, Inter, JetBrains Mono)
   public/           favicons (copied to the site root)
@@ -45,6 +45,7 @@ Requires Node 18+. The site itself has **no npm dependencies**.
 | Add my email | `content/site.mjs` → `contact.email` (CTAs switch from LinkedIn to email automatically) |
 | Add a CV download | Put the PDF in `src/assets/cv/` and set `contact.cv` in `content/site.mjs` |
 | Write a case study section | `content/projects.mjs` → the project's `sections`. A section with `body: null` and no media stays hidden. |
+| Replace a project card screenshot | Save `<slug>-800.webp` and `<slug>-1440.webp` (16:10) to `src/assets/img/work/` and set `shot` on the project in `content/projects.mjs` |
 | Add real project images | Save WebP files to `src/assets/img/work/<slug>/` and set `src` on the matching `media` entry (it replaces the placeholder) |
 | Add a before/after slider | Use a media entry `{ compare: { before: '…', after: '…' }, caption: '…' }` |
 | Add a Playground piece | Add the image (see `tools/optimize-images.mjs`) and an entry in `content/playground.mjs` |

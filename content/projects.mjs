@@ -24,6 +24,8 @@ const tbd = null; // marks a section waiting for your write-up
 export const projects = [
   {
     slug: 'optispaces',
+    // Screenshot of the live page, captured Nov 2026 (tools: see README).
+    shot: { base: '/assets/img/work/optispaces', alt: 'OptiSpaces.ai dashboard sign-in page', caption: 'Live product — dashboard.optispaces.ai sign-in, captured Nov 2026' },
     number: '01',
     name: 'OptiSpaces.ai',
     category: 'SaaS Product Design / Rebranding',
@@ -84,6 +86,8 @@ export const projects = [
   },
   {
     slug: 'spintly-global-website',
+    // Screenshot of the live page, captured Nov 2026 (tools: see README).
+    shot: { base: '/assets/img/work/spintly-global-website', alt: 'Spintly global website hero section', caption: 'Live site — spintly.com global website, captured Nov 2026' },
     number: '02',
     name: 'Spintly Global Website',
     category: 'Website Design / UX Research',
@@ -132,6 +136,8 @@ export const projects = [
   },
   {
     slug: 'scypher',
+    // Screenshot of the live page, captured Nov 2026 (tools: see README).
+    shot: { base: '/assets/img/work/scypher', alt: 'Scypher credential management platform page', caption: 'Live page — spintly.com/scypher, captured Nov 2026' },
     number: '03',
     name: 'Scypher',
     category: 'Branding / Product Design',
@@ -212,6 +218,8 @@ export const projects = [
   },
   {
     slug: 'apple-wallet-integration',
+    // Screenshot of the live page, captured Nov 2026 (tools: see README).
+    shot: { base: '/assets/img/work/apple-wallet-integration', alt: 'Spintly Apple Wallet page hero', caption: 'Live page — spintly.com/apple-wallet-india, captured Nov 2026' },
     number: '05',
     name: 'Apple Wallet Integration',
     category: 'Product Experience / Collaboration',

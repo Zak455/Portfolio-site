@@ -1,330 +1,111 @@
-/* FUZAIL. — interaction & motion (progressive enhancement throughout) */
+// Navigation, small interactions and gentle fade-ins. No dependencies.
 (function () {
   'use strict';
+  window.__ready = true;
+  var d = document;
+  var $ = function (s, r) { return (r || d).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || d).querySelectorAll(s)); };
 
-  var root = document.documentElement;
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  var $ = function (s, c) { return (c || document).querySelector(s); };
-  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
-  var store = {
-    get: function (k, s) { try { return (s ? sessionStorage : localStorage).getItem(k); } catch (e) { return null; } },
-    set: function (k, v, s) { try { (s ? sessionStorage : localStorage).setItem(k, v); } catch (e) {} },
-  };
-
-  /* ── Top bar + menu ─────────────────────────────────────────────────── */
-  var bar = $('[data-nav-root]');
-  var menuBtn = $('[data-menu-btn]');
-  var menuLabel = $('[data-menu-label]');
-  var menu = $('[data-menu]');
-
+  /* ── Mobile menu ──────────────────────────────────────────────────────── */
+  var btn = $('[data-menu-btn]'), menu = $('[data-menu]'), label = $('[data-menu-label]');
   function setMenu(open) {
-    bar.classList.toggle('is-open', open);
-    menuBtn.setAttribute('aria-expanded', String(open));
-    if (menuLabel) menuLabel.textContent = open ? 'Close' : 'Menu';
-    document.body.classList.toggle('menu-open', open);
-    if (open) {
-      menu.hidden = false;
-      var first = $('a', menu);
-      if (first) setTimeout(function () { first.focus(); }, 150);
-    } else {
-      setTimeout(function () { if (!bar.classList.contains('is-open')) menu.hidden = true; }, 820);
-    }
+    if (!btn || !menu) return;
+    btn.setAttribute('aria-expanded', String(open));
+    menu.classList.toggle('is-open', open);
+    if (label) label.textContent = open ? 'Close menu' : 'Open menu';
   }
-  if (menuBtn && menu) {
-    menuBtn.addEventListener('click', function () { setMenu(!bar.classList.contains('is-open')); });
+  if (btn) {
+    btn.addEventListener('click', function () { setMenu(btn.getAttribute('aria-expanded') !== 'true'); });
     $$('a', menu).forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
-    document.addEventListener('keydown', function (e) {
-      if (!bar.classList.contains('is-open')) return;
-      if (e.key === 'Escape') { setMenu(false); menuBtn.focus(); }
-      if (e.key === 'Tab') {
-        var items = [menuBtn].concat($$('a', menu));
-        var i = items.indexOf(document.activeElement);
-        if (e.shiftKey && i <= 0) { e.preventDefault(); items[items.length - 1].focus(); }
-        else if (!e.shiftKey && i === items.length - 1) { e.preventDefault(); items[0].focus(); }
-      }
+    d.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') { setMenu(false); btn.focus(); }
     });
+    window.matchMedia('(min-width: 860px)').addEventListener('change', function (m) { if (m.matches) setMenu(false); });
   }
 
-  var lastY = window.scrollY, ticking = false;
-  var navLinks = $$('[data-nav]');
-  var sections = $$('[data-section]');
-  function onScroll() {
-    var y = window.scrollY;
-    if (!bar.classList.contains('is-open')) bar.classList.toggle('is-hidden', y > lastY && y > window.innerHeight * 0.7 && !bar.contains(document.activeElement));
-    lastY = y;
-    var mark = window.innerHeight * 0.45, current = null;
-    sections.forEach(function (s) { var r = s.getBoundingClientRect(); if (r.top <= mark && r.bottom > mark) current = s.getAttribute('data-section'); });
-    navLinks.forEach(function (l) {
-      var on = l.getAttribute('data-nav') === current;
-      l.classList.toggle('is-active', on);
-      if (on) l.setAttribute('aria-current', 'location'); else l.removeAttribute('aria-current');
-    });
-    ticking = false;
-  }
-  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  /* ── Nav border on scroll + active section ─────────────────────────────── */
+  var nav = $('[data-nav-root]');
+  function onScroll() { if (nav) nav.classList.toggle('is-scrolled', window.scrollY > 8); }
   onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
 
-  /* ── Layout grid toggle (like a design tool's Ctrl+G) ───────────────── */
-  var gridBtn = $('[data-grid-toggle]');
-  var gridState = $('[data-grid-state]');
-  function syncGrid() {
-    var on = root.classList.contains('show-grid');
-    if (gridBtn) gridBtn.setAttribute('aria-pressed', String(on));
-    if (gridState) gridState.textContent = on ? 'On' : 'Off';
-  }
-  if (gridBtn) {
-    gridBtn.addEventListener('click', function () {
-      root.classList.toggle('show-grid');
-      store.set('fz-grid', root.classList.contains('show-grid') ? '1' : '0');
-      syncGrid();
-    });
-    syncGrid();
+  var links = $$('[data-nav]');
+  if ('IntersectionObserver' in window && links.length) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var id = en.target.getAttribute('data-section');
+        links.forEach(function (l) {
+          var on = l.getAttribute('data-nav') === id;
+          l.classList.toggle('is-active', on);
+          if (on) l.setAttribute('aria-current', 'true'); else l.removeAttribute('aria-current');
+        });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    $$('[data-section]').forEach(function (s) { io.observe(s); });
   }
 
-  /* ── Credentials filter ─────────────────────────────────────────────── */
-  $$('[data-filter]').forEach(function (bar) {
-    var tabs = $$('[data-filter-key]', bar);
-    var items = $$('[data-type]', bar.parentNode);
+  /* ── Fade-ins ─────────────────────────────────────────────────────────── */
+  var fades = $$('[data-fade]');
+  if (d.documentElement.classList.contains('motion') && 'IntersectionObserver' in window) {
+    var fo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('is-in'); fo.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+    fades.forEach(function (el) { fo.observe(el); });
+  } else {
+    fades.forEach(function (el) { el.classList.add('is-in'); });
+  }
+
+  /* ── Credentials filter ───────────────────────────────────────────────── */
+  var filter = $('[data-filter]');
+  if (filter) {
+    var tabs = $$('[data-filter-key]', filter);
     tabs.forEach(function (t) {
       t.addEventListener('click', function () {
         var key = t.getAttribute('data-filter-key');
-        tabs.forEach(function (x) { x.setAttribute('aria-pressed', String(x === t)); });
-        items.forEach(function (it) {
-          var show = key === 'all' || it.getAttribute('data-type') === key;
-          it.hidden = !show;
-        });
-        if (window.ScrollTrigger) window.ScrollTrigger.refresh();
-      });
-    });
-  });
-
-  /* ── Pointer light on work canvases ─────────────────────────────────── */
-  if (finePointer) {
-    $$('.work-visual').forEach(function (el) {
-      var c = $('.work-canvas', el);
-      el.addEventListener('pointermove', function (e) {
-        var r = el.getBoundingClientRect();
-        c.style.setProperty('--mx', ((e.clientX - r.left) / r.width) * 100 + '%');
-        c.style.setProperty('--my', ((e.clientY - r.top) / r.height) * 100 + '%');
+        tabs.forEach(function (o) { o.setAttribute('aria-pressed', String(o === t)); });
+        $$('.cred').forEach(function (c) { c.hidden = key !== 'all' && c.getAttribute('data-type') !== key; });
       });
     });
   }
 
-  /* ── Case study: before/after, TOC, progress ────────────────────────── */
-  $$('[data-compare]').forEach(function (fig) {
-    var range = $('.compare-range', fig), frame = $('.compare-frame', fig);
-    var set = function () { frame.style.setProperty('--c', range.value + '%'); };
-    range.addEventListener('input', set); set();
+  /* ── Copy email ───────────────────────────────────────────────────────── */
+  $$('[data-copy]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var text = b.getAttribute('data-copy'), lab = $('[data-copy-label]', b) || b;
+      var done = function () { lab.textContent = 'Copied!'; setTimeout(function () { lab.textContent = 'Copy email'; }, 1800); };
+      if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, function () { lab.textContent = text; });
+      else lab.textContent = text;
+    });
   });
-  var tocLinks = $$('[data-toc]');
-  if (tocLinks.length && 'IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
+
+  /* ── Before / after slider ────────────────────────────────────────────── */
+  $$('[data-compare]').forEach(function (c) {
+    var r = $('.compare-range', c), before = $('.compare-before', c), h = $('.compare-handle', c);
+    if (!r) return;
+    var set = function () { before.style.clipPath = 'inset(0 ' + (100 - r.value) + '% 0 0)'; h.style.left = r.value + '%'; };
+    r.addEventListener('input', set); set();
+  });
+
+  /* ── Case study: active section + reading progress ────────────────────── */
+  var toc = $$('[data-toc]'), prog = $('[data-cs-progress]'), content = $('.cs-content');
+  if (toc.length && 'IntersectionObserver' in window) {
+    var to = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
-        if (en.isIntersecting) tocLinks.forEach(function (l) { l.classList.toggle('is-active', l.getAttribute('data-toc') === en.target.id); });
+        if (!en.isIntersecting) return;
+        toc.forEach(function (a) { a.classList.toggle('is-active', a.getAttribute('data-toc') === en.target.id); });
       });
     }, { rootMargin: '-30% 0px -60% 0px' });
-    $$('[data-cs-section]').forEach(function (s) { io.observe(s); });
-    var progress = $('[data-cs-progress]'), content = $('.cs-content');
-    if (progress && content) {
-      var upd = function () {
-        var r = content.getBoundingClientRect();
-        progress.style.setProperty('--p', Math.min(1, Math.max(0, (window.innerHeight * 0.5 - r.top) / r.height)).toFixed(3));
-      };
-      window.addEventListener('scroll', function () { requestAnimationFrame(upd); }, { passive: true });
-      upd();
-    }
+    $$('[data-cs-section]').forEach(function (s) { to.observe(s); });
   }
-
-  /* ── Copy email ─────────────────────────────────────────────────────── */
-  $$('[data-copy]').forEach(function (btn) {
-    var label = $('[data-copy-label]', btn);
-    btn.addEventListener('click', function () {
-      var text = btn.getAttribute('data-copy');
-      var done = function () { if (label) { label.textContent = 'Copied ✓'; setTimeout(function () { label.textContent = 'Copy email'; }, 2000); } };
-      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () {});
-      else { var t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); done(); } catch (e) {} t.remove(); }
-    });
-  });
-
-  /* ── Interface sounds (off by default, generated with Web Audio) ────── */
-  var soundBtn = $('[data-sound-toggle]');
-  var soundState = $('[data-sound-state]');
-  var audio = null, soundOn = store.get('fz-sound') === '1', lastBlip = 0;
-  function ctx() {
-    if (!audio) { var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return null; audio = new AC(); }
-    if (audio.state === 'suspended') audio.resume();
-    return audio;
+  if (prog && content) {
+    var upd = function () {
+      var r = content.getBoundingClientRect(), total = r.height - window.innerHeight * 0.5;
+      var p = Math.min(1, Math.max(0, (window.innerHeight * 0.3 - r.top) / Math.max(1, total)));
+      prog.style.width = (p * 100).toFixed(1) + '%';
+    };
+    upd(); window.addEventListener('scroll', upd, { passive: true });
   }
-  function tone(freq, dur, gain, type, when) {
-    var a = ctx(); if (!a) return;
-    var t = a.currentTime + (when || 0);
-    var o = a.createOscillator(), g = a.createGain();
-    o.type = type || 'sine'; o.frequency.setValueAtTime(freq, t);
-    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(gain, t + 0.006); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    o.connect(g).connect(a.destination); o.start(t); o.stop(t + dur + 0.02);
-  }
-  function syncSound() {
-    if (soundBtn) soundBtn.setAttribute('aria-pressed', String(soundOn));
-    if (soundState) soundState.textContent = soundOn ? 'On' : 'Off';
-  }
-  if (soundBtn) {
-    syncSound();
-    soundBtn.addEventListener('click', function () {
-      soundOn = !soundOn; store.set('fz-sound', soundOn ? '1' : '0'); syncSound();
-      if (soundOn) { tone(660, 0.12, 0.05, 'triangle'); tone(990, 0.16, 0.04, 'triangle', 0.08); }
-    });
-    if (finePointer) {
-      document.addEventListener('pointerover', function (e) {
-        if (!soundOn) return;
-        var el = e.target.closest && e.target.closest('a, button, summary');
-        if (!el || el.contains(e.relatedTarget)) return;
-        var now = performance.now(); if (now - lastBlip < 70) return; lastBlip = now;
-        tone(1320, 0.05, 0.016, 'sine');
-      });
-    }
-    document.addEventListener('click', function (e) {
-      if (!soundOn || e.target.closest('[data-sound-toggle]')) return;
-      if (e.target.closest('a, button, summary')) tone(520, 0.08, 0.035, 'triangle');
-    });
-  }
-
-  /* ── Work carousel: counter + progress (native scroll mode) ─────────── */
-  var carousel = $('[data-carousel]');
-  var cTrack = $('[data-carousel-track]'), cView = $('[data-carousel-viewport]');
-  var cIndex = $('[data-carousel-index]'), cProg = $('[data-carousel-progress]');
-  var cCards = $$('[data-card]');
-  function setCarousel(p) {
-    p = Math.max(0, Math.min(1, p));
-    var i = Math.min(cCards.length, Math.round(p * (cCards.length - 1)) + 1);
-    if (cIndex) cIndex.textContent = String(i).padStart(2, '0');
-    if (cProg) cProg.style.setProperty('--p', Math.max(0.04, p).toFixed(3));
-  }
-  if (carousel && cView) {
-    cView.addEventListener('scroll', function () {
-      if (carousel.classList.contains('is-pinned')) return;
-      var max = cView.scrollWidth - cView.clientWidth;
-      setCarousel(max > 0 ? cView.scrollLeft / max : 0);
-    }, { passive: true });
-  }
-
-  /* ── Motion ─────────────────────────────────────────────────────────── */
-  if (reduce || !root.classList.contains('motion')) { window.__motion = true; return; }
-  if (!window.gsap || !window.ScrollTrigger || root.classList.contains('motion-failed')) { root.classList.add('motion-failed'); return; }
-  window.__motion = true;
-  var gsap = window.gsap, ST = window.ScrollTrigger;
-  gsap.registerPlugin(ST);
-  var ease = 'expo.out';
-  // CSS pre-hides with translate(%); GSAP reads that as px, so % tweens also zero x/y.
-
-  // Intro splash: once per session, skippable with any click or key.
-  var intro = $('[data-intro]');
-  var heroDelay = 0.1;
-  if (intro && root.classList.contains('intro-on')) {
-    heroDelay = 0;
-    var count = $('[data-intro-count]', intro), n = { v: 0 };
-    var tl = gsap.timeline({
-      onComplete: function () { root.classList.remove('intro-on'); store.set('fz-intro', '1', true); intro.remove(); heroIn(0); },
-    });
-    tl.fromTo($$('.intro-word .c', intro), { y: 0, yPercent: 105 }, { y: 0, yPercent: 0, duration: 0.9, stagger: 0.06, ease: ease }, 0.1)
-      .fromTo($('.intro-mark', intro), { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.8, ease: ease }, 0)
-      .to($('.intro-band', intro), { clipPath: 'inset(0 0% 0 0)', duration: 1.1, ease: 'power2.inOut' }, 0.15)
-      .to(n, { v: 100, duration: 1.1, ease: 'power2.inOut', onUpdate: function () { if (count) count.textContent = String(Math.round(n.v)).padStart(2, '0'); } }, 0.15)
-      .to(intro, { yPercent: -100, duration: 0.85, ease: 'expo.inOut' }, 1.45);
-    var skip = function () { tl.progress(1); };
-    intro.addEventListener('click', skip);
-    document.addEventListener('keydown', function k() { skip(); document.removeEventListener('keydown', k); });
-  } else {
-    heroIn(heroDelay);
-  }
-
-  function heroIn(d) {
-    var t = gsap.timeline({ delay: d, defaults: { ease: ease } });
-    var l = $('[data-name-l]'), r = $('[data-name-r]');
-    if (l) t.fromTo(l, { x: 0, xPercent: -30, opacity: 0 }, { x: 0, xPercent: 0, opacity: 1, duration: 1.4 }, 0.1);
-    if (r) t.fromTo(r, { x: 0, xPercent: 30, opacity: 0 }, { x: 0, xPercent: 0, opacity: 1, duration: 1.4 }, 0.1);
-    var p = $('[data-portrait]');
-    if (p) t.fromTo(p, { clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.3, ease: 'expo.inOut' }, 0);
-    var f = $$('[data-fade], [data-hero-fade]');
-    if (f.length) t.fromTo(f, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 1, stagger: 0.08 }, 0.35);
-    var lines = $$('[data-hero-line]');
-    if (lines.length) t.fromTo(lines, { y: 0, yPercent: 105 }, { y: 0, yPercent: 0, duration: 1.2, stagger: 0.08 }, 0.05);
-  }
-
-  // Giant frame titles: characters rise in.
-  $$('[data-giant]').forEach(function (g) {
-    gsap.fromTo($$('.c', g), { y: 0, yPercent: 105 }, { y: 0, yPercent: 0, duration: 1.1, stagger: 0.035, ease: ease, scrollTrigger: { trigger: g, start: 'top 88%' } });
-  });
-
-  // Reading paragraph: words light up as you scroll through it.
-  $$('[data-words]').forEach(function (p) {
-    gsap.fromTo($$('.w', p), { opacity: 0.16 }, { opacity: 1, stagger: 0.05, ease: 'none', scrollTrigger: { trigger: p, start: 'top 80%', end: 'bottom 45%', scrub: 0.4 } });
-  });
-
-  // Pixel bands draw in from the left.
-  $$('.band').forEach(function (b) {
-    if (b.closest('.bar, .intro, .menu, [data-portrait], .work-visual')) return;
-    gsap.fromTo(b, { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 1.4, ease: 'power2.inOut', scrollTrigger: { trigger: b, start: 'top 95%' } });
-  });
-
-  // Generic reveals, batched.
-  ST.batch('[data-reveal]:not([data-reveal="image"])', {
-    start: 'top 92%', once: true,
-    onEnter: function (els) { gsap.to(els, { opacity: 1, y: 0, duration: 1, ease: ease, stagger: 0.06, overwrite: true }); },
-  });
-  $$('[data-reveal="image"]').forEach(function (el) {
-    gsap.fromTo(el, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.3, ease: 'expo.inOut', scrollTrigger: { trigger: el, start: 'top 86%', once: true } });
-  });
-
-  // Object parallax inside work canvases + case covers.
-  $$('[data-parallax]').forEach(function (o) {
-    gsap.fromTo(o, { yPercent: 8 }, { yPercent: -8, ease: 'none', scrollTrigger: { trigger: o.parentNode, start: 'top bottom', end: 'bottom top', scrub: true } });
-  });
-
-  // Story: pin the three chapters on wide screens and swap them as you scroll.
-  var story = $('[data-story]');
-  var wide = window.matchMedia('(min-width: 960px)');
-  if (story && wide.matches) {
-    story.classList.add('story--pinned');
-    var chapters = $$('[data-chapter]', story), steps = $$('[data-step]', story), cur = -1;
-    ST.create({
-      trigger: story, start: 'top top+=56', end: 'bottom bottom',
-      onUpdate: function (self) {
-        var i = Math.min(chapters.length - 1, Math.floor(self.progress * chapters.length));
-        if (i === cur) return; cur = i;
-        chapters.forEach(function (c, j) { c.classList.toggle('is-active', j === i); });
-        steps.forEach(function (c, j) { c.classList.toggle('is-active', j <= i); });
-      },
-    });
-  }
-
-  // Work: pin the carousel and translate the track horizontally with scroll.
-  if (carousel && cTrack && wide.matches) {
-    carousel.classList.add('is-pinned');
-    var dist = function () { return Math.max(0, cTrack.scrollWidth - cView.clientWidth); };
-    var tween = gsap.to(cTrack, {
-      x: function () { return -dist(); }, ease: 'none',
-      scrollTrigger: {
-        trigger: carousel, start: 'top top+=56', end: function () { return '+=' + dist(); },
-        pin: true, scrub: 0.6, invalidateOnRefresh: true, anticipatePin: 1,
-        onUpdate: function (self) { setCarousel(self.progress); },
-      },
-    });
-    // Keyboard: tabbing into a card scrolls the page to where that card is in view.
-    cTrack.addEventListener('focusin', function (e) {
-      var card = e.target.closest('[data-card]'); if (!card) return;
-      cView.scrollLeft = 0;
-      var st = tween.scrollTrigger, d = dist(); if (!st || !d) return;
-      var target = Math.min(d, Math.max(0, card.offsetLeft - parseFloat(getComputedStyle(cTrack).paddingLeft)));
-      window.scrollTo({ top: st.start + (target / d) * (st.end - st.start), behavior: 'instant' });
-    });
-  }
-
-  // Footer: title lines settle, dot-matrix name scales up.
-  var ft = $('.foot-title');
-  if (ft) gsap.from(ft, { y: 40, opacity: 0, duration: 1.1, ease: ease, scrollTrigger: { trigger: ft, start: 'top 90%' } });
-  var fm = $('[data-foot-mark]');
-  if (fm) gsap.fromTo(fm, { scale: 0.92, opacity: 0.3 }, { scale: 1, opacity: 1, ease: 'none', scrollTrigger: { trigger: fm, start: 'top bottom', end: 'bottom bottom', scrub: 0.5 } });
-
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ST.refresh(); });
 })();

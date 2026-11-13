@@ -113,13 +113,13 @@ export const tagList = (tags = []) =>
 
 export function mediaFrame(m, slug) {
   if (m.src) {
-    return `<figure class="media${m.wide ? ' media--wide' : ''}" data-reveal="image">
+    return `<figure class="media${m.wide ? ' media--wide' : ''}" data-fade>
       <div class="media-frame"><img src="${esc(m.src)}" alt="${esc(m.alt || '')}" loading="lazy" decoding="async"${m.width ? ` width="${m.width}" height="${m.height}"` : ''}></div>
       ${m.caption ? `<figcaption>${esc(m.caption)}</figcaption>` : ''}
     </figure>`;
   }
   if (m.compare?.before && m.compare?.after) {
-    return `<figure class="media media--wide compare" data-compare data-reveal="image">
+    return `<figure class="media media--wide compare" data-compare data-fade>
       <div class="media-frame compare-frame">
         <img src="${esc(m.compare.after)}" alt="${esc(m.compare.afterAlt || 'After')}" loading="lazy">
         <div class="compare-before"><img src="${esc(m.compare.before)}" alt="${esc(m.compare.beforeAlt || 'Before')}" loading="lazy"></div>
@@ -129,7 +129,7 @@ export function mediaFrame(m, slug) {
       ${m.caption ? `<figcaption>${esc(m.caption)}</figcaption>` : ''}
     </figure>`;
   }
-  return `<figure class="media media--placeholder${m.wide ? ' media--wide' : ''}" data-reveal="image">
+  return `<figure class="media media--placeholder${m.wide ? ' media--wide' : ''}" data-fade>
     <div class="media-frame">
       <span class="ph-label">Visual placeholder</span>
       <span class="ph-brief">${esc(m.placeholder)}</span>
@@ -200,3 +200,21 @@ export const splitChars = (text) =>
   `<span class="sr-only">${esc(text)}</span><span aria-hidden="true" class="chars">${[...text]
     .map((c) => (c === ' ' ? '<span class="c c--space"> </span>' : `<span class="c">${esc(c)}</span>`))
     .join('')}</span>`;
+
+/* ── Product screenshot in a light browser frame ───────────────────────────
+   Real captures of live pages only. Projects without one get an honest,
+   clearly labelled panel instead of a mock-up. */
+export function productShot(p, { sizes = '(min-width: 960px) 60vw, 92vw', priority = false, caption = false } = {}) {
+  if (!p.shot) {
+    return `<div class="shot shot--empty" aria-hidden="true">
+      <span class="shot-empty-cat">${esc(p.category)}</span>
+      <span class="shot-empty-name">${esc(p.name)}</span>
+      <span class="shot-empty-note">Visuals coming soon</span>
+    </div>`;
+  }
+  return `<figure class="shot">
+    <div class="shot-chrome" aria-hidden="true"><i></i><i></i><i></i></div>
+    ${picture({ base: p.shot.base, widths: [800, 1440], sizes, alt: p.shot.alt, ratio: [1440, 900], className: 'shot-img', priority })}
+    ${caption ? `<figcaption>${esc(p.shot.caption)}</figcaption>` : ''}
+  </figure>`;
+}
