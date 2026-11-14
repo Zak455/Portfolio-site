@@ -17,7 +17,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=2">
+<link rel="stylesheet" href="/assets/style.css?v=4">
 <script>
   (function (d) {
     var r = d.documentElement; r.classList.add('js');
@@ -32,6 +32,7 @@
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="nav" data-nav>
+  <span class="nav-progress" aria-hidden="true"><span data-progress></span></span>
   <div class="wrap nav-in">
     <a class="logo" href="#top" aria-label="Konkan Creative, home">
       <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="17" r="9" class="lm-sun"/><path d="M3 27c4.5-4 8.5-4 13 0s8.5 4 13 0 7.5-3 8 0" class="lm-wave"/><path d="M3 34c4.5-4 8.5-4 13 0s8.5 4 13 0 7.5-3 8 0" class="lm-wave"/></svg>
@@ -52,14 +53,15 @@
 <main id="main">
 
 <!-- Hero -->
-<section class="hero">
+<section class="hero" data-spotlight>
+  <div class="hero-dots" aria-hidden="true"></div>
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <p class="tag"><span class="dot" aria-hidden="true"></span>Graphic design &amp; animation studio · Madgaon, Goa</p>
-      <h1 class="hero-title">Signs, menus <span class="hl">&amp; flyers</span> that bring people through your door.</h1>
+      <h1 class="hero-title"><span class="line"><span>Signs, menus</span></span> <span class="line"><span><span class="hl">&amp; flyers</span> that</span></span> <span class="line"><span>bring people</span></span> <span class="line"><span>through your door.</span></span></h1>
       <p class="lead">Konkan Creative is the design studio of Fuzail Khan. I design menus, signboards, flyers, exhibition booths, branding and short animations for restaurants, cafés and local businesses.</p>
       <div class="btn-row">
-        <a class="btn btn-wa js-wa" href="mailto:fuzailgfx@gmail.com?subject=Design%20enquiry" data-wa-text="Hi Fuzail, I found Konkan Creative and I'd like a quote for">
+        <a class="btn btn-wa js-wa" href="mailto:fuzailgfx@gmail.com?subject=Design%20enquiry" data-wa-text="Hi Fuzail, I found Konkan Creative and I'd like a quote for" data-magnetic>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.6.3.1.2.1.8-.2 1.4z"/></svg>
           <span class="js-wa-label">Email for a quote</span>
         </a>
@@ -71,8 +73,10 @@
         <li>Print, screen &amp; social</li>
       </ul>
     </div>
-    <div class="hero-art" aria-hidden="true">
-      <svg viewBox="0 0 560 480" class="scene">
+    <div class="hero-art">
+      <p class="chip chip--time" aria-label="Local time in Goa"><span class="chip-dot" aria-hidden="true"></span>Goa · <time data-clock>IST</time></p>
+      <p class="chip chip--tag" aria-hidden="true">Print · Screen · Social</p>
+      <svg viewBox="0 0 560 480" class="scene" aria-hidden="true">
         <!-- ground & sun -->
         <circle cx="430" cy="110" r="64" class="s-sun"/>
         <path d="M0 418h560v62H0z" class="s-ground"/>
@@ -136,37 +140,60 @@
       <p class="sec-lead">From the board outside your door to the menu on the table and the reel on your phone. One designer, one look across all of it.</p>
     </header>
     <ul class="svc-grid" role="list">
-      <li class="svc" data-fade>
+      <li class="svc" data-fade data-glow>
         <svg class="ico ico--menu" viewBox="0 0 80 56" aria-hidden="true"><path d="M8 8h30v40H8zM42 8h30v40H42z" class="i-paper"/><path d="M14 18h18M14 26h14M14 34h18M48 18h18M48 26h12M48 34h16" class="i-ink" pathLength="1"/></svg>
         <h3>Menus &amp; menu boards</h3>
         <p>Table menus, QR menus, wall boards and takeaway cards that are easy to read and make the best dishes stand out.</p>
+        <a class="svc-link js-wa" href="mailto:fuzailgfx@gmail.com?subject=Quote%20for%20a%20menu" data-wa-text="Hi Fuzail, I'd like a quote for a menu." data-wa-label="Get a quote" data-cursor="Get a quote"><span class="js-wa-label">Get a quote</span> <span aria-hidden="true">→</span><span class="sr-only"> for a menu</span></a>
       </li>
-      <li class="svc" data-fade>
+      <li class="svc" data-fade data-glow>
         <svg class="ico ico--sign" viewBox="0 0 80 56" aria-hidden="true"><path d="M10 4h60" class="i-line"/><g class="i-swing"><path d="M24 4v10M56 4v10" class="i-line"/><rect x="14" y="14" width="52" height="28" rx="4" class="i-board"/><path d="M24 28h32" class="i-cream"/></g></svg>
         <h3>Signboards &amp; shopfronts</h3>
         <p>Shop signs, glow-sign and flex designs, window graphics and standees, sized and set up for your fabricator.</p>
+        <a class="svc-link js-wa" href="mailto:fuzailgfx@gmail.com?subject=Quote%20for%20a%20signboard" data-wa-text="Hi Fuzail, I'd like a quote for a signboard." data-wa-label="Get a quote" data-cursor="Get a quote"><span class="js-wa-label">Get a quote</span> <span aria-hidden="true">→</span><span class="sr-only"> for a signboard</span></a>
       </li>
-      <li class="svc" data-fade>
+      <li class="svc" data-fade data-glow>
         <svg class="ico ico--flyer" viewBox="0 0 80 56" aria-hidden="true"><rect x="26" y="6" width="30" height="42" rx="3" class="i-paper i-f1"/><rect x="26" y="6" width="30" height="42" rx="3" class="i-paper i-f2"/><rect x="26" y="6" width="30" height="42" rx="3" class="i-board i-f3"/></svg>
         <h3>Flyers, posters &amp; brochures</h3>
         <p>Offers, launches, events and price lists for print and WhatsApp, with one clear message and a clear call to action.</p>
+        <a class="svc-link js-wa" href="mailto:fuzailgfx@gmail.com?subject=Quote%20for%20flyers%20or%20posters" data-wa-text="Hi Fuzail, I'd like a quote for flyers or posters." data-wa-label="Get a quote" data-cursor="Get a quote"><span class="js-wa-label">Get a quote</span> <span aria-hidden="true">→</span><span class="sr-only"> for flyers or posters</span></a>
       </li>
-      <li class="svc" data-fade>
+      <li class="svc" data-fade data-glow>
         <svg class="ico ico--booth" viewBox="0 0 80 56" aria-hidden="true"><path d="M8 50h64" class="i-line"/><path d="M12 50V12h56v38" class="i-line"/><rect x="16" y="14" width="48" height="16" rx="2" class="i-board i-banner"/><rect x="28" y="34" width="24" height="16" rx="2" class="i-paper"/></svg>
         <h3>Exhibition booths &amp; events</h3>
         <p>Booth backdrops, banners, roll-ups and event branding that read from across the hall.</p>
+        <a class="svc-link js-wa" href="mailto:fuzailgfx@gmail.com?subject=Quote%20for%20an%20exhibition%20booth" data-wa-text="Hi Fuzail, I'd like a quote for an exhibition booth." data-wa-label="Get a quote" data-cursor="Get a quote"><span class="js-wa-label">Get a quote</span> <span aria-hidden="true">→</span><span class="sr-only"> for an exhibition booth</span></a>
       </li>
-      <li class="svc" data-fade>
+      <li class="svc" data-fade data-glow>
         <svg class="ico ico--motion" viewBox="0 0 80 56" aria-hidden="true"><rect x="8" y="6" width="64" height="38" rx="5" class="i-paper"/><path d="M35 17v16l13-8z" class="i-play"/><path d="M8 50h64" class="i-track"/><path d="M8 50h64" class="i-prog" pathLength="1"/></svg>
         <h3>Animations &amp; reels</h3>
         <p>Animated menus for TV screens, logo intros, Instagram reels and motion posts that make people stop scrolling.</p>
+        <a class="svc-link js-wa" href="mailto:fuzailgfx@gmail.com?subject=Quote%20for%20an%20animation%20or%20reel" data-wa-text="Hi Fuzail, I'd like a quote for an animation or reel." data-wa-label="Get a quote" data-cursor="Get a quote"><span class="js-wa-label">Get a quote</span> <span aria-hidden="true">→</span><span class="sr-only"> for an animation or reel</span></a>
       </li>
-      <li class="svc" data-fade>
+      <li class="svc" data-fade data-glow>
         <svg class="ico ico--brand" viewBox="0 0 80 56" aria-hidden="true"><circle cx="40" cy="28" r="20" class="i-ring" pathLength="1"/><path d="M31 36V20h14M31 28h10" class="i-mono"/></svg>
         <h3>Logos, branding &amp; packaging</h3>
         <p>Logos, colours, packaging and stickers so your shop looks the same on the sign, the bag and the post.</p>
+        <a class="svc-link js-wa" href="mailto:fuzailgfx@gmail.com?subject=Quote%20for%20a%20logo%20or%20branding" data-wa-text="Hi Fuzail, I'd like a quote for a logo or branding." data-wa-label="Get a quote" data-cursor="Get a quote"><span class="js-wa-label">Get a quote</span> <span aria-hidden="true">→</span><span class="sr-only"> for a logo or branding</span></a>
       </li>
     </ul>
+  </div>
+</section>
+
+<!-- Statement + bento -->
+<section class="section section--paper" id="why" aria-labelledby="why-t">
+  <div class="wrap">
+    <p class="eyebrow" data-fade>Why it matters</p>
+    <h2 class="sr-only" id="why-t">Why it matters</h2>
+    <p class="statement" data-scrub>Your sign is the first thing people see. Your menu is what they order from. Your flyer is why they came. I design all of it to work together, so customers notice you, choose you and come back.</p>
+    <div class="bento">
+      <div class="tile tile--wide" data-fade><p class="tile-label">From street to screen</p><p class="tile-text">One designer for the board outside, the menu on the table, the flyer on WhatsApp and the reel on Instagram, so your business looks like itself everywhere.</p></div>
+      <div class="tile tile--sun" data-fade><p class="tile-label">Designing since</p><p class="tile-big" data-count="2020">2020</p></div>
+      <div class="tile tile--ink" data-fade><p class="tile-label">Right now in Goa</p><p class="tile-big tile-big--time"><time data-clock>IST</time></p><p class="tile-small">Madgaon · UTC+5:30</p></div>
+      <div class="tile tile--teal" data-fade><p class="tile-label">Services</p><p class="tile-big"><span data-count="6">6</span></p><p class="tile-small">One designer, one look</p></div>
+      <blockquote class="tile tile--quote" data-fade><p>“Good design makes people stop, look and walk in.”</p></blockquote>
+      <div class="tile tile--red" data-fade><p class="tile-label">You get</p><p class="tile-text">Print-ready files plus WhatsApp and Instagram sizes.</p></div>
+    </div>
   </div>
 </section>
 
@@ -241,11 +268,11 @@
       <p class="eyebrow">Process</p>
       <h2 id="process-t">Simple, from first message <span class="hl">to final file.</span></h2>
     </header>
-    <ol class="steps" role="list">
-      <li class="step" data-fade><span class="step-n">1</span><h3>Say hello</h3><p>Message me with what you need, your shop name and any photos, logo or old designs you have.</p></li>
-      <li class="step" data-fade><span class="step-n">2</span><h3>Quote &amp; idea</h3><p>I share a clear quote and a first direction, so you know the cost and the look before we start.</p></li>
-      <li class="step" data-fade><span class="step-n">3</span><h3>Design &amp; tweaks</h3><p>I design it, you review it on your phone, and we adjust until it feels right for your place.</p></li>
-      <li class="step" data-fade><span class="step-n">4</span><h3>Ready files</h3><p>You get print-ready files for your printer or sign maker, plus versions sized for WhatsApp and Instagram.</p></li>
+    <ol class="steps steps--stack" role="list">
+      <li class="step" style="--i:0"><span class="step-n">1</span><h3>Say hello</h3><p>Message me with what you need, your shop name and any photos, logo or old designs you have.</p></li>
+      <li class="step" style="--i:1"><span class="step-n">2</span><h3>Quote &amp; idea</h3><p>I share a clear quote and a first direction, so you know the cost and the look before we start.</p></li>
+      <li class="step" style="--i:2"><span class="step-n">3</span><h3>Design &amp; tweaks</h3><p>I design it, you review it on your phone, and we adjust until it feels right for your place.</p></li>
+      <li class="step" style="--i:3"><span class="step-n">4</span><h3>Ready files</h3><p>You get print-ready files for your printer or sign maker, plus versions sized for WhatsApp and Instagram.</p></li>
     </ol>
   </div>
 </section>
@@ -298,7 +325,7 @@
       <h2 id="contact-t">Got a menu, sign or flyer <span class="hl hl--sun">to make?</span></h2>
       <p>Send a message with what you need, and I’ll get back to you with ideas and a quote.</p>
       <div class="btn-row">
-        <a class="btn btn-wa btn-lg js-wa" href="mailto:fuzailgfx@gmail.com?subject=Design%20enquiry" data-wa-text="Hi Fuzail, I found Konkan Creative and I'd like a quote for"><span class="js-wa-label">Email for a quote</span></a>
+        <a class="btn btn-wa btn-lg js-wa" href="mailto:fuzailgfx@gmail.com?subject=Design%20enquiry" data-wa-text="Hi Fuzail, I found Konkan Creative and I'd like a quote for" data-magnetic><span class="js-wa-label">Email for a quote</span></a>
         <a class="btn btn-ghost-light btn-lg" href="mailto:fuzailgfx@gmail.com?subject=Design%20enquiry">fuzailgfx@gmail.com</a>
       </div>
     </div>
@@ -314,6 +341,7 @@
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.6.3.1.2.1.8-.2 1.4z"/></svg>
 </a>
 
-<script src="/assets/main.js?v=2" defer></script>
+<div class="cursor" aria-hidden="true" data-cursor-el><span data-cursor-label>Quote</span></div>
+<script src="/assets/main.js?v=3" defer></script>
 </body>
 </html>
