@@ -9,24 +9,31 @@ export const story = [
   {
     label: 'The maker',
     period: '2020 – 2023',
+    // Drive the animated year counter in the journey section (end: null = now).
+    years: [2020, 2023],
     title: 'Pixels first.',
     glyph: 'pen',
+    highlights: ['Freelance on Fiverr', 'Head of media, Team Phoenix', 'Posters, brand & video'],
     text:
       'I started in 2020 as a freelance graphic designer on Fiverr and as head of media production for Team Phoenix: posters, brand visuals and video. Real clients, real deadlines, and a lot of learning what makes people stop and look.',
   },
   {
     label: 'The researcher',
     period: '2023 – 2025',
+    years: [2023, 2025],
     title: 'Questions before pixels.',
     glyph: 'node',
+    highlights: ['Web Designer → UI Designer', 'Competitor analysis', 'User flows & heuristics'],
     text:
       'At Spintly I grew from web designer to UI designer on complex access-control products. I learned to start with competitor analysis, user flows and heuristics, so the interface answers a real question instead of decorating one.',
   },
   {
     label: 'The product designer',
     period: '2025 – now',
+    years: [2025, null],
     title: 'Research into high-impact interfaces.',
     glyph: 'cursor',
+    highlights: ['Senior UI/UX Designer', 'OptiSpaces.ai · Scypher · V3', 'Web, mobile & motion'],
     text:
       'Today, as Senior UI/UX Designer, I connect research, product UI, branding and motion across web and mobile, and stay close to development and R&D so the work ships the way it was designed.',
   },

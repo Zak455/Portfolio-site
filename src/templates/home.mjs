@@ -110,19 +110,57 @@ function processSection() {
 </section>`;
 }
 
-/* ── Story ────────────────────────────────────────────────────────────────── */
-function storySection(story) {
-  return `<section class="section" id="story" aria-labelledby="story-title">
+/* ── Story: scroll-driven journey ─────────────────────────────────────────────
+   A sticky stage (year counter, chapter, role, meter) beside a rail that fills
+   as you scroll. Without JS or with motion off, every chapter is simply shown. */
+const JOURNEY_ICONS = {
+  pen: '<path d="M4 20l4.5-1 10-10a2.1 2.1 0 0 0-3-3l-10 10L4 20z"/><path d="M13.5 7.5l3 3"/>',
+  node: '<circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M8.3 7.2l7.4 3.6M8.3 16.8l7.4-3.6"/>',
+  cursor: '<path d="M5 4l13 6-5.5 1.8L10.7 18z"/><path d="M13 13l5 5"/>',
+  spark: '<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.8 2.8M14.9 14.9l2.8 2.8M6.3 17.7l2.8-2.8M14.9 9.1l2.8-2.8"/>',
+};
+const journeyIcon = (name) =>
+  `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${JOURNEY_ICONS[name] || JOURNEY_ICONS.spark}</svg>`;
+
+function storySection(story, site) {
+  const nowYear = new Date().getFullYear();
+  const total = String(story.length + 1).padStart(2, '0'); // + the "what's next" chapter
+  const first = story[0];
+  return `<section class="section journey-section" id="story" aria-labelledby="story-title">
   <div class="wrap">
-    ${head({ eyebrow: 'How I got here', title: 'From pixels to product.', id: 'story-title' })}
-    <ol class="timeline" role="list">${story
-      .map((c) => `<li class="timeline-item" data-fade>
-        <p class="timeline-period">${esc(c.period)}</p>
-        <p class="timeline-label">${esc(c.label)}</p>
-        <h3 class="timeline-title">${esc(c.title)}</h3>
-        <p>${esc(c.text)}</p>
-      </li>`)
-      .join('')}</ol>
+    ${head({ eyebrow: 'How I got here', title: 'From pixels to product.', intro: 'Three chapters, one thread: learning to make things people notice, then making them answer real questions.', id: 'story-title' })}
+    <div class="journey" data-journey>
+      <div class="journey-stage" aria-hidden="true">
+        <p class="journey-count"><span data-j-index>01</span><span class="journey-count-total"> / ${total}</span></p>
+        <p class="journey-year" data-j-year>${first.years[0]}</p>
+        <p class="journey-role" data-j-role>${esc(first.label)}</p>
+        <div class="journey-meter"><span></span></div>
+        <p class="journey-hint">Scroll the story</p>
+      </div>
+      <ol class="journey-list" role="list">
+        <li class="journey-rail" aria-hidden="true"><span class="journey-fill"></span></li>
+        ${story
+          .map((c, i) => `<li class="journey-item" data-j-item data-y0="${c.years[0]}" data-y1="${c.years[1] ?? nowYear}" data-label="${esc(c.label)}" style="--i:${i}">
+          <span class="journey-node">${journeyIcon(c.glyph)}<svg class="journey-tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12.5l4 4 8-9"/></svg></span>
+          <article class="journey-card">
+            <p class="journey-period"><span>${esc(c.period)}</span> · ${esc(c.label)}</p>
+            <h3 class="journey-title">${esc(c.title)}</h3>
+            <p class="journey-text">${esc(c.text)}</p>
+            ${c.highlights?.length ? `<ul class="journey-tags" role="list">${c.highlights.map((h) => `<li>${esc(h)}</li>`).join('')}</ul>` : ''}
+          </article>
+        </li>`)
+          .join('')}
+        <li class="journey-item journey-item--next" data-j-item data-y0="${nowYear}" data-y1="${nowYear}" data-label="What’s next">
+          <span class="journey-node">${journeyIcon('spark')}</span>
+          <article class="journey-card journey-card--next">
+            <p class="journey-period"><span>Chapter ${String(story.length + 1).padStart(2, '0')}</span> · What’s next</p>
+            <h3 class="journey-title">The next chapter is unwritten.</h3>
+            <p class="journey-text">${site.availability?.enabled ? `${esc(site.availability.label)}. ` : ''}If your team is building something complex that deserves to feel simple, let’s write it together.</p>
+            <a class="text-link" href="#contact">Start the conversation ${arrowRight}</a>
+          </article>
+        </li>
+      </ol>
+    </div>
   </div>
 </section>`;
 }
@@ -232,7 +270,7 @@ export function homePage({ site, projects, additionalWork, about, experience, ed
     work(projects, additionalWork),
     aboutSection(site, about),
     processSection(),
-    storySection(story),
+    storySection(story, site),
     servicesSection(services),
     toolkit(capabilities, tools),
     experienceSection(experience),

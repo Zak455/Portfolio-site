@@ -264,3 +264,69 @@
   sync();
   new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ['class'] });
 })();
+
+/* Journey: the rail fills, chapters wake up and the year counter scrubs with scroll.
+   Runs only while motion is on; otherwise every chapter is shown as finished. */
+(function () {
+  var j = document.querySelector('[data-journey]');
+  if (!j) return;
+  var root = document.documentElement;
+  var list = j.querySelector('.journey-list');
+  var items = Array.prototype.slice.call(j.querySelectorAll('[data-j-item]'));
+  var nodes = items.map(function (it) { return it.querySelector('.journey-node'); });
+  var yEl = j.querySelector('[data-j-year]');
+  var rEl = j.querySelector('[data-j-role]');
+  var iEl = j.querySelector('[data-j-index]');
+  var lastIdx = -1, lastYear = null, ticking = false;
+  var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+
+  function update() {
+    ticking = false;
+    if (!root.classList.contains('motion')) {
+      j.classList.remove('is-live');
+      j.style.removeProperty('--p');
+      items.forEach(function (it) { it.classList.remove('is-active', 'is-past'); });
+      lastIdx = -1;
+      return;
+    }
+    j.classList.add('is-live');
+    var anchor = window.innerHeight * 0.55;
+    // The rail runs from the first node's centre to the last node's centre.
+    var r = list.getBoundingClientRect();
+    var n0 = nodes[0].getBoundingClientRect(), n1 = nodes[nodes.length - 1].getBoundingClientRect();
+    var c0 = n0.top + n0.height / 2, c1 = n1.top + n1.height / 2;
+    list.style.setProperty('--rail-top', (c0 - r.top).toFixed(1) + 'px');
+    list.style.setProperty('--rail-end', (r.bottom - c1).toFixed(1) + 'px');
+    j.style.setProperty('--p', clamp((anchor - c0) / Math.max(1, c1 - c0)).toFixed(4));
+
+    var tops = items.map(function (it) { return it.getBoundingClientRect().top; });
+    var idx = 0;
+    tops.forEach(function (t, i) { if (t < anchor) idx = i; });
+    items.forEach(function (it, i) {
+      it.classList.toggle('is-active', i === idx);
+      it.classList.toggle('is-past', i < idx);
+    });
+
+    // Scrub the year across the active chapter, from its start year to its end year.
+    var a = tops[idx];
+    var b = idx + 1 < items.length ? tops[idx + 1] : a + items[idx].offsetHeight;
+    var local = clamp((anchor - a) / Math.max(1, b - a));
+    var y0 = +items[idx].getAttribute('data-y0'), y1 = +items[idx].getAttribute('data-y1');
+    var year = Math.round(y0 + (y1 - y0) * local);
+    if (year !== lastYear && yEl) { yEl.textContent = year; lastYear = year; }
+
+    if (idx !== lastIdx) {
+      if (iEl) iEl.textContent = String(idx + 1).padStart(2, '0');
+      if (rEl) {
+        rEl.textContent = items[idx].getAttribute('data-label');
+        rEl.classList.remove('is-swap'); void rEl.offsetWidth; rEl.classList.add('is-swap');
+      }
+      lastIdx = idx;
+    }
+  }
+  function req() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', req, { passive: true });
+  window.addEventListener('resize', req);
+  new MutationObserver(req).observe(root, { attributes: true, attributeFilter: ['class'] });
+  update();
+})();
