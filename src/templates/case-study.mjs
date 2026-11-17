@@ -10,7 +10,7 @@ function resolveSections(p, sectionOrder, showPlaceholders) {
   const pending = [];
   for (const [key, title] of sectionOrder) {
     const raw = p.sections[key] || {};
-    const s = showPlaceholders ? raw : { ...raw, media: (raw.media || []).filter((m) => m.src || m.compare) };
+    const s = showPlaceholders ? raw : { ...raw, media: (raw.media || []).filter((m) => m.src || m.compare || m.video) };
     const list = s.useContribution ? p.contribution : s.list;
     const has = (s.body && s.body.length) || (list && list.length) || (s.media && s.media.length);
     (has ? shown : pending).push({ key, title, ...s, list });

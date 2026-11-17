@@ -248,3 +248,19 @@
     mgs.forEach(function (m) { m.classList.add('is-playing'); });
   }
 })();
+
+/* Case study videos: autoplay muted loops only when motion is on; otherwise show controls. */
+(function () {
+  var vids = Array.prototype.slice.call(document.querySelectorAll('[data-media-video]'));
+  if (!vids.length) return;
+  var root = document.documentElement;
+  function sync() {
+    var on = root.classList.contains('motion');
+    vids.forEach(function (v) {
+      v.controls = !on;
+      if (on) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } else v.pause();
+    });
+  }
+  sync();
+  new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ['class'] });
+})();

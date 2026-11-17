@@ -271,8 +271,8 @@ export const projects = [
   },
   {
     slug: 'scypher',
-    // Screenshot of the live page, captured Nov 2026 (tools: see README).
-    shot: { base: '/assets/img/work/scypher', alt: 'Scypher credential management platform page', caption: 'Live page: spintly.com/scypher, captured Nov 2026' },
+    // Screenshot of the new Spintly site on staging (Scypher · Mobile Credentials), captured Nov 2026 (2x tiles, stitched).
+    shot: { base: '/assets/img/work/scypher', alt: 'Scypher Mobile Credentials page: Mobile Access Control, Every Phone a Secure Key', caption: 'Scypher · Mobile Credentials page on the new Spintly website (staging), captured Nov 2026' },
     number: '04',
     name: 'Scypher',
     category: 'Branding / Product Design',
@@ -296,10 +296,16 @@ export const projects = [
       },
       context: {
         body: [
-          'Spintly’s software sits in two products: OptiSpaces.ai, the cloud suite for running buildings, and Scypher, for credential management. Scypher adds mobile, QR and Apple Wallet credentials to any existing access control system, so organisations can modernise how people get in without replacing the readers and panels they already have.',
+          'Spintly’s software sits in two products: OptiSpaces.ai, the cloud suite for running buildings, and Scypher, for credential management. Scypher adds mobile, QR and Apple Wallet credentials to any existing access control system, so organisations can modernise how people get in without replacing the controllers and door hardware they already have.',
+          'It serves three kinds of customer: enterprises that want mobile credentials without building backend infrastructure, system integrators enabling mobile access on the systems they deploy, and property and facility platforms embedding secure access into tenant and resident apps.',
         ],
       },
-      problem: { body: tbd },
+      problem: {
+        body: [
+          'Scypher and OptiSpaces.ai both deal with doors and credentials, so they are easy to confuse. The difference matters to a buyer: OptiSpaces.ai runs the whole building on Spintly hardware, while Scypher leaves the existing access control system in charge and only modernises the credentials.',
+          'The brand and its pages had to make that one idea land fast, “your access logic stays the same”, and reassure enterprise buyers that there is no rewiring and no downtime.',
+        ],
+      },
       objectives: {
         list: [
           'Create a distinct product brand for the credential management platform',
@@ -311,12 +317,37 @@ export const projects = [
       team: { body: tbd },
       research: { body: tbd },
       competitors: { body: tbd },
-      flows: { body: tbd },
+      flows: {
+        body: [
+          'Scypher’s credential flow has six steps: the customer sets permissions in their access control system; the system requests credentials from the Spintly Credential Server; the controller is updated with them; the mobile app, built on the Spintly Mobile SDK, fetches the user’s credential; the user taps in over NFC, Bluetooth or QR; and the controller makes the access decision as it always has.',
+          'The animation turns that flow into something a buyer can follow in a few seconds, showing which parts Spintly builds and manages and which stay with the integrator.',
+        ],
+        media: [
+          { video: '/assets/video/scypher-credential-management.mp4', poster: '/assets/video/scypher-credential-management.webp', alt: 'Animation of the Scypher credential flow, from the access control system and credential server to the phone, reader and controller', caption: 'Credential management animation: how a credential travels from the cloud to the door', width: 1440, height: 1102, wide: true },
+        ],
+      },
       explorations: { body: tbd, media: [{ placeholder: 'Logo and identity explorations' }] },
       wireframes: { body: tbd },
       visual: { body: tbd, media: [{ placeholder: 'Brand system: logo, colour, typography', wide: true }] },
-      final: { body: tbd, media: [{ placeholder: 'Scypher interface applying the new identity' }, { placeholder: 'Brand applications' }] },
-      decisions: { body: tbd },
+      final: {
+        body: [
+          'On the new Spintly website, Scypher has its own place in the Products menu beside OptiSpaces.ai, with three credential products under it: Mobile Credentials, Apple Wallet Access, and QR & Visitor Passes.',
+          'Each product page leads with the outcome (“Every phone a secure key”) and backs it with the proof enterprise buyers look for: BLE and NFC, credentials issued or revoked in seconds, and no rewiring. A side-by-side comparison then answers the question every visitor asks: OptiSpaces.ai or Scypher?',
+        ],
+        media: [
+          { src: '/assets/img/work/scypher/products-menu.webp', alt: 'Spintly Products menu with OptiSpaces.ai modules and the Scypher credential products: Mobile Credentials, Apple Wallet Access, and QR and Visitor Passes', caption: 'Products menu: Scypher positioned beside OptiSpaces.ai, with its three credential products', width: 1440, height: 1041, wide: true },
+          { src: '/assets/img/work/scypher/comparison.webp', alt: 'Comparison table of OptiSpaces.ai and Scypher: what it is, who makes access decisions, hardware, credentials, modules and best for', caption: '“OptiSpaces.ai or Scypher”: one table that settles which product a buyer needs', width: 1440, height: 720, wide: true },
+        ],
+      },
+      decisions: {
+        list: [
+          'Lead with reassurance: “Your access logic stays the same”, with no rewiring and no downtime',
+          'Show the credential flow as an animation instead of a dense architecture diagram',
+          'Mark which parts Spintly builds and which stay with the integrator',
+          'Group the credential products under one Scypher name in navigation, separate from OptiSpaces.ai',
+          'Answer “which one do I need?” with a direct comparison, not more marketing copy',
+        ],
+      },
       implementation: { body: tbd },
       learnings: { body: tbd },
     },

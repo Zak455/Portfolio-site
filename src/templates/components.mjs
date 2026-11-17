@@ -112,6 +112,13 @@ export const tagList = (tags = []) =>
 /* ── Placeholder for missing visuals — deliberately obvious ───────────────── */
 
 export function mediaFrame(m, slug) {
+  // Short muted loop (e.g. a product animation). Reduced-motion visitors get controls instead of autoplay (see main.js).
+  if (m.video) {
+    return `<figure class="media${m.wide ? ' media--wide' : ''}" data-fade>
+      <div class="media-frame"><video src="${esc(m.video)}"${m.poster ? ` poster="${esc(m.poster)}"` : ''} muted loop playsinline autoplay preload="metadata" aria-label="${esc(m.alt || '')}" data-media-video${m.width ? ` width="${m.width}" height="${m.height}"` : ''}></video></div>
+      ${m.caption ? `<figcaption>${esc(m.caption)}</figcaption>` : ''}
+    </figure>`;
+  }
   if (m.src) {
     return `<figure class="media${m.wide ? ' media--wide' : ''}" data-fade>
       <div class="media-frame"><img src="${esc(m.src)}" alt="${esc(m.alt || '')}" loading="lazy" decoding="async"${m.width ? ` width="${m.width}" height="${m.height}"` : ''}></div>
