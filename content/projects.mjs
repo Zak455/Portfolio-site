@@ -45,7 +45,7 @@ export const projects = [
       'Interface design for the web portal and mobile application',
       'Product pages, experience and visual consistency',
     ],
-    tags: ['Access Control', 'Visitor Management', 'Tenant Management', 'Locker Management', 'Elevator Access'],
+    tags: ['Access Control', 'Time & Attendance', 'Visitor Management', 'Tenant Management', 'Locker Management', 'Elevator Access'],
     object: 'layers',
     theme: { accent: '#4f8cff', layout: 'wide' },
     sections: {
