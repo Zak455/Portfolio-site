@@ -419,8 +419,8 @@ export const projects = [
   },
   {
     slug: 'apple-wallet-integration',
-    // Screenshot of the live page, captured Nov 2026 (tools: see README).
-    shot: { base: '/assets/img/work/apple-wallet-integration', alt: 'Spintly Apple Wallet page hero', caption: 'Live page: spintly.com/apple-wallet-india, captured Nov 2026' },
+    // Screenshot of the new Spintly site on staging (Scypher · Apple Wallet Access), captured Nov 2026 (2x tiles, stitched).
+    shot: { base: '/assets/img/work/apple-wallet-integration', alt: 'Apple Wallet Access page: Your iPhone Is Now Your Employee Badge, with a Spintly badge on iPhone and Apple Watch', caption: 'Scypher · Apple Wallet Access page on the new Spintly website (staging), captured Nov 2026' },
     number: '06',
     name: 'Apple Wallet Integration',
     category: 'Product Experience / Collaboration',
@@ -446,9 +446,15 @@ export const projects = [
       context: {
         body: [
           'Spintly already supported many credentials: the mobile app, cards, QR codes, PIN and face recognition. Apple Wallet adds an employee badge people already carry: hold an iPhone or Apple Watch near the reader to unlock, with no app to open and no physical badge.',
+          'Spintly launched employee badges in Apple Wallet for access control in India, and the badge is part of Scypher, Spintly’s credential management platform, alongside mobile credentials and QR visitor passes.',
         ],
       },
-      problem: { body: tbd },
+      problem: {
+        body: [
+          'A badge in Apple Wallet is a new idea for most employees and admins, and it raises the same questions every time: is it secure, does it work when the phone is locked or out of charge, and what happens if the phone is lost?',
+          'The experience, and the way it is explained, had to answer those questions up front, so a badge in Wallet feels as dependable as the plastic card it replaces.',
+        ],
+      },
       objectives: {
         list: [
           'Let employees unlock with iPhone or Apple Watch in one tap',
@@ -465,12 +471,35 @@ export const projects = [
       },
       research: { body: tbd },
       competitors: { body: tbd },
-      flows: { body: tbd, media: [{ placeholder: 'Credential provisioning flow' }] },
+      flows: {
+        body: [
+          'Adding the badge takes four steps: sign in to the employer’s app with employee credentials, follow the in-app instructions, tap Add to Apple Wallet, and finish on screen. The badge added to iPhone is added to the paired Apple Watch too, and from then on either one is held near the reader to get in.',
+        ],
+        media: [
+          { src: '/assets/img/work/apple-wallet-integration/add-badge-and-card.webp', alt: 'Activating your employee badge on iPhone: four steps beside an iPhone and Apple Watch showing the Spintly badge added, and the branded badge card below', caption: 'Adding the badge: four steps, then the same badge on iPhone and Apple Watch, branded for the organisation', width: 1440, height: 900, wide: true },
+        ],
+      },
       explorations: { body: tbd },
       wireframes: { body: tbd },
-      visual: { body: tbd },
-      final: { body: tbd, media: [{ placeholder: 'Credential experience: final design', wide: true }] },
-      decisions: { body: tbd },
+      visual: { body: tbd, media: [{ placeholder: 'Badge card design explorations' }] },
+      final: {
+        body: [
+          'The experience is built around five promises: access instantly from the Spintly app, badge in by holding iPhone or Apple Watch near the reader, keep working for up to five hours with Power Reserve, suspend the badge from Find My if a device is lost, and keep data private with the security of iPhone.',
+          'Express Mode means people don’t need to wake or unlock the device, and the same badge opens office doors, restricted areas, turnstiles and secure printing.',
+        ],
+        media: [
+          { src: '/assets/img/work/apple-wallet-integration/features.webp', alt: 'Employee Badge in Apple Wallet: five feature cards for instant access, easy badging, Power Reserve, Find My and iPhone security', caption: 'Five promises, each shown on the device it happens on', width: 1440, height: 738, wide: true },
+          { src: '/assets/img/work/apple-wallet-integration/homepage-section.webp', alt: 'Spintly homepage section: Your Employee Badge in Apple Wallet, with benefits and a phone and watch showing the badge', caption: 'On the Spintly homepage: Apple Wallet presented as one credential among many', width: 1440, height: 684, wide: true },
+        ],
+      },
+      decisions: {
+        list: [
+          'Answer the trust questions first: Express Mode, Power Reserve, Find My and privacy',
+          'Show the badge on both iPhone and Apple Watch, since one badge works on both',
+          'Make the badge card itself carry the organisation’s brand',
+          'Present Apple Wallet alongside the app, card and QR credentials, not as a replacement for them',
+        ],
+      },
       implementation: { body: tbd },
       learnings: { body: tbd },
     },
