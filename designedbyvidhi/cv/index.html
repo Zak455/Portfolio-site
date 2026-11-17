@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vidhi Halarnkar · CV · DesignedByVidhi</title>
+  <meta name="description" content="CV of Vidhi Halarnkar, graphic designer in Goa: social media, posters, brand identity and print.">
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Caveat:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root { --cream: #FFF4E8; --cream-2: #FFE9D3; --ink: #1F1420; --ink-2: #4A3A46; --ink-3: #7A6873; --tomato: #FF4F2E; --sun: #FFC93C; --plum: #6E2B3D; --line: rgba(31,20,32,.16); }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #EDE3D8; color: var(--ink); font: 400 12.7px/1.46 "Bricolage Grotesque", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
+    .bar { position: sticky; top: 0; z-index: 2; display: flex; justify-content: center; gap: 10px; padding: 14px 16px; background: rgba(237,227,216,.9); backdrop-filter: blur(8px); }
+    .bar a, .bar button { font: 700 14px "Bricolage Grotesque", sans-serif; padding: 10px 18px; border-radius: 999px; border: 2px solid var(--ink); background: #fff; color: var(--ink); text-decoration: none; cursor: pointer; box-shadow: 0 3px 0 var(--ink); }
+    .bar .primary { background: var(--tomato); color: #fff; }
+    .page { width: 210mm; min-height: 297mm; margin: 8px auto 40px; background: var(--cream); box-shadow: 0 20px 50px rgba(31,20,32,.18); display: flex; flex-direction: column; overflow: hidden; }
+    header { flex: none; position: relative; padding: 12mm 14mm 8mm; background: var(--ink); color: var(--cream); overflow: hidden; }
+    .body { flex: 1; }
+    /* Decorative circles stay in the right-hand corner; the text column never reaches them. */
+    header::after { content: ""; position: absolute; right: -20mm; top: -24mm; width: 62mm; height: 62mm; border-radius: 50%; background: var(--tomato); }
+    header::before { content: ""; position: absolute; right: 24mm; bottom: -14mm; width: 24mm; height: 24mm; border-radius: 50%; background: var(--sun); }
+    .name, .role, .contact { position: relative; z-index: 1; max-width: 128mm; }
+    .name { margin: 0; font-size: 40px; font-weight: 800; letter-spacing: -.04em; line-height: .95; }
+    .role { margin: 6px 0 12px; font-size: 15px; font-weight: 700; color: var(--sun); }
+    .contact { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 12.5px; color: var(--cream); }
+    .contact a { text-decoration: none; }
+    .hand { position: absolute; z-index: 1; right: 14mm; top: 13mm; font: 700 22px "Caveat", cursive; color: var(--ink); transform: rotate(-6deg); }
+    .body { display: grid; grid-template-columns: 1fr 62mm; }
+    main { padding: 8mm 8mm 8mm 14mm; }
+    aside { padding: 8mm 12mm 8mm 7mm; background: var(--cream-2); border-left: 1.5px dashed var(--line); }
+    h2 { margin: 0 0 8px; font-size: 12.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--tomato); display: flex; align-items: center; gap: 8px; }
+    h2::after { content: ""; flex: 1; height: 2px; background: var(--ink); opacity: .85; border-radius: 2px; }
+    section { margin-bottom: 6mm; }
+    section:last-child { margin-bottom: 0; }
+    .summary { margin: 0; font-size: 13.6px; color: var(--ink-2); }
+    .job { margin-bottom: 5mm; }
+    .job:last-child { margin-bottom: 0; }
+    .job-head { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+    .job h3 { margin: 0; font-size: 14.5px; font-weight: 800; letter-spacing: -.01em; }
+    .when { flex: none; font-size: 11.5px; font-weight: 700; color: #fff; background: var(--plum); padding: 2px 8px; border-radius: 999px; }
+    .org { margin: 1px 0 5px; font-weight: 700; color: var(--plum); font-size: 12.8px; }
+    ul { margin: 0; padding-left: 16px; }
+    li { margin: 2px 0; color: var(--ink-2); }
+    li::marker { color: var(--tomato); }
+    .tags { display: flex; flex-wrap: wrap; gap: 5px; padding: 0; list-style: none; }
+    .tags li { margin: 0; padding: 2px 8px; border: 1.5px solid var(--ink); border-radius: 999px; font-size: 11.5px; font-weight: 700; color: var(--ink); background: #fff; }
+    .tags.tools li { background: var(--ink); color: var(--cream); }
+    aside ul:not(.tags) { padding-left: 14px; }
+    aside p { margin: 0 0 4px; color: var(--ink-2); }
+    .label { font-weight: 800; color: var(--ink); display: block; font-size: 12px; }
+    .ref p { margin: 0; }
+    .small { font-size: 12px; }
+    @media screen and (max-width: 820px) {
+      .page { width: auto; min-height: 0; margin: 0 0 24px; }
+      .body { grid-template-columns: 1fr; }
+      main, aside { padding: 24px 16px; } aside { border-left: 0; border-top: 1.5px dashed var(--line); }
+      .bar { gap: 8px; } .bar a, .bar button { padding: 9px 14px; font-size: 13px; white-space: nowrap; }
+      header { padding: 32px 76px 24px 16px; } .hand { display: none; } .name { font-size: 34px; }
+      header::after { right: -38px; top: -38px; width: 108px; height: 108px; }
+      header::before { right: 14px; bottom: auto; top: 58px; width: 30px; height: 30px; }
+      .contact { flex-direction: column; gap: 4px; }
+    }
+    @page { size: A4; margin: 0; }
+    @media print {
+      body { background: none; }
+      .bar { display: none; }
+      .page { margin: 0; box-shadow: none; width: 210mm; height: 297mm; min-height: 0; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bar">
+    <a href="/">← Back to portfolio</a>
+    <a class="primary" href="/assets/cv/Vidhi-Halarnkar-CV.pdf" download>Download PDF</a>
+    <button type="button" onclick="window.print()">Print</button>
+  </div>
+
+  <article class="page">
+    <header>
+      <h1 class="name">Vidhi Halarnkar</h1>
+      <p class="role">Graphic Designer · Social Media, Print &amp; Brand</p>
+      <p class="contact">
+        <span>Chicalim, Vasco, Goa</span>
+        <a href="tel:+918855034613">+91 88550 34613</a>
+        <a href="mailto:halarnkarvidhi@gmail.com">halarnkarvidhi@gmail.com</a>
+        <a href="https://designedbyvidhi.vercel.app/" data-portfolio>designedbyvidhi.vercel.app</a>
+      </p>
+      <span class="hand" aria-hidden="true">hi there!</span>
+    </header>
+
+    <div class="body">
+      <main>
+        <section>
+          <h2>Profile</h2>
+          <p class="summary">Graphic designer with a year of hands-on social media and print experience at Bouncing Buddies, Goa's pet experience café, plus a portfolio of B2B poster campaigns, brand identities and exhibition mockups. I turn busy or technical ideas into clear, engaging visuals, and bring a law student's precision to layout, copy and detail.</p>
+        </section>
+
+        <section>
+          <h2>Experience</h2>
+          <div class="job">
+            <div class="job-head"><h3>Graphic Designer, Social Media &amp; Print</h3><span class="when">Jan 2026 – Dec 2026</span></div>
+            <p class="org">Bouncing Buddies · Taleigao, Panaji, Goa</p>
+            <ul>
+              <li>Designed Instagram posts and carousels promoting the café, its pet-education experiences, activities and events.</li>
+              <li>Created short-form reels showing the animals, play areas and café for the brand's social channels.</li>
+              <li>Designed printed flyers and promotional material for in-café and event promotions.</li>
+              <li>Kept one playful, consistent visual style across digital and print touchpoints.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section>
+          <h2>Projects</h2>
+          <div class="job">
+            <div class="job-head"><h3>Poster Campaigns for B2B Tech</h3><span class="when">Concept series</span></div>
+            <p class="org">Digital &amp; print · self-initiated</p>
+            <ul>
+              <li>Created a series of digital and print posters for access control and cloud platforms, turning technical features into clear visual stories.</li>
+              <li>Designed event-announcement and industry-showcase posters in the style of high-end corporate event marketing.</li>
+              <li>Built reusable layout grids and type hierarchies for event and product-feature posters.</li>
+            </ul>
+          </div>
+          <div class="job">
+            <div class="job-head"><h3>Brand Identity &amp; Exhibition Mockups</h3><span class="when">Portfolio work</span></div>
+            <p class="org">Branding · marketing collateral · events</p>
+            <ul>
+              <li>Designed logos and brand identities, marketing carousels and presentation slides.</li>
+              <li>Produced exhibition booth mockups to show how a brand comes to life at events before anything is printed.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section>
+          <h2>Education</h2>
+          <div class="job">
+            <div class="job-head"><h3>B.A. LL.B. (4th year)</h3><span class="when">Currently pursuing</span></div>
+            <p class="org">V.M. Salgaocar College of Law, Goa</p>
+            <ul>
+              <li>Legal training in research, structured thinking and close reading, applied to accurate, compliant brand and marketing design.</li>
+            </ul>
+          </div>
+        </section>
+      </main>
+
+      <aside>
+        <section>
+          <h2>Design skills</h2>
+          <ul class="tags">
+            <li>Social media content</li><li>Reels</li><li>Posters</li><li>Flyers &amp; print</li><li>Brand identity</li><li>Logo design</li><li>Carousels</li><li>Exhibition mockups</li><li>Presentation design</li><li>Tech product visuals</li><li>Layout &amp; typography</li><li>Visual storytelling</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Tools</h2>
+          <ul class="tags tools"><li>Figma</li><li>Adobe Photoshop</li></ul>
+        </section>
+        <section>
+          <h2>Strengths</h2>
+          <ul class="small">
+            <li>Attention to detail</li>
+            <li>Turning technical ideas into simple visuals</li>
+            <li>Research and structured thinking</li>
+            <li>Clear written communication</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Details</h2>
+          <p><span class="label">Location</span>Panaji or Vasco, Goa · open to remote</p>
+          <p><span class="label">Availability</span>Design roles and freelance projects</p>
+        </section>
+        <section class="ref">
+          <h2>Reference</h2>
+          <p><span class="label">Fuzail Khan</span></p>
+          <p class="small">Senior UI/UX Designer, Spintly India Pvt. Ltd.</p>
+          <p class="small"><a href="mailto:fuzail.k@spintly.com">fuzail.k@spintly.com</a></p>
+        </section>
+      </aside>
+    </div>
+  </article>
+</body>
+</html>

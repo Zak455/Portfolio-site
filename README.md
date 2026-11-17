@@ -6,6 +6,8 @@ Senior UI/UX Designer · Goa, India. Live at **https://fuzailgfx.vercel.app**.
 
 Second site: **Konkan Creative** (`konkan-creative/`), the graphic design and print studio for local businesses, deployed as its own Vercel project at https://konkancreative.vercel.app.
 
+Third site: **DesignedByVidhi** (`designedbyvidhi/`), the portfolio and CV of graphic designer Vidhi Halarnkar, deployed as its own Vercel project at https://designedbyvidhi.vercel.app (Root Directory `designedbyvidhi`).
+
 A static site: content lives in plain data files, a zero-dependency Node script renders it to HTML, and Vercel deploys it on every push to `main`.
 
 ```
