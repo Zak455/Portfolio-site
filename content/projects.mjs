@@ -60,7 +60,12 @@ export const projects = [
           "OptiSpaces.ai is now the single platform for that suite: access control, visitor management, tenant management, video integration, locker access and elevator access run in one integrated product. The change spans both the mobile app (iOS and Android) and the web portal, so admins, operators, employees and residents get one consistent experience.",
         ],
       },
-      problem: { body: tbd },
+      problem: {
+        body: [
+          "Each product had grown up on its own: access control, attendance, visitors, tenants, video, lockers and elevators each came with its own screens and habits. For admins running a building, that meant switching between tools for one job. For employees and residents, it meant the experience changed depending on which product they touched.",
+          'The opportunity was to make the suite feel like one platform: the same users, doors and credentials shared across every module, under one product name.',
+        ],
+      },
       objectives: {
         list: [
           'Define a product identity and visual direction for the suite',
@@ -80,8 +85,91 @@ export const projects = [
       explorations: { body: tbd, media: [{ placeholder: 'Early identity explorations: wordmark and visual direction sketches' }, { placeholder: 'Alternative directions considered' }] },
       wireframes: { body: tbd },
       visual: { body: tbd, media: [{ placeholder: 'Visual direction board: colour, type, components' }] },
-      final: { body: tbd, media: [{ placeholder: 'Final web portal: hero screen', wide: true }, { placeholder: 'Mobile application screens' }, { placeholder: 'Product page' }] },
+      final: {
+        body: [
+          'OptiSpaces.ai ships as a web portal for admins and operators and a mobile app on iOS and Android for everyone who uses the building. Both carry the same identity and patterns, so moving from the dashboard to the phone feels like one product.',
+          'The suite covers seven connected modules: Access Control, Time & Attendance, Visitor Management, Tenant Management, Video Management, Elevator Access and Locker Access.',
+        ],
+        media: [{ placeholder: 'Final web portal: hero screen', wide: true }, { placeholder: 'Mobile application screens' }, { placeholder: 'Product page' }],
+      },
       decisions: { body: tbd },
+      implementation: { body: tbd },
+      learnings: { body: tbd },
+    },
+  },
+  {
+    slug: 'optispaces-website',
+    number: '02',
+    name: 'OptiSpaces.ai Website',
+    category: 'Website Design / Product Storytelling',
+    year: null,
+    summary:
+      'Designing the new OptiSpaces.ai website, which presents the platform as an AI operating system for physical security: access control, video intelligence, visitors, tenants and attendance on one intelligence layer.',
+    role: 'Website design: structure, UI & product storytelling',
+    teamNote: 'In progress: the new site is on staging and not yet public.',
+    contribution: [
+      'Website structure and page flow',
+      'UI design and interactive product moments',
+      'Product storytelling for the AI and video platform',
+      'Presenting seven software products on one page',
+    ],
+    tags: ['Website', 'AI Video Analytics', 'Access Control', 'Physical Security'],
+    object: 'globe',
+    theme: { accent: '#4f8cff', layout: 'split' },
+    sections: {
+      introduction: {
+        body: [
+          'The new OptiSpaces.ai website tells the story of the platform as an AI operating system for physical security. Wireless access control, video intelligence, visitor, tenant and attendance management share one intelligence layer, so every event tells the whole story.',
+        ],
+      },
+      context: {
+        body: [
+          "OptiSpaces.ai grew from an access control suite into a platform that also understands video: Spintly EDGE AI turns existing IP cameras into smart cameras, with facial recognition, people counting, perimeter intrusion detection and licence plate recognition. The website needed to carry that shift without losing the access control story customers already knew.",
+        ],
+      },
+      problem: {
+        body: [
+          'Physical security used to mean separate systems: access panels, video recorders, sensors and building software, each with its own screen, and control rooms full of feeds and alert fatigue. The site had to make "one platform, one pane of glass" feel concrete, not abstract.',
+        ],
+      },
+      objectives: {
+        list: [
+          'Position OptiSpaces.ai as AI-based physical security, with access and video on one layer',
+          'Present seven connected software products clearly on one page',
+          'Make AI use cases tangible for admins, security officers and executives',
+          'Explain deployment, from first site survey to full commissioning',
+          'Build trust with certifications and a clear path to sales',
+        ],
+      },
+      role: { useContribution: true },
+      team: { body: tbd },
+      research: { body: tbd },
+      competitors: { body: tbd },
+      flows: {
+        body: [
+          'The page moves from the big idea to proof: one platform, then the seven-product software suite, then why the architecture is faster and cheaper to install, then integrations, AI capabilities, AI use cases, deployment, certifications and contact.',
+          'The platform idea is told as three verbs (Live, Understand, Remember): cameras, access events and alerts in real time; AI that detects, correlates and summarises incidents; and a searchable incident log with timelines and evidence.',
+        ],
+        media: [{ placeholder: 'Page structure: from platform idea to contact' }],
+      },
+      explorations: { body: tbd },
+      wireframes: { body: tbd },
+      visual: { body: tbd, media: [{ placeholder: 'Hero: "Securing the built world with AI"', wide: true }] },
+      final: {
+        body: [
+          'The AI use cases section lets visitors switch between Overcrowding, Zone violation, PPE compliance, Vehicle pass & parking and Person of interest. Each one shows the same chain (cameras, AI detection, response, intelligence) and who it helps: the admin who configures it, the officer who responds and the executive who reads the trends.',
+          'A six-step deployment timeline (approval, site survey, proposal, alignment, costing, execution) answers the "how do we get this?" question before a visitor has to ask sales.',
+        ],
+        media: [{ placeholder: 'Software suite: seven products on one platform', wide: true }, { placeholder: 'AI use cases: interactive switcher' }, { placeholder: 'Deployment timeline' }],
+      },
+      decisions: {
+        list: [
+          'Lead with one idea (access and video on one intelligence layer) before listing products',
+          'Show every use case through the same detection → response → intelligence chain, so they read as one system',
+          'Speak to three audiences (admin, officer, executive) inside each use case instead of one generic buyer',
+          'Group AI capabilities by what they protect: identity, vehicles, movement and policy',
+        ],
+      },
       implementation: { body: tbd },
       learnings: { body: tbd },
     },
@@ -90,7 +178,7 @@ export const projects = [
     slug: 'spintly-global-website',
     // Screenshot of the live page, captured Nov 2026 (tools: see README).
     shot: { base: '/assets/img/work/spintly-global-website', alt: 'Spintly global website hero section', caption: 'Live site: spintly.com global website, captured Nov 2026' },
-    number: '02',
+    number: '03',
     name: 'Spintly Global Website',
     category: 'Website Design / UX Research',
     year: null,
@@ -112,8 +200,17 @@ export const projects = [
       introduction: {
         body: ["I led the redesign of Spintly's website, turning it into a modern, global digital experience for the company and its product range, built on UX research, competitor analysis and scalable UI systems."],
       },
-      context: { body: tbd },
-      problem: { body: tbd },
+      context: {
+        body: [
+          'Spintly is a global technology platform for access control. It serves two very different audiences: teams who run buildings and want smarter, wireless security, and manufacturers who want to license the technology and build their own connected devices.',
+          'The product range is wide: smart readers on a patented BLE mesh, the OptiSpaces.ai software suite, Scypher for credential management, and open APIs and SDKs for integrations.',
+        ],
+      },
+      problem: {
+        body: [
+          'The site had to speak to both audiences without splitting into two websites, and explain hardware, software and platform clearly enough that a facility manager, an IT lead or an OEM could each find their path quickly.',
+        ],
+      },
       objectives: {
         list: [
           'Understand how comparable companies present similar products',
@@ -126,12 +223,32 @@ export const projects = [
       team: { body: tbd },
       research: { body: tbd, media: [{ placeholder: 'UX research synthesis' }] },
       competitors: { body: tbd, media: [{ placeholder: 'Competitor analysis matrix' }] },
-      flows: { body: tbd, media: [{ placeholder: 'Sitemap / information architecture' }] },
+      flows: {
+        body: [
+          'The homepage opens with a choice: Physical Security for teams who run buildings, or Technology Services for companies who build devices. Physical Security breaks down into Hardware, Software and Platform.',
+          'From there the page builds the case in order: wireless readers, the BLE mesh, every credential type, the OptiSpaces.ai solutions, integrations, the partner programme, certifications, industries, customer stories and a demo form.',
+        ],
+        media: [{ placeholder: 'Sitemap / information architecture' }],
+      },
       explorations: { body: tbd },
       wireframes: { body: tbd, media: [{ placeholder: 'Key page wireframes' }] },
       visual: { body: tbd },
-      final: { body: tbd, media: [{ placeholder: 'Homepage: final design', wide: true }, { placeholder: 'Product page: final design' }] },
-      decisions: { body: tbd },
+      final: {
+        body: [
+          'The product is shown working rather than described. A live feed of access events (meeting room, floor, loading dock, each with the credential used) sits beside the BLE mesh story. A phone mock-up walks through a mobile unlock, from "Tap to unlock" to "Access granted".',
+          'Credentials (mobile, Apple Wallet, QR, card, PIN, face and fingerprint) each get their own tab, and the seven OptiSpaces.ai modules sit in one tabbed section, so a lot of product fits on one page without becoming a wall of text.',
+          'Industry cards cover eight sectors, from co-working and offices to healthcare, hospitality and construction, so each visitor can find their kind of space.',
+        ],
+        media: [{ placeholder: 'Homepage: final design', wide: true }, { placeholder: 'Credential tabs and mobile unlock mock-up' }, { placeholder: 'OptiSpaces.ai solutions section' }],
+      },
+      decisions: {
+        list: [
+          'Split the audience at the top (Physical Security vs Technology Services) instead of building two sites',
+          'Show live product moments (access events, mobile unlock) rather than static feature lists',
+          'Use tabs for credentials, solutions and integrations to keep a broad product range scannable',
+          'Put certifications (SOC 2 Type II, ISO/IEC 27001, ISO 9001, FCC) close to the decision point for enterprise buyers',
+        ],
+      },
       implementation: { body: tbd },
       learnings: { body: tbd },
     },
@@ -140,7 +257,7 @@ export const projects = [
     slug: 'scypher',
     // Screenshot of the live page, captured Nov 2026 (tools: see README).
     shot: { base: '/assets/img/work/scypher', alt: 'Scypher credential management platform page', caption: 'Live page: spintly.com/scypher, captured Nov 2026' },
-    number: '03',
+    number: '04',
     name: 'Scypher',
     category: 'Branding / Product Design',
     year: null,
@@ -186,7 +303,7 @@ export const projects = [
   },
   {
     slug: 'spintly-v3',
-    number: '04',
+    number: '05',
     name: 'Spintly V3',
     category: 'Mobile Product Design',
     year: null,
@@ -222,7 +339,7 @@ export const projects = [
     slug: 'apple-wallet-integration',
     // Screenshot of the live page, captured Nov 2026 (tools: see README).
     shot: { base: '/assets/img/work/apple-wallet-integration', alt: 'Spintly Apple Wallet page hero', caption: 'Live page: spintly.com/apple-wallet-india, captured Nov 2026' },
-    number: '05',
+    number: '06',
     name: 'Apple Wallet Integration',
     category: 'Product Experience / Collaboration',
     year: null,
@@ -299,6 +416,8 @@ export const additionalWork = {
     'Elevator Access',
     'Hotel Access Control',
     'Visitor Management',
+    'Tenant Management',
+    'Video Management',
     'Mobile Credentialing',
     'Digital Credentials',
   ],
