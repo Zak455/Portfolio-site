@@ -36,6 +36,7 @@ export const projects = [
     links: [
       { label: 'OptiSpaces.ai dashboard', href: 'https://dashboard.optispaces.ai/login' },
       { label: 'App Store', href: 'https://apps.apple.com/in/app/optispaces-ai-by-spintly/id1462730510' },
+      { label: 'Google Play', href: 'https://play.google.com/store/apps/details?id=com.mrinq.smartaccess' },
     ],
     contribution: [
       'Product ideation',
@@ -44,7 +45,7 @@ export const projects = [
       'Interface design for the web portal and mobile application',
       'Product pages, experience and visual consistency',
     ],
-    tags: ['Access Control', 'Time & Attendance', 'Locker Management', 'Visitor Management'],
+    tags: ['Access Control', 'Visitor Management', 'Tenant Management', 'Locker Management', 'Elevator Access'],
     object: 'layers',
     theme: { accent: '#4f8cff', layout: 'wide' },
     sections: {
@@ -56,6 +57,7 @@ export const projects = [
       context: {
         body: [
           "Spintly builds smart access and workspace products: access control, time & attendance, locker management, elevator access, visitor management and mobile credentials. The software suite needed an identity that could carry all of it.",
+          "OptiSpaces.ai is now the single platform for that suite: access control, visitor management, tenant management, video integration, locker access and elevator access run in one integrated product. The change spans both the mobile app (iOS and Android) and the web portal, so admins, operators, employees and residents get one consistent experience.",
         ],
       },
       problem: { body: tbd },
