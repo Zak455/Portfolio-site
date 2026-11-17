@@ -41,11 +41,11 @@ function hero(site, about) {
 </section>`;
 }
 
-/* ── Product areas marquee ──────────────────────────────────────────────── */
+/* ── Core expertise marquee ─────────────────────────────────────────────── */
 function areas(extra) {
-  const items = extra.productAreas.map((a) => `<li>${esc(a)}</li>`).join('<li class="sep" aria-hidden="true">✦</li>');
-  return `<section class="areas" aria-label="Product areas I design for">
-  <p class="sr-only">Product areas I design for: ${esc(extra.productAreas.join(', '))}</p>
+  const items = extra.coreExpertise.map((a) => `<li>${esc(a)}</li>`).join('<li class="sep" aria-hidden="true">✦</li>');
+  return `<section class="areas" aria-label="Core expertise">
+  <p class="sr-only">Core expertise: ${esc(extra.coreExpertise.join(', '))}</p>
   <div class="marquee" aria-hidden="true">
     <ul class="marquee-track" role="list">${items}<li class="sep">✦</li>${items}<li class="sep">✦</li></ul>
   </div>
