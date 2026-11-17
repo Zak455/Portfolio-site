@@ -47,7 +47,7 @@ Requires Node 18+. The site itself has **no npm dependencies**.
 | Edit the story chapters, services or FAQ | `content/studio.mjs` |
 | Add certifications or a publication | `content/profile.mjs` → `certifications`, `publications` |
 | Add my email | `content/site.mjs` → `contact.email` (CTAs switch from LinkedIn to email automatically) |
-| Add a CV download | Put the PDF in `src/assets/cv/` and set `contact.cv` in `content/site.mjs` |
+| Update the CV | It is built from `content/` by `src/templates/cv.mjs` at `/cv/`. After editing, regenerate the PDF (see "CV" below) |
 | Write a case study section | `content/projects.mjs` → the project's `sections`. A section with `body: null` and no media stays hidden. |
 | Replace a project card screenshot | Save `<slug>-800.webp` and `<slug>-1440.webp` (16:10) to `src/assets/img/work/` and set `shot` on the project in `content/projects.mjs` |
 | Add real project images | Save WebP files to `src/assets/img/work/<slug>/` and set `src` on the matching `media` entry (it replaces the placeholder) |
@@ -74,3 +74,11 @@ node render-og.mjs # needs `npm run dev` running in the repo root
 - No WebGL at runtime — the 3D objects are pre-rendered transparent WebP (~20–100 KB each).
 - Fonts are subset WOFF2 with `font-display: swap`; key fonts are preloaded.
 - Skip link, visible focus states, keyboard-accessible mobile menu with focus trap and Escape to close.
+
+## CV
+
+`/cv/` is a one-page A4 CV generated from the same content as the site (`src/templates/cv.mjs`: experience, education, tools, core expertise and links to the case studies). The downloadable PDF lives at `src/assets/cv/Fuzail-Khan-CV.pdf`. After changing the content, rebuild and print it with headless Edge while `npm run dev` is running:
+
+```bash
+"/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" --headless=new --no-pdf-header-footer --virtual-time-budget=6000 --print-to-pdf="src/assets/cv/Fuzail-Khan-CV.pdf" http://localhost:4173/cv/
+```

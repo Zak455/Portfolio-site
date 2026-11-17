@@ -14,7 +14,7 @@ export function nav(site, { home = true } = {}) {
   const href = (h) => (home ? h.replace('/#', '#') : h);
   const links = navItems
     .map(([label, h, id]) => `<li><a class="nav-link" href="${href(h)}" data-nav="${id}">${label}</a></li>`)
-    .join('');
+    .join('') + (site.contact.cv ? `<li><a class="nav-link" href="${esc(site.contact.cv)}">CV</a></li>` : '');
   return `<a class="skip" href="#main">Skip to content</a>
 <header class="nav" data-nav-root>
   <span class="nav-progress" aria-hidden="true"><span data-progress></span></span>
@@ -58,7 +58,9 @@ export function footer(site) {
       <div class="foot-col">
         <p class="foot-label">Direct</p>
         ${c.email ? `<a href="mailto:${esc(c.email)}">${esc(c.email)}</a>` : ''}
-        ${c.cv ? `<a href="${esc(c.cv)}" target="_blank" rel="noopener">View CV ↗<span class="sr-only"> (opens in a new tab)</span></a>` : ''}
+        ${c.phone ? `<a href="tel:${esc(c.phone.replace(/[^+\d]/g, ''))}">${esc(c.phone)}</a>` : ''}
+        ${c.cv ? `<a href="${esc(c.cv)}">View CV</a>` : ''}
+        ${c.cvPdf ? `<a href="${esc(c.cvPdf)}" download>Download CV (PDF)</a>` : ''}
       </div>
       <div class="foot-col">
         <p class="foot-label">Elsewhere</p>

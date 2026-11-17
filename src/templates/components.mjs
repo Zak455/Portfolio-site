@@ -225,3 +225,32 @@ export function productShot(p, { sizes = '(min-width: 960px) 60vw, 92vw', priori
     ${caption ? `<figcaption>${esc(p.shot.caption)}</figcaption>` : ''}
   </figure>`;
 }
+
+/* ── Contact CTA band ─────────────────────────────────────────────────────────
+   Dropped between sections (home: after every second one; case studies: mid-way
+   and at the end) so a recruiter is never more than a scroll away from contact. */
+export function ctaBand(site, { eyebrow, title, text, tone = 'light', inline = false } = {}) {
+  const c = site.contact;
+  const mail = c.email ? `mailto:${esc(c.email)}` : esc(c.linkedin);
+  return `<aside class="cta-band cta-band--${tone}${inline ? ' cta-band--inline' : ''}" aria-label="Contact Fuzail" data-fade>
+  <div class="${inline ? 'cta-inner' : 'wrap'}">
+    <div class="cta-card">
+      <span class="cta-glow" aria-hidden="true"></span>
+      <div class="cta-who">
+        <img class="cta-avatar" src="/assets/img/about/portrait-photo-560.webp" alt="" width="64" height="64" loading="lazy" decoding="async">
+        ${site.availability?.enabled ? `<span class="cta-status"><i aria-hidden="true"></i>${esc(site.availability.label)}</span>` : ''}
+      </div>
+      <div class="cta-copy">
+        ${eyebrow ? `<p class="cta-eyebrow">${esc(eyebrow)}</p>` : ''}
+        <p class="cta-title">${esc(title)}</p>
+        ${text ? `<p class="cta-text">${esc(text)}</p>` : ''}
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="${mail}" data-magnetic>${c.email ? 'Email me' : 'Message me'} ${arrow}</a>
+        ${c.cv ? `<a class="btn btn-secondary" href="${esc(c.cv)}">View CV</a>` : ''}
+        ${c.linkedin ? `<a class="cta-icon" href="${esc(c.linkedin)}" target="_blank" rel="noopener" aria-label="LinkedIn (opens in a new tab)"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4v11H3zM9.5 9.5h3.8v1.5h.1c.5-1 1.8-1.8 3.7-1.8 4 0 4.7 2.6 4.7 6v6.3h-4v-5.6c0-1.3 0-3-1.9-3s-2.2 1.4-2.2 2.9v5.7h-4z"/></svg></a>` : ''}
+      </div>
+    </div>
+  </div>
+</aside>`;
+}

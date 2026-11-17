@@ -24,6 +24,8 @@ const tbd = null; // marks a section waiting for your write-up
 export const projects = [
   {
     slug: 'optispaces',
+    // "At a glance" strip on the case study: real facts only (content, store listings).
+    glance: [{ n: '7', l: 'product modules on one platform' }, { n: '3', l: 'surfaces: web portal, iOS & Android' }, { n: '100K+', l: 'Google Play downloads' }],
     // Screenshot of the live page, captured Nov 2026 (tools: see README).
     shot: { base: '/assets/img/work/optispaces', alt: 'OptiSpaces.ai web dashboard with hourly access analytics, KPI cards and module navigation', caption: 'OptiSpaces.ai web portal: dashboard (demo organisation), Nov 2026' },
     number: '01',
@@ -105,6 +107,8 @@ export const projects = [
   },
   {
     slug: 'optispaces-website',
+    // "At a glance" strip on the case study: real facts only (content, store listings).
+    glance: [{ n: '7', l: 'products told on a single page' }, { n: '5', l: 'AI use cases in one interaction' }, { n: '6', l: 'step deployment journey' }],
     // Screenshot of the staging site, captured Nov 2026 in the browser pane (2x tiles, stitched).
     shot: { base: '/assets/img/work/optispaces-website', alt: 'OptiSpaces.ai website hero: Securing the built world with AI', caption: 'Staging site: new OptiSpaces.ai website, captured Nov 2026' },
     number: '02',
@@ -190,6 +194,8 @@ export const projects = [
   },
   {
     slug: 'spintly-global-website',
+    // "At a glance" strip on the case study: real facts only (content, store listings).
+    glance: [{ n: '2', l: 'audiences served by one site' }, { n: '7', l: 'credential types, one section' }, { n: '8', l: 'industries with their own path' }],
     // Screenshot of the new site on staging, captured Nov 2026 in the browser pane (2x tiles, stitched).
     shot: { base: '/assets/img/work/spintly-global-website', alt: 'New Spintly website hero: A Global Technology Platform for Access Control', caption: 'New Spintly website (staging), captured Nov 2026' },
     number: '03',
@@ -271,6 +277,8 @@ export const projects = [
   },
   {
     slug: 'scypher',
+    // "At a glance" strip on the case study: real facts only (content, store listings).
+    glance: [{ n: '3', l: 'credential products: mobile, Wallet, QR' }, { n: '6', l: 'step credential flow, animated' }, { n: '0', l: 'rewiring for existing systems' }],
     // Screenshot of the new Spintly site on staging (Scypher · Mobile Credentials), captured Nov 2026 (2x tiles, stitched).
     shot: { base: '/assets/img/work/scypher', alt: 'Scypher Mobile Credentials page: Mobile Access Control, Every Phone a Secure Key', caption: 'Scypher · Mobile Credentials page on the new Spintly website (staging), captured Nov 2026' },
     number: '04',
@@ -354,6 +362,8 @@ export const projects = [
   },
   {
     slug: 'spintly-v3',
+    // "At a glance" strip on the case study: real facts only (content, store listings).
+    glance: [{ n: '3', l: 'tab navigation: Doors, Consoles, Help' }, { n: '2', l: 'stores: Google Play & App Store' }, { n: '100K+', l: 'Google Play downloads' }],
     // Built from the Google Play listing screenshots (app version 3.0), Nov 2026.
     shot: { base: '/assets/img/work/spintly-v3', alt: 'Three screens of the redesigned mobile app: access points, door unlocked and My Console', caption: 'V3 app screens from the Google Play listing (OptiSpaces.ai app, v3.0), Nov 2026' },
     number: '05',
@@ -419,6 +429,8 @@ export const projects = [
   },
   {
     slug: 'apple-wallet-integration',
+    // "At a glance" strip on the case study: real facts only (content, store listings).
+    glance: [{ n: '2', l: 'devices, one badge: iPhone & Watch' }, { n: '5', l: 'hours of access with Power Reserve' }, { n: '4', l: 'steps to add a badge' }],
     // Screenshot of the new Spintly site on staging (Scypher · Apple Wallet Access), captured Nov 2026 (2x tiles, stitched).
     shot: { base: '/assets/img/work/apple-wallet-integration', alt: 'Apple Wallet Access page: Your iPhone Is Now Your Employee Badge, with a Spintly badge on iPhone and Apple Watch', caption: 'Scypher · Apple Wallet Access page on the new Spintly website (staging), captured Nov 2026' },
     number: '06',

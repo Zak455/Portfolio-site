@@ -330,3 +330,24 @@
   new MutationObserver(req).observe(root, { attributes: true, attributeFilter: ['class'] });
   update();
 })();
+
+/* Case study images open full screen on click (Esc or click to close). */
+(function () {
+  var imgs = Array.prototype.slice.call(document.querySelectorAll('.cs .media-frame img'));
+  if (!imgs.length || typeof HTMLDialogElement === 'undefined') return;
+  var dlg = document.createElement('dialog');
+  dlg.className = 'lightbox';
+  dlg.setAttribute('aria-label', 'Image preview');
+  dlg.innerHTML = '<div class="lightbox-inner"><img alt=""></div><button class="lightbox-close" type="button" aria-label="Close preview">×</button>';
+  document.body.appendChild(dlg);
+  var big = dlg.querySelector('img');
+  dlg.addEventListener('click', function () { dlg.close(); });
+  imgs.forEach(function (img) {
+    img.setAttribute('tabindex', '0');
+    img.setAttribute('role', 'button');
+    img.setAttribute('aria-label', 'Open larger: ' + (img.alt || 'image'));
+    var open = function () { big.src = img.currentSrc || img.src; big.alt = img.alt; dlg.showModal(); };
+    img.addEventListener('click', open);
+    img.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+  });
+})();

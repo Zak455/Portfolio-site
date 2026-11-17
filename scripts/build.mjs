@@ -10,6 +10,7 @@ import { story, services, faq } from '../content/studio.mjs';
 import { layout } from '../src/templates/layout.mjs';
 import { homePage } from '../src/templates/home.mjs';
 import { caseStudyPage, notFoundPage } from '../src/templates/case-study.mjs';
+import { cvPage } from '../src/templates/cv.mjs';
 
 const root = new URL('../', import.meta.url);
 const dist = new URL('dist/', root);
@@ -46,6 +47,9 @@ for (const [i, project] of projects.entries()) {
     body: caseStudyPage({ site, project, next, sectionOrder }),
   }));
 }
+
+// Standalone CV page (own print styles; the PDF is printed from it).
+await write('/cv/', cvPage({ site, about, experience, education, publications, certifications, capabilities, tools, projects, coreExpertise: additionalWork.coreExpertise }));
 
 await writeFile(new URL('404.html', dist), layout({
   site, path: '/404', home: false, assetVersion, bodyClass: 'page-404', title: 'Not found', body: notFoundPage(),

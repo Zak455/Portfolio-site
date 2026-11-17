@@ -41,9 +41,11 @@ export const site = {
     email: 'fuzailgfx@gmail.com',
     linkedin: 'https://www.linkedin.com/in/fuzail-360',
     github: 'https://github.com/Zak455',
-    // Latest CV (Google Drive). Update the file in Drive and this link keeps working.
-    // Set to null to hide the "Download CV" buttons.
-    cv: 'https://drive.google.com/file/d/1deHri4UkiQQMjXGjTzT7joos5s_oi7A6/view',
+    phone: '+91 73509 20817',
+    // CV page built from content/ (src/templates/cv.mjs); its PDF lives in src/assets/cv/.
+    // Set to null to hide the CV links.
+    cv: '/cv/',
+    cvPdf: '/assets/cv/Fuzail-Khan-CV.pdf',
   },
 
   seo: {

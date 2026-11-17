@@ -1,5 +1,11 @@
-import { esc, productShot, tagList, liveLinks, mediaFrame, arrowRight } from './components.mjs';
+import { esc, productShot, tagList, liveLinks, mediaFrame, arrowRight, ctaBand } from './components.mjs';
 import { caseArt } from './case-art.mjs';
+
+// "100K+" → <span data-count="100">100</span>K+ so the number counts up (main.js).
+const countUp = (v) => {
+  const m = /^(\D*)(\d+)(.*)$/.exec(String(v));
+  return m ? `${esc(m[1])}<span data-count="${m[2]}">${m[2]}</span>${esc(m[3])}` : esc(v);
+};
 
 // Returns only the sections that have something to show; empty ones are listed
 // in an HTML comment so they're easy to find and fill in.
@@ -18,18 +24,31 @@ function resolveSections(p, sectionOrder, showPlaceholders) {
   return { shown, pending };
 }
 
+// Objectives and key decisions read better as numbered cards than as bullets.
+const CARD_LISTS = { objectives: 'Goal', decisions: 'Decision' };
+
+function listBlock(s) {
+  if (!s.list?.length) return '';
+  const kind = CARD_LISTS[s.key];
+  if (kind) {
+    return `<ol class="cs-cards cs-cards--${s.key}" role="list">${s.list
+      .map((l, j) => `<li class="cs-cardlet" style="--j:${j}" data-fade><span class="cs-cardlet-n">${kind} ${String(j + 1).padStart(2, '0')}</span><p>${esc(l)}</p></li>`)
+      .join('')}</ol>`;
+  }
+  return `<ul class="cs-list" role="list">${s.list.map((l, j) => `<li style="--j:${j}"><svg class="tick" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.4l2.7 2.7L14.2 7.6" pathLength="1"/></svg>${esc(l)}</li>`).join('')}</ul>`;
+}
+
 function sectionBlock(s, i, p) {
   const id = `s-${s.key}`;
-  const body = (s.body || []).map((b) => `<p>${esc(b)}</p>`).join('');
-  const list = s.list?.length
-    ? `<ul class="cs-list" role="list">${s.list.map((l, j) => `<li style="--j:${j}"><svg class="tick" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10.4l2.7 2.7L14.2 7.6" pathLength="1"/></svg>${esc(l)}</li>`).join('')}</ul>`
-    : '';
+  const body = (s.body || []).map((b, j) => `<p${s.key === 'introduction' && j === 0 ? ' class="cs-lead"' : ''}>${esc(b)}</p>`).join('');
+  const list = listBlock(s);
   const isRole = s.key === 'role';
   const media = s.media?.length ? `<div class="cs-media">${s.media.map((m) => mediaFrame(m, p.slug)).join('')}</div>` : '';
-  return `<section class="cs-section${isRole ? ' cs-section--role' : ''}" id="${id}" aria-labelledby="${id}-t" data-cs-section>
+  const n = String(i + 1).padStart(2, '0');
+  return `<section class="cs-section cs-section--${s.key}${isRole ? ' cs-section--role' : ''}" id="${id}" aria-labelledby="${id}-t" data-cs-section>
     <div class="cs-section-head" data-fade>
-      <p class="cs-index">${String(i + 1).padStart(2, '0')}</p>
-      <h2 class="cs-title" id="${id}-t">${esc(s.title)}</h2>
+      <p class="cs-index" aria-hidden="true">${n}</p>
+      <h2 class="cs-title" id="${id}-t"><span class="sr-only">${n}. </span>${esc(s.title)}</h2>
     </div>
     <div class="cs-section-body" data-fade>
       ${isRole ? '<p class="eyebrow">My contribution</p>' : ''}
@@ -67,6 +86,7 @@ export function caseStudyPage({ site, project: p, next, sectionOrder }) {
       </dl>
     </div>
     <div class="wrap cs-cover" data-fade style="view-transition-name:shot-${esc(p.slug)}">${productShot(p, { priority: true, caption: true, sizes: '(min-width: 1200px) 1140px, 94vw' })}</div>
+    ${p.glance?.length ? `<div class="wrap"><ul class="cs-glance" role="list" aria-label="At a glance">${p.glance.map((g) => `<li data-fade><b>${countUp(g.n)}</b><span class="cs-glance-l">${esc(g.l)}</span></li>`).join('')}</ul></div>` : ''}
   </header>
 
   <div class="cs-layout wrap">
@@ -78,12 +98,8 @@ export function caseStudyPage({ site, project: p, next, sectionOrder }) {
       </div>
     </aside>
     <div class="cs-content">
-      ${shown.map((s, i) => sectionBlock(s, i, p)).join('')}
-      <aside class="cs-wip" data-fade>
-        <p class="eyebrow">Case study in progress</p>
-        <p>The full process story, covering research, explorations, wireframes and outcomes, is being written up. Want the walkthrough now? I’m happy to take you through it on a call.</p>
-        <a class="text-link" href="#contact">Get in touch ${arrowRight}</a>
-      </aside>
+      ${shown.map((s, i) => sectionBlock(s, i, p) + (i === 3 && shown.length > 6 ? ctaBand(site, { inline: true, eyebrow: 'Enjoying this case study?', title: 'Let’s talk about what I could design for you.', text: 'Senior UI/UX Designer, open to new roles. Email me or grab the one-page CV.' }) : '')).join('')}
+      ${ctaBand(site, { inline: true, tone: 'tint', eyebrow: 'Want the full story?', title: 'I’ll walk you through the process on a call.', text: 'Research, explorations, wireframes and the decisions behind this work: happy to share the details live.' })}
     </div>
   </div>
 

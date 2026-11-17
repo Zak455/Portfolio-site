@@ -1,4 +1,4 @@
-import { esc, arrow, arrowRight, picture, productShot } from './components.mjs';
+import { esc, arrow, arrowRight, picture, productShot, ctaBand } from './components.mjs';
 import { processGraphic, serviceIcon } from './motion-graphics.mjs';
 
 // One section heading style everywhere: small eyebrow, clear title, optional intro.
@@ -24,6 +24,7 @@ function hero(site, about) {
       <div class="btn-row">
         <a class="btn btn-primary" href="#work" data-magnetic>View my work ${arrowRight}</a>
         <a class="btn btn-secondary" href="${mail(site)}">Get in touch</a>
+        ${site.contact.cv ? `<a class="btn btn-secondary" href="${esc(site.contact.cv)}">View CV</a>` : ''}
       </div>
       <dl class="hero-facts">
         <div><dt>Designing since</dt><dd>${esc(site.designingSince)}</dd></div>
@@ -269,12 +270,16 @@ export function homePage({ site, projects, additionalWork, about, experience, ed
     areas(additionalWork),
     work(projects, additionalWork),
     aboutSection(site, about),
+    ctaBand(site, { eyebrow: 'Hiring?', title: 'Liked the work? Let’s talk about your product.', text: 'I design enterprise SaaS end to end, from research to shipped UI. Happy to walk you through any case study.' }),
     processSection(),
     storySection(story, site),
+    ctaBand(site, { eyebrow: 'For recruiters', title: 'Hiring a Senior UI/UX Designer?', text: '3+ years designing enterprise SaaS across web and mobile. My one-page CV is a click away.', tone: 'tint' }),
     servicesSection(services),
     toolkit(capabilities, tools),
+    ctaBand(site, { eyebrow: 'Skills match?', title: 'Need these skills on your team?', text: 'Research, product UI, design systems and motion: one designer, one conversation.' }),
     experienceSection(experience),
     credentials(education, publications, certifications),
+    ctaBand(site, { eyebrow: 'Let’s connect', title: 'Have a role or project in mind?', text: 'Send a note with the role or the problem, and I’ll reply with how I’d approach it.', tone: 'tint' }),
     faqSection(faq, site),
   ].join('\n');
 }
