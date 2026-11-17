@@ -190,8 +190,8 @@ export const projects = [
   },
   {
     slug: 'spintly-global-website',
-    // Screenshot of the live page, captured Nov 2026 (tools: see README).
-    shot: { base: '/assets/img/work/spintly-global-website', alt: 'Spintly global website hero section', caption: 'Live site: spintly.com global website, captured Nov 2026' },
+    // Screenshot of the new site on staging, captured Nov 2026 in the browser pane (2x tiles, stitched).
+    shot: { base: '/assets/img/work/spintly-global-website', alt: 'New Spintly website hero: A Global Technology Platform for Access Control', caption: 'New Spintly website (staging), captured Nov 2026' },
     number: '03',
     name: 'Spintly Global Website',
     category: 'Website Design / UX Research',
@@ -254,7 +254,6 @@ export const projects = [
           'Industry cards cover eight sectors, from co-working and offices to healthcare, hospitality and construction, so each visitor can find their kind of space.',
         ],
         media: [
-          { src: '/assets/img/work/spintly-global-website/homepage-hero.webp', alt: 'New Spintly homepage hero: A Global Technology Platform for Access Control, with a reader and phone showing access granted', caption: 'Homepage hero on the new site (staging), captured Nov 2026', width: 1440, height: 878, wide: true },
           { src: '/assets/img/work/spintly-global-website/credentials.webp', alt: 'Credentials section listing mobile, Apple Wallet, QR, card, PIN, face and fingerprint access beside a mobile unlock mock-up', caption: 'One reader, every credential: tabs for each credential type beside a live unlock mock-up', width: 1440, height: 900, wide: true },
         ],
       },
