@@ -24,6 +24,10 @@ export const site = {
     label: 'Open to opportunities',
   },
 
+  // Show the dashed "Visual placeholder" frames in case studies.
+  // Keep false for the public site; set true while drafting to see what's missing.
+  showPlaceholders: false,
+
   hero: {
     headline: ['Designing', 'beyond the', 'interface.'],
     // Word(s) from the headline rendered in the editorial italic serif.

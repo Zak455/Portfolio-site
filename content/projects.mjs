@@ -25,7 +25,7 @@ export const projects = [
   {
     slug: 'optispaces',
     // Screenshot of the live page, captured Nov 2026 (tools: see README).
-    shot: { base: '/assets/img/work/optispaces', alt: 'OptiSpaces.ai dashboard sign-in page', caption: 'Live product: dashboard.optispaces.ai sign-in, captured Nov 2026' },
+    shot: { base: '/assets/img/work/optispaces', alt: 'OptiSpaces.ai web dashboard with hourly access analytics, KPI cards and module navigation', caption: 'OptiSpaces.ai web portal: dashboard (demo organisation), Nov 2026' },
     number: '01',
     name: 'OptiSpaces.ai',
     category: 'SaaS Product Design / Rebranding',
@@ -89,8 +89,14 @@ export const projects = [
         body: [
           'OptiSpaces.ai ships as a web portal for admins and operators and a mobile app on iOS and Android for everyone who uses the building. Both carry the same identity and patterns, so moving from the dashboard to the phone feels like one product.',
           'The suite covers seven connected modules: Access Control, Time & Attendance, Visitor Management, Tenant Management, Video Management, Elevator Access and Locker Access.',
+          'The web dashboard opens on what an admin checks first: access analytics by hour, split into entry and exit and filterable by direction, period and door, beside cards for users, access points, today’s visitors and shifts. Below it, recent access history shows who came in or out, when, through which door and with which credential. Every module (activity logs, access, attendance, users, visitors, tenants, integrations, devices and settings) sits in one left-hand navigation.',
+          'On mobile, the app keeps everyday actions one tap away: unlock a door, check in remotely with GPS attendance, approve or reject visitors, and open My Console to manage the organisation by role (admin, manager or user).',
         ],
-        media: [{ placeholder: 'Final web portal: hero screen', wide: true }, { placeholder: 'Mobile application screens' }, { placeholder: 'Product page' }],
+        media: [
+          { src: '/assets/img/work/optispaces/dashboard-overview.webp', alt: 'OptiSpaces.ai dashboard: hourly access analytics chart with entry and exit, and KPI cards for users, access points, visitors and shifts', caption: 'Web portal dashboard: access analytics and organisation overview (demo data)', width: 1440, height: 810, wide: true },
+          { src: '/assets/img/work/optispaces/dashboard-access-history.webp', alt: 'OptiSpaces.ai recent access history table with name, date, access type, event type, direction, location and photos', caption: 'Recent access history: credential type, direction and door for every event (demo data)', width: 1440, height: 810, wide: true },
+          { src: '/assets/img/work/optispaces/mobile-app.webp', alt: 'Four OptiSpaces.ai mobile app screens: door unlock, GPS remote check-in, My Console and visitor management', caption: 'Mobile app: unlock, remote check-in, My Console and visitor management (Google Play listing)', width: 1440, height: 820, wide: true },
+        ],
       },
       decisions: { body: tbd },
       implementation: { body: tbd },
@@ -99,6 +105,8 @@ export const projects = [
   },
   {
     slug: 'optispaces-website',
+    // Screenshot of the staging site, captured Nov 2026 in the browser pane (2x tiles, stitched).
+    shot: { base: '/assets/img/work/optispaces-website', alt: 'OptiSpaces.ai website hero: Securing the built world with AI', caption: 'Staging site: new OptiSpaces.ai website, captured Nov 2026' },
     number: '02',
     name: 'OptiSpaces.ai Website',
     category: 'Website Design / Product Storytelling',
@@ -154,13 +162,19 @@ export const projects = [
       },
       explorations: { body: tbd },
       wireframes: { body: tbd },
-      visual: { body: tbd, media: [{ placeholder: 'Hero: "Securing the built world with AI"', wide: true }] },
+      visual: {
+        body: tbd,
+        media: [{ src: '/assets/img/work/optispaces-website/hero.webp', alt: 'OptiSpaces.ai website hero with the headline "Securing the built world with AI", a phone unlocking a Spintly reader and certification badges', caption: 'Hero: the platform idea, proof points and a product moment in one view', width: 1440, height: 900, wide: true }],
+      },
       final: {
         body: [
           'The AI use cases section lets visitors switch between Overcrowding, Zone violation, PPE compliance, Vehicle pass & parking and Person of interest. Each one shows the same chain (cameras, AI detection, response, intelligence) and who it helps: the admin who configures it, the officer who responds and the executive who reads the trends.',
           'A six-step deployment timeline (approval, site survey, proposal, alignment, costing, execution) answers the "how do we get this?" question before a visitor has to ask sales.',
         ],
-        media: [{ placeholder: 'Software suite: seven products on one platform', wide: true }, { placeholder: 'AI use cases: interactive switcher' }, { placeholder: 'Deployment timeline' }],
+        media: [
+          { src: '/assets/img/work/optispaces-website/software-suite.webp', alt: 'Software suite section: seven OptiSpaces.ai products shown as photo cards', caption: 'Software suite: seven connected products on one platform', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/optispaces-website/ai-use-cases.webp', alt: 'AI use cases section with tabs for overcrowding, zone violation, PPE compliance, vehicle pass and person of interest', caption: 'AI use cases: each one shown as cameras → detection → response → intelligence, and who it helps', width: 1440, height: 900, wide: true },
+        ],
       },
       decisions: {
         list: [
@@ -239,7 +253,10 @@ export const projects = [
           'Credentials (mobile, Apple Wallet, QR, card, PIN, face and fingerprint) each get their own tab, and the seven OptiSpaces.ai modules sit in one tabbed section, so a lot of product fits on one page without becoming a wall of text.',
           'Industry cards cover eight sectors, from co-working and offices to healthcare, hospitality and construction, so each visitor can find their kind of space.',
         ],
-        media: [{ placeholder: 'Homepage: final design', wide: true }, { placeholder: 'Credential tabs and mobile unlock mock-up' }, { placeholder: 'OptiSpaces.ai solutions section' }],
+        media: [
+          { src: '/assets/img/work/spintly-global-website/homepage-hero.webp', alt: 'New Spintly homepage hero: A Global Technology Platform for Access Control, with a reader and phone showing access granted', caption: 'Homepage hero on the new site (staging), captured Nov 2026', width: 1440, height: 878, wide: true },
+          { src: '/assets/img/work/spintly-global-website/credentials.webp', alt: 'Credentials section listing mobile, Apple Wallet, QR, card, PIN, face and fingerprint access beside a mobile unlock mock-up', caption: 'One reader, every credential: tabs for each credential type beside a live unlock mock-up', width: 1440, height: 900, wide: true },
+        ],
       },
       decisions: {
         list: [
@@ -278,7 +295,11 @@ export const projects = [
       introduction: {
         body: ["Scypher is the rebrand and redesign of Spintly's credential management platform. I aligned its UI/UX, product positioning and marketing visuals into one identity, to improve usability and how the platform is positioned."],
       },
-      context: { body: tbd },
+      context: {
+        body: [
+          'Spintly’s software sits in two products: OptiSpaces.ai, the cloud suite for running buildings, and Scypher, for credential management. Scypher adds mobile, QR and Apple Wallet credentials to any existing access control system, so organisations can modernise how people get in without replacing the readers and panels they already have.',
+        ],
+      },
       problem: { body: tbd },
       objectives: {
         list: [
@@ -303,6 +324,8 @@ export const projects = [
   },
   {
     slug: 'spintly-v3',
+    // Built from the Google Play listing screenshots (app version 3.0), Nov 2026.
+    shot: { base: '/assets/img/work/spintly-v3', alt: 'Three screens of the redesigned mobile app: access points, door unlocked and My Console', caption: 'V3 app screens from the Google Play listing (OptiSpaces.ai app, v3.0), Nov 2026' },
     number: '05',
     name: 'Spintly V3',
     category: 'Mobile Product Design',
@@ -311,13 +334,25 @@ export const projects = [
     role: 'Mobile UI/UX in a collaborative redesign',
     contribution: ['Mobile UI/UX', 'Navigation and usability improvements', 'Interaction patterns', 'Product visual language and consistency'],
     teamNote: 'A collaborative redesign: I worked on the mobile UI/UX alongside the wider product team.',
-    tags: ['Mobile', 'Access Control', 'Mobile Credentialing'],
+    links: [
+      { label: 'Google Play', href: 'https://play.google.com/store/apps/details?id=com.mrinq.smartaccess' },
+      { label: 'App Store', href: 'https://apps.apple.com/in/app/optispaces-ai-by-spintly/id1462730510' },
+    ],
+    tags: ['Mobile', 'Access Control', 'Mobile Credentialing', 'Visitor Management'],
     object: 'device',
     theme: { accent: '#e8e8e8', layout: 'split-reverse' },
     sections: {
       introduction: { body: ['Spintly V3 is the redesign of the Spintly mobile application, which I collaborated on. It brings cleaner layouts, improved navigation and usability, and modern interaction patterns.'] },
-      context: { body: tbd },
-      problem: { body: tbd },
+      context: {
+        body: [
+          'The Spintly app is how employees, residents and admins open doors and manage access every day. With version 3, the app moved to the OptiSpaces.ai brand as Spintly’s software platform was rebranded, and it shipped on Google Play and the App Store.',
+        ],
+      },
+      problem: {
+        body: [
+          'People use this app many times a day, often while walking up to a door. The redesign had to modernise the look and add new capabilities without breaking those habits: in the launch message’s words, “a new look, but same feel”.',
+        ],
+      },
       objectives: {
         list: ['Improve navigation and usability', 'Introduce cleaner layouts and modern interaction patterns', 'Keep the experience consistent across the app'],
       },
@@ -329,8 +364,25 @@ export const projects = [
       explorations: { body: tbd },
       wireframes: { body: tbd },
       visual: { body: tbd },
-      final: { body: tbd, media: [{ placeholder: 'Before / after: previous app vs V3', wide: true }, { placeholder: 'V3 key screens' }] },
-      decisions: { body: tbd },
+      final: {
+        body: [
+          'V3 introduces a minimal design built for faster door operations. Access points are listed by site, and a successful unlock takes over the top of the screen with a clear green confirmation.',
+          'Around that core, V3 adds remote check-in with GPS attendance, visitor management with approve and reject actions right in the list, My Console for managing the organisation by role, and in-app help with FAQs and support requests.',
+        ],
+        media: [
+          { src: '/assets/img/work/spintly-v3/rebrand.webp', alt: 'Launch screens: Spintly app rebranded to OptiSpaces.ai, and "A new look but same feel"', caption: 'Launch: the Spintly app becomes OptiSpaces.ai, a new look with the same feel', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/spintly-v3/key-screens.webp', alt: 'Four V3 screens: remote GPS check-in, My Console, visitor management and help and support', caption: 'V3 key screens: remote check-in, My Console, visitor management and quick help (Google Play listing)', width: 1440, height: 820, wide: true },
+        ],
+      },
+      decisions: {
+        list: [
+          'A new bottom navigation (Doors, Consoles, Help) so the most frequent task, opening a door, is always the home screen',
+          'Full-width success state on unlock, readable at a glance while walking',
+          'Role tabs (Admin, Manager, User) in My Console, so one app serves every role without clutter',
+          'Inline approve and reject on visitor cards, so hosts act without opening each request',
+          'GPS check-in in a bottom sheet, confirming the captured location before check-in',
+        ],
+      },
       implementation: { body: tbd },
       learnings: { body: tbd },
     },
@@ -361,9 +413,20 @@ export const projects = [
       introduction: {
         body: ['Bringing Apple Wallet integration to the product ecosystem, so credentials can live where people already keep their cards.'],
       },
-      context: { body: tbd },
+      context: {
+        body: [
+          'Spintly already supported many credentials: the mobile app, cards, QR codes, PIN and face recognition. Apple Wallet adds an employee badge people already carry: hold an iPhone or Apple Watch near the reader to unlock, with no app to open and no physical badge.',
+        ],
+      },
       problem: { body: tbd },
-      objectives: { body: tbd },
+      objectives: {
+        list: [
+          'Let employees unlock with iPhone or Apple Watch in one tap',
+          'Keep the built-in privacy and security of Apple Wallet',
+          'Let admins issue and revoke badges from the dashboard',
+          'Work alongside the app, card and QR credentials already in use',
+        ],
+      },
       role: { useContribution: true },
       team: {
         body: [

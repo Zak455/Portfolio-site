@@ -3,11 +3,14 @@ import { caseArt } from './case-art.mjs';
 
 // Returns only the sections that have something to show; empty ones are listed
 // in an HTML comment so they're easy to find and fill in.
-function resolveSections(p, sectionOrder) {
+// Placeholder frames (media without a real image) are left out unless
+// site.showPlaceholders is true, so the public site shows finished visuals only.
+function resolveSections(p, sectionOrder, showPlaceholders) {
   const shown = [];
   const pending = [];
   for (const [key, title] of sectionOrder) {
-    const s = p.sections[key] || {};
+    const raw = p.sections[key] || {};
+    const s = showPlaceholders ? raw : { ...raw, media: (raw.media || []).filter((m) => m.src || m.compare) };
     const list = s.useContribution ? p.contribution : s.list;
     const has = (s.body && s.body.length) || (list && list.length) || (s.media && s.media.length);
     (has ? shown : pending).push({ key, title, ...s, list });
@@ -38,12 +41,12 @@ function sectionBlock(s, i, p) {
 }
 
 export function caseStudyPage({ site, project: p, next, sectionOrder }) {
-  const { shown, pending } = resolveSections(p, sectionOrder);
+  const { shown, pending } = resolveSections(p, sectionOrder, site.showPlaceholders);
   const toc = shown
     .map((s, i) => `<li><a href="#s-${s.key}" data-toc="s-${s.key}"><span>${String(i + 1).padStart(2, '0')}</span>${esc(s.title)}</a></li>`)
     .join('');
   return `<article class="cs">
-  <!-- Sections waiting for content (edit content/projects.mjs): ${pending.map((s) => s.title).join(', ') || 'none'} -->
+  ${site.showPlaceholders ? `<!-- Sections waiting for content (edit content/projects.mjs): ${pending.map((s) => s.title).join(', ') || 'none'} -->` : ''}
   <header class="cs-hero">
     <div class="wrap">
       <nav class="crumbs" aria-label="Breadcrumb"><a href="/#work">Work</a><span aria-hidden="true">/</span><span aria-current="page">${esc(p.name)}</span></nav>
