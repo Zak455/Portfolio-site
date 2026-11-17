@@ -113,7 +113,7 @@
     var label = $('.cursor-label');
     var cx = -100, cy = -100, tx = -100, ty = -100, lastSpark = 0;
     var sparks = ['✦', '✺', '●', '★', '♥'];
-    var colors = ['#FF4F2E', '#FFC93C', '#2FA866', '#7BC4FF', '#FF8FBA'];
+    var colors = ['#DB1E6C', '#FFC93C', '#2FA866', '#7BC4FF', '#FFA8CB'];
     window.addEventListener('pointermove', function (e) {
       tx = e.clientX; ty = e.clientY;
       var now = performance.now();
@@ -264,7 +264,7 @@
     if (!ctx || !root.classList.contains('motion')) return;
     var r = canvas.getBoundingClientRect();
     canvas.width = r.width * devicePixelRatio; canvas.height = r.height * devicePixelRatio;
-    var cols = ['#FF4F2E', '#FFC93C', '#2FA866', '#7BC4FF', '#FF8FBA', '#FFF4E8'];
+    var cols = ['#DB1E6C', '#FFC93C', '#2FA866', '#7BC4FF', '#FFA8CB', '#FFF1F5'];
     for (var i = 0; i < 140; i++) {
       bits.push({ x: (x - r.left) * devicePixelRatio, y: (y - r.top) * devicePixelRatio, vx: (Math.random() - .5) * 22, vy: -Math.random() * 22 - 6, s: (Math.random() * 8 + 6) * devicePixelRatio, c: cols[i % cols.length], r: Math.random() * 6, vr: (Math.random() - .5) * .4, life: 0, circle: Math.random() < .35 });
     }
