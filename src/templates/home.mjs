@@ -64,6 +64,7 @@ function workCard(p, i, all) {
     <p class="work-role"><strong>My role:</strong> ${esc(p.role)}</p>
     ${p.teamNote ? `<p class="work-team">${esc(p.teamNote)}</p>` : ''}
     <a class="text-link" href="/work/${esc(p.slug)}/">Read the case study ${arrowRight}<span class="sr-only">: ${esc(p.name)}</span></a>
+    ${p.play ? `<a class="text-link" href="${esc(p.play)}">Play the game ${arrowRight}<span class="sr-only">: ${esc(p.name)}</span></a>` : ''}
   </div>
 </article>`;
 }
@@ -71,7 +72,7 @@ function workCard(p, i, all) {
 function work(projects, extra) {
   return `<section class="section" id="work" aria-labelledby="work-title" data-section="work">
   <div class="wrap">
-    ${head({ eyebrow: 'Selected work', title: 'Products I’ve helped shape.', intro: 'Enterprise access-control products at Spintly, from brand and website to web portals and mobile apps. Screenshots are of the live products.', id: 'work-title' })}
+    ${head({ eyebrow: 'Selected work', title: 'Products I’ve helped shape.', intro: 'Enterprise access-control products at Spintly, from brand and website to web portals and mobile apps. Screenshots are of the live products. Plus a playable side project.', id: 'work-title' })}
     <div class="work-stack">${projects.map(workCard).join('')}</div>
     <div class="archive" data-fade>
       <p class="eyebrow">Also in the archive</p>

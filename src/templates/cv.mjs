@@ -14,7 +14,7 @@ function impact({ site, projects }) {
   return [
     { n: `${years}+`, l: `years designing, since ${since}` },
     { n: `${site.experienceYears}+`, l: 'years in enterprise SaaS at Spintly' },
-    { n: String(projects.length), l: 'product case studies, web & mobile' },
+    { n: String(projects.filter((p) => !p.personal).length), l: 'product case studies, web & mobile' },
     { n: '100K+', l: 'Play Store downloads, OptiSpaces.ai app' },
   ];
 }
