@@ -79,7 +79,7 @@ export function caseStudyPage({ site, project: p, next, sectionOrder }) {
       </div>
       <dl class="cs-facts" data-fade>
         <div><dt>My role</dt><dd>${esc(p.role)}</dd></div>
-        <div><dt>Company</dt><dd>${esc(site.company)}</dd></div>
+        <div><dt>Company</dt><dd>${esc(p.company || site.company)}</dd></div>
         ${p.year ? `<div><dt>Year</dt><dd>${esc(p.year)}</dd></div>` : ''}
         <div><dt>Areas</dt><dd>${tagList(p.tags)}</dd></div>
         ${p.links?.length ? `<div><dt>Live</dt><dd>${liveLinks(p.links)}</dd></div>` : ''}

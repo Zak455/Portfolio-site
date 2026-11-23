@@ -516,6 +516,73 @@ export const projects = [
       learnings: { body: tbd },
     },
   },
+  {
+    slug: 'hollowmere',
+    // Personal project: kept out of the CV's "product case studies" count.
+    personal: true,
+    company: 'Personal project',
+    play: '/play/hollowmere/',
+    glance: [{ n: '4', l: 'suspects to interrogate' }, { n: '8', l: 'crime scene hotspots' }, { n: '3', l: 'investigation spaces: scene, lab, séance room' }],
+    // Screenshot of the playable build at /play/hollowmere/, captured Nov 2026.
+    shot: { base: '/assets/img/work/hollowmere', alt: 'Hollowmere title screen: Case OC-1221 field report with the four suspects', caption: 'Hollowmere: opening field report, from the playable build on this site, Nov 2026' },
+    number: '07',
+    name: 'Hollowmere',
+    category: 'Personal Project / Game Design',
+    year: '2026',
+    summary:
+      'A paranormal detective game that runs in the browser: walk a cursed crime scene, run occult lab scans and break suspects in a séance room, while your sanity slips.',
+    role: 'Concept, game UX and interface design',
+    links: [{ label: 'Play Hollowmere', href: '/play/hollowmere/' }],
+    contribution: [
+      'Game concept, case and story',
+      'Game UX: investigation loop, sanity system and accusation flow',
+      'Interface and visual design: dark occult UI, SVG scenes and portraits',
+      'Motion and sound direction',
+    ],
+    tags: ['Game Design', 'Interaction Design', 'Motion', 'Web Audio', 'React'],
+    theme: { accent: '#10b981', layout: 'wide' },
+    teamNote: 'A personal side project, built with AI-assisted coding.',
+    sections: {
+      introduction: {
+        body: [
+          'Hollowmere is a single-case detective game about a death that looks supernatural and is not. It plays in the browser on this site, with no install.',
+        ],
+      },
+      context: {
+        body: [
+          'Case OC-1221. On the night of the winter solstice, Professor Ambrose Vane is found dead in his locked study at Hollowmere Manor, sitting inside an unbroken salt circle. The mirror is shattered and his canary is dead. The household says the Grey Widow took him, just as she took Lord Hollowmere in 1887. Four living people also had reason to want him silent.',
+        ],
+      },
+      objectives: {
+        list: [
+          'Make the player feel the house working against them, without hiding the real clues',
+          'Give each space its own tool: hotspots at the scene, instruments in the lab, pressure in the séance room',
+          'Let mistakes cost something, so guessing is never free',
+        ],
+      },
+      role: { useContribution: true },
+      final: {
+        body: [
+          'The crime scene is a top-down plan of the study, the upper landing and the servants’ corridor, with eight hotspots. Some objects are cursed, and looking at them costs sanity.',
+          'The paranormal lab has a live EMF waveform, a UV sweep that reveals hidden marks and an EVP equaliser that decodes whispers, beside toxicology and trace analysis. The séance room holds four suspects with animated portraits that glitch when caught in a lie; presenting the right evidence triggers a contradiction or an anomaly.',
+          'Sanity ties it together. As it drops, the vignette closes in, the heartbeat speeds up, and below 40% the interface itself starts to hallucinate. At zero you black out. A correct accusation shows the full timeline, the red herrings and a rank from S to C.',
+        ],
+        media: [
+          { src: '/assets/img/work/hollowmere/crime-scene.webp', alt: 'Hollowmere crime scene: top-down plan of the study with glowing hotspots, plus the upper landing and servants’ corridor, and the Occult Case Log', caption: 'Cursed crime scene: eight hotspots across three rooms', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/hollowmere/seance-room.webp', alt: 'Hollowmere séance room: suspect Cordelia Marsh with composure meter, motive, alibi and questions to ask', caption: 'Séance room: question suspects and present evidence', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/hollowmere/lab.webp', alt: 'Hollowmere paranormal lab with EMF, UV and EVP instruments', caption: 'Paranormal lab: EMF, UV and EVP scans', width: 1440, height: 900, wide: true },
+        ],
+      },
+      decisions: {
+        list: [
+          'Sanity as the single cost: cursed objects, irrelevant evidence and wrong accusations all draw from it',
+          'The UI degrades with the player, so tension is shown, not told',
+          'A case log that writes itself, so players chase leads instead of taking notes',
+          'All sound is generated live in the browser, with a mute toggle always in reach',
+        ],
+      },
+    },
+  },
 ];
 
 // Order and titles of the case study storytelling structure.
