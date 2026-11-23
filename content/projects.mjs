@@ -541,7 +541,6 @@ export const projects = [
     ],
     tags: ['Game Design', 'Interaction Design', 'Motion', 'Web Audio', 'React'],
     theme: { accent: '#10b981', layout: 'wide' },
-    teamNote: 'A personal side project, built with AI-assisted coding.',
     sections: {
       introduction: {
         body: [
