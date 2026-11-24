@@ -579,7 +579,7 @@ export const projects = [
           'A case log that writes itself, so players chase leads instead of taking notes',
           'Every suspect line voice-acted with local AI text-to-speech (Voicebox), with emotional direction and on-screen subtitles',
           'Recorded horror sound design (royalty-free Sonniss GDC library) layered over a live-generated drone and heartbeat that track sanity, with a mute toggle always in reach',
-          'Jumpscares built on a dead-silence drop before the hit, with an opt-out toggle and flashes kept under three per second',
+          'Jumpscares built on a dead-silence drop before the hit (stabs from DIGITALKEVN\'s Horror Mini Pack), with an opt-out toggle and flashes kept under three per second',
         ],
       },
     },
