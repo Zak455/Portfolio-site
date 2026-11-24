@@ -20,7 +20,9 @@
   * { box-sizing: border-box; }
   html, body { margin: 0; height: 100%; overflow: hidden; background: #1d120b; color: var(--cream); font-family: var(--sans); -webkit-tap-highlight-color: transparent; }
   body { overscroll-behavior: none; touch-action: none; user-select: none; -webkit-user-select: none; }
-  canvas#cv { position: fixed; inset: 0; display: block; touch-action: none; }
+  canvas#cv { position: fixed; inset: 0; display: block; touch-action: none; z-index: 1; }
+  canvas#cv3d { position: fixed; inset: 0; display: none; z-index: 0; }
+  canvas#cv3d.on { display: block; }
   button { font: inherit; color: inherit; cursor: pointer; }
 
   /* ── Top HUD ───────────────────────────────────────── */
@@ -211,5 +213,7 @@
 <script src="js/prep.js"></script>
 <script src="js/cook.js"></script>
 <script src="js/main.js"></script>
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.min.js" } }</script>
+<script type="module" src="js/dish3d.js"></script>
 </body>
 </html>

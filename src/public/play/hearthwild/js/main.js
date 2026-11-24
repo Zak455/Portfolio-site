@@ -272,7 +272,7 @@ function dishThumb(r, locked) {
   if (thumbCache[key]) return thumbCache[key];
   const cv = makeCanvas(96, 96, 2), c = cv.getContext('2d');
   if (locked) { c.fillStyle = 'rgba(255,240,220,.12)'; c.beginPath(); c.arc(48, 48, 40, 0, TAU); c.fill(); c.fillStyle = 'rgba(255,240,220,.35)'; c.font = '28px Georgia, serif'; c.textAlign = 'center'; c.fillText('?', 48, 58); }
-  else drawDish(c, r, 48, 48, 40);
+  else { const t3 = window.Dish3D && Dish3D.ok && Dish3D.thumb(r); if (t3) return (thumbCache[key] = t3); drawDish(c, r, 48, 48, 40); }
   return (thumbCache[key] = cv.toDataURL());
 }
 
@@ -287,10 +287,15 @@ class PlateScene {
     const stars = q >= 0.8 ? 3 : q >= 0.58 ? 2 : 1;
     this.stars = stars;
     Save.data.done[this.r.id] = Math.max(Save.data.done[this.r.id] || 0, stars); Save.store();
-    for (let i = 0; i < this.drops.length; i++) {
-      await Tw.wait(0.22);
-      Tw.to(this.drops, { [i]: 1 }, 0.45, easeBack);
-      Audio2.tone({ f: 520 + i * 60, vol: 0.05, d: 0.3, verb: 0.5 });
+    const D3 = window.Dish3D;
+    this.d3 = !!(D3 && D3.ok) && D3.plate(this.r, { brown: Math.min(0.85, game.brown ?? 0.7), view: () => ({ x: this.cx(), y: this.cy(), R: this.R() }) }) > 0;
+    const n = this.d3 ? D3.pieces.length : this.drops.length;
+    if (this.d3) await Tw.wait(0.5);
+    for (let i = 0; i < n; i++) {
+      await Tw.wait(this.d3 ? 0.26 : 0.22);
+      if (G.scene !== this) return;
+      if (this.d3) D3.reveal(i); else Tw.to(this.drops, { [i]: 1 }, 0.45, easeBack);
+      Audio2.tone({ f: 520 + (i % 8) * 60, vol: 0.05, d: 0.3, verb: 0.5 });
     }
     await Tw.wait(0.6);
     const note = this.r.notes[3 - stars];
@@ -308,21 +313,27 @@ class PlateScene {
       else go(new JournalScene(next));
     };
   }
-  exit() { UI.overlay(''); }
+  exit() { UI.overlay(''); if (this.d3) Dish3D.stop(); }
   resize() { this.bg = paintLinen(this.r); }
   update(dt) {
     this.steam.update(dt); this.fx.update(dt);
     const R = this.R();
-    if (Math.random() < dt * 7) this.steam.add({ kind: 'glow', x: this.cx() + rand(-R, R) * 0.4, y: this.cy() - R * 0.1, vx: rand(-6, 6), vy: rand(-40, -22), life: rand(2.5, 4), size: rand(14, 26), color: '#ffffff', a: 0.12, fadeIn: true, flutter: 0.8, seed: rand(0, 9) });
+    if (!this.d3 && Math.random() < dt * 7) this.steam.add({ kind: 'glow', x: this.cx() + rand(-R, R) * 0.4, y: this.cy() - R * 0.1, vx: rand(-6, 6), vy: rand(-40, -22), life: rand(2.5, 4), size: rand(14, 26), color: '#ffffff', a: 0.12, fadeIn: true, flutter: 0.8, seed: rand(0, 9) });
   }
   R() { return G.W < G.H ? Math.min(G.W * 0.42, G.H * 0.22) : Math.min(G.H * 0.34, G.W * 0.22, 300); }
-  cx() { return G.W < G.H ? G.W / 2 : G.W * 0.64; }
+  cx() { return G.W < G.H ? G.W / 2 : Math.max(G.W * 0.64, Math.min(G.W - this.R() * 1.1, 520 + this.R())); }
   cy() { return G.W < G.H ? G.H * 0.68 : G.H * 0.53; }
   draw(c) {
+    if (this.d3) { c.clearRect(0, 0, G.W, G.H); vignette(c, this.cx(), this.cy()); this.fx.draw(c); return; }
     c.drawImage(this.bg, 0, 0, G.W, G.H);
     drawDish(c, this.r, this.cx(), this.cy(), this.R(), { brown: Math.min(0.85, (game.brown ?? 0.7)), drops: this.drops });
     this.steam.draw(c); this.fx.draw(c);
   }
+}
+function vignette(c, x, y) {
+  const W = G.W, H = G.H, g = c.createRadialGradient(x, y, Math.min(W, H) * 0.3, x, y, Math.hypot(W, H) * 0.62);
+  g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(14,6,2,.6)');
+  c.fillStyle = g; c.fillRect(0, 0, W, H);
 }
 function paintLinen(r) {
   const W = G.W, H = G.H, P = SKY[r ? r.time : 'golden'], cv = makeCanvas(W, H, Math.min(G.dpr, 1.5)), c = cv.getContext('2d'), R = rng(8);
@@ -358,8 +369,9 @@ class FeastScene {
       <p class="note">Five dishes from one day in the wild: dawn mushrooms to dusk pies. ${total} of 15 stars${finds ? `, and ${finds} little extra find${finds > 1 ? 's' : ''} for the larder` : ''}.</p>
       <button class="btn primary" id="back">Back to the journal</button></div>`);
     $('#back').onclick = () => { Audio2.sfxPage(); go(new JournalScene(0)); };
+    this.d3 = !!(window.Dish3D && Dish3D.ok) && Dish3D.feast(RECIPES);
   }
-  exit() { UI.overlay(''); }
+  exit() { UI.overlay(''); if (this.d3) Dish3D.stop(); }
   resize() {
     const W = G.W, H = G.H;
     this.gy = H * 0.42;
@@ -372,6 +384,7 @@ class FeastScene {
   }
   draw(c) {
     const W = G.W, H = G.H;
+    if (this.d3) { c.clearRect(0, 0, W, H); vignette(c, W / 2, H * 0.62); return; }
     for (const L of this.layers) c.drawImage(L.cv, 0, 0, L.w, H);
     // string of lanterns
     c.strokeStyle = 'rgba(40,30,30,.8)'; c.lineWidth = 1.2; c.beginPath(); c.moveTo(-10, H * 0.12); c.quadraticCurveTo(W / 2, H * 0.32, W + 10, H * 0.12); c.stroke();

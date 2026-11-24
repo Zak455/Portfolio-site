@@ -610,7 +610,7 @@ export const projects = [
       'Visual direction: painted landscapes, time-of-day lighting, kitchen and hearth scenes',
       'Motion and sound direction',
     ],
-    tags: ['Game Design', 'Interaction Design', 'Motion', 'Web Audio', 'Canvas'],
+    tags: ['Game Design', 'Interaction Design', 'Motion', 'Web Audio', 'Canvas', 'Three.js'],
     theme: { accent: '#e0a24a', layout: 'wide' },
     sections: {
       introduction: {
@@ -631,14 +631,14 @@ export const projects = [
         body: [
           'Foraging happens in wide painted scenes you can pan across, with parallax layers, drifting mist, light shafts, butterflies or fireflies. Anything gatherable glows softly. Fishing is a float that dips and a line you keep in the green. Hunting is a quiet stalk: creep forward while the animal grazes, freeze when it looks up, then breathe with the ring before you let go.',
           'Preparation happens on a cutting board in window light. Each ingredient has its own gesture: brush soil off mushrooms, scale and fillet a trout along the spine, pluck a pheasant as feathers drift away, joint a rabbit along guide lines, peel carrots in long strokes, crush juniper with a pestle and roll out pastry.',
-          'Cooking happens at a stone hearth. You work the bellows to keep the flame in a heat band, drag ingredients into the pan, stir in circles, flick to toss, baste, and pull the dish off at golden. The plate is then laid one piece at a time and earns up to three stars in a recipe journal.',
+          'Cooking happens at a stone hearth. You work the bellows to keep the flame in a heat band, drag ingredients into the pan, stir in circles, flick to toss, baste, and pull the dish off at golden. The finished dish is then plated in real-time 3D, one piece at a time, under the light of that hour, and earns up to three stars in a recipe journal. After the fifth dish, all five come together on a candlelit table under the stars.',
         ],
         media: [
           { src: '/assets/img/work/hearthwild/forage.webp', alt: 'Hearthwild foraging scene at golden hour: a pheasant in a meadow with glowing blackberries and juniper', caption: 'Forage: the hedgerows at golden hour', width: 1440, height: 900, wide: true },
           { src: '/assets/img/work/hearthwild/fish.webp', alt: 'Hearthwild fishing: a float on a bright stream with a tension gauge', caption: 'Fishing the morning stream', width: 1440, height: 900, wide: true },
           { src: '/assets/img/work/hearthwild/prep.webp', alt: 'Hearthwild preparation: plucking a pheasant on a wooden board as feathers drift away', caption: 'Prepare: plucking at the board', width: 1440, height: 900, wide: true },
           { src: '/assets/img/work/hearthwild/cook.webp', alt: 'Hearthwild hearth: pheasant and blackberries in a skillet over a fire, with a doneness bar', caption: 'Cook: bellows, heat band and the golden window', width: 1440, height: 900, wide: true },
-          { src: '/assets/img/work/hearthwild/plate.webp', alt: 'Hearthwild plated pheasant with blackberry glaze and three stars', caption: 'Plated and scored in the journal', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/hearthwild/plate.webp', alt: 'Hearthwild pheasant with blackberry sauce, plated in 3D', caption: 'The finished dish, plated in real-time 3D', width: 1440, height: 900, wide: true },
         ],
       },
       decisions: {
