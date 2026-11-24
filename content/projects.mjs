@@ -544,7 +544,8 @@ export const projects = [
     sections: {
       introduction: {
         body: [
-          'Hollowmere is a single-case detective game about a death that looks supernatural and is not. It plays in the browser on this site, with no install.',
+          'Hollowmere is a detective game about deaths that look supernatural and are not. It plays in the browser on this site, with no install.',
+          'Case 2, The Folklorist, is in progress: a serial killer who stages each murder as a famous monster from folklore, told across ten levels that end in a confrontation. Levels 1 to 3 are playable now.',
         ],
       },
       context: {
@@ -564,6 +565,7 @@ export const projects = [
         body: [
           'The crime scene is a top-down plan of the study, the upper landing and the servants’ corridor, with eight hotspots. Some objects are cursed, and looking at them costs sanity.',
           'The paranormal lab has a live EMF waveform, a UV sweep that reveals hidden marks and an EVP equaliser that decodes whispers, beside toxicology and trace analysis. The séance room holds four suspects with animated portraits that glitch when caught in a lie; presenting the right evidence triggers a contradiction or an anomaly.',
+          'Case 2 adds a cinematic layer: letterboxed cold opens, film grain, and a torch the player shines around a dark scene that narrows and fails as sanity drops. A case board links the levels, and each solve adds a fragment to the killer’s profile.',
           'Sanity ties it together. As it drops, the vignette closes in, the heartbeat speeds up, and below 40% the interface itself starts to hallucinate. At zero you black out. A correct accusation shows the full timeline, the red herrings and a rank from S to C.',
         ],
         media: [
@@ -577,7 +579,7 @@ export const projects = [
           'Sanity as the single cost: cursed objects, irrelevant evidence and wrong accusations all draw from it',
           'The UI degrades with the player, so tension is shown, not told',
           'A case log that writes itself, so players chase leads instead of taking notes',
-          'Every suspect line voice-acted with local AI text-to-speech (Voicebox), with emotional direction and on-screen subtitles',
+          'Every Case 1 suspect line voice-acted with local AI text-to-speech (Voicebox), with emotional direction and on-screen subtitles',
           'Recorded horror sound design (royalty-free Sonniss GDC library) layered over a live-generated drone and heartbeat that track sanity, with a mute toggle always in reach',
           'Jumpscares built on a dead-silence drop before the hit (stabs from DIGITALKEVN\'s Horror Mini Pack), with an opt-out toggle and flashes kept under three per second',
         ],
