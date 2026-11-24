@@ -587,6 +587,71 @@ export const projects = [
       },
     },
   },
+  {
+    slug: 'hearthwild',
+    // Personal project: kept out of the CV's "product case studies" count.
+    personal: true,
+    company: 'Personal project',
+    play: '/play/hearthwild/',
+    glance: [{ n: '5', l: 'dishes, dawn to dusk' }, { n: '3', l: 'stages: forage, prepare, cook' }, { n: '6', l: 'kinds of prep: brush, chop, fillet, peel, grind, roll' }],
+    // Screenshot of the playable build at /play/hearthwild/, captured Nov 2026.
+    shot: { base: '/assets/img/work/hearthwild', alt: 'Hearthwild title screen: a thatched cottage in a meadow at golden hour', caption: 'Hearthwild: title screen, from the playable build on this site, Nov 2026' },
+    number: '08',
+    name: 'Hearthwild',
+    category: 'Personal Project / Game Design',
+    year: '2026',
+    summary:
+      'A cozy cooking game that runs in the browser: forage and fish the wild, prepare at the board, then cook over the hearth, one dish for every hour of the day.',
+    role: 'Concept, game UX, interface and motion design',
+    links: [{ label: 'Play Hearthwild', href: '/play/hearthwild/' }],
+    contribution: [
+      'Game concept, recipes and day structure',
+      'Game UX: three-stage loop and gesture-based mini-games',
+      'Visual direction: painted landscapes, time-of-day lighting, kitchen and hearth scenes',
+      'Motion and sound direction',
+    ],
+    tags: ['Game Design', 'Interaction Design', 'Motion', 'Web Audio', 'Canvas'],
+    theme: { accent: '#e0a24a', layout: 'wide' },
+    sections: {
+      introduction: {
+        body: [
+          'Hearthwild is a slow, cozy game about a chef who cooks only what the land gives. It plays in the browser on this site, on desktop and phone, with no install.',
+          'Every dish moves through the same three stages: forage it, prepare it, cook it. Five dishes take you through one day, from chanterelle toast at dawn to venison hand pies at dusk, and the light, sky and sound change with the hour.',
+        ],
+      },
+      objectives: {
+        list: [
+          'Make every stage feel tactile: you brush, slice, peel and stir with your own gestures',
+          'Keep it calm: no timers that end the run, no failing a dish, only a better or rougher result',
+          'Keep the hunt gentle in tone: patience and stillness, never anything graphic',
+        ],
+      },
+      role: { useContribution: true },
+      final: {
+        body: [
+          'Foraging happens in wide painted scenes you can pan across, with parallax layers, drifting mist, light shafts, butterflies or fireflies. Anything gatherable glows softly. Fishing is a float that dips and a line you keep in the green. Hunting is a quiet stalk: creep forward while the animal grazes, freeze when it looks up, then breathe with the ring before you let go.',
+          'Preparation happens on a cutting board in window light. Each ingredient has its own gesture: brush soil off mushrooms, scale and fillet a trout along the spine, pluck a pheasant as feathers drift away, joint a rabbit along guide lines, peel carrots in long strokes, crush juniper with a pestle and roll out pastry.',
+          'Cooking happens at a stone hearth. You work the bellows to keep the flame in a heat band, drag ingredients into the pan, stir in circles, flick to toss, baste, and pull the dish off at golden. The plate is then laid one piece at a time and earns up to three stars in a recipe journal.',
+        ],
+        media: [
+          { src: '/assets/img/work/hearthwild/forage.webp', alt: 'Hearthwild foraging scene at golden hour: a pheasant in a meadow with glowing blackberries and juniper', caption: 'Forage: the hedgerows at golden hour', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/hearthwild/fish.webp', alt: 'Hearthwild fishing: a float on a bright stream with a tension gauge', caption: 'Fishing the morning stream', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/hearthwild/prep.webp', alt: 'Hearthwild preparation: plucking a pheasant on a wooden board as feathers drift away', caption: 'Prepare: plucking at the board', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/hearthwild/cook.webp', alt: 'Hearthwild hearth: pheasant and blackberries in a skillet over a fire, with a doneness bar', caption: 'Cook: bellows, heat band and the golden window', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/hearthwild/plate.webp', alt: 'Hearthwild plated pheasant with blackberry glaze and three stars', caption: 'Plated and scored in the journal', width: 1440, height: 900, wide: true },
+        ],
+      },
+      decisions: {
+        list: [
+          'One loop, three verbs: every recipe teaches forage, prepare, cook, so new dishes add variety without new rules',
+          'The time of day is the level design: each dish has its own light, palette and soundscape',
+          'Forgiving scoring: quality only changes the stars and the note on the plate, never whether you finish',
+          'Recorded kitchen and foley sounds (royalty-free Sonniss GDC library) over live-generated wind, birdsong, stream, fire and a soft kalimba score',
+          'Touch first: every gesture works with one finger, and the layout fits phone screens without sideways scrolling',
+        ],
+      },
+    },
+  },
 ];
 
 // Order and titles of the case study storytelling structure.
