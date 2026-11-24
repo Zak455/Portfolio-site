@@ -545,7 +545,7 @@ export const projects = [
       introduction: {
         body: [
           'Hollowmere is a detective game about deaths that look supernatural and are not. It plays in the browser on this site, with no install.',
-          'Case 2, The Folklorist, is in progress: a serial killer who stages each murder as a famous monster from folklore, told across ten levels that end in a confrontation. Levels 1 to 3 are playable now.',
+          'Case 2, The Folklorist, follows a serial killer who stages each murder as a famous monster from folklore, across ten levels that end in a timed confrontation on breaking ice with five endings.',
         ],
       },
       context: {
