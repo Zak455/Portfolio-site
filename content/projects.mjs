@@ -577,6 +577,7 @@ export const projects = [
           'Sanity as the single cost: cursed objects, irrelevant evidence and wrong accusations all draw from it',
           'The UI degrades with the player, so tension is shown, not told',
           'A case log that writes itself, so players chase leads instead of taking notes',
+          'Every suspect line voice-acted with local AI text-to-speech (Voicebox), with emotional direction and on-screen subtitles',
           'Recorded horror sound design (royalty-free Sonniss GDC library) layered over a live-generated drone and heartbeat that track sanity, with a mute toggle always in reach',
         ],
       },
