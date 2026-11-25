@@ -36,10 +36,18 @@
     names.forEach(n => { if (!voices[n]) { const el = new Audio('voice/' + n + '.mp3'); el.preload = 'auto'; voices[n] = el; } });
   };
 
+  A.ducked = false;
+  function masterLevel() { return A.muted ? 0 : A.ducked ? 0.15 : 0.6; }
   A.setMuted = function (m) {
     A.muted = m;
     if (m) A.stopVoice();
-    if (master) master.gain.setTargetAtTime(m ? 0 : 0.6, ctx.currentTime, 0.05);
+    if (master) master.gain.setTargetAtTime(masterLevel(), ctx.currentTime, 0.05);
+  };
+  // pause menu: drop everything to a murmur
+  A.duck = function (on) {
+    A.ducked = on;
+    if (master) master.gain.setTargetAtTime(masterLevel(), ctx.currentTime, 0.08);
+    if (curVoice) { try { on ? curVoice.pause() : curVoice.play(); } catch (e) {} }
   };
 
   function noiseBuffer(sec) {
@@ -200,7 +208,7 @@
       if (L.on) { L.a.forEach(el => { try { el.pause(); } catch (e) {} }); L.on = false; }
       L.vol = 0; return;
     }
-    const v = A.muted ? 0 : Math.min(1, L.vol);
+    const v = A.muted ? 0 : Math.min(1, L.vol) * (A.ducked ? 0.25 : 1);
     if (!L.on) {
       L.on = true; L.cur = 0;
       const el = L.a[0]; el.currentTime = 2 + Math.random() * 20; const p = el.play(); if (p && p.catch) p.catch(() => {});

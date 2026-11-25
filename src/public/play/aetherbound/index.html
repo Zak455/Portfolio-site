@@ -339,6 +339,22 @@ body.dlg #hotbar,body.dlg #prompt,body.dlg .hud-bl{opacity:0;pointer-events:none
   #dialogue{padding:24px 16px 18px}
   #dialogue #dlgText{font-size:16px}
 }
+
+/* pause: Esc / P / the pause button; opens automatically when the tab is hidden */
+#btnPause{position:absolute;left:50%;top:max(14px,env(safe-area-inset-top));transform:translateX(-50%);pointer-events:auto;width:46px;height:46px;border-radius:50%;padding:0;display:grid;place-items:center;background:var(--glass);border:1px solid var(--line);box-shadow:inset 0 0 0 3px #fffaf0,0 4px 12px rgba(29,37,48,.16);color:var(--ink)}
+#btnPause i{display:flex;gap:5px}#btnPause i::before,#btnPause i::after{content:"";width:4px;height:15px;border-radius:2px;background:currentColor}
+#btnPause:hover,#btnPause:focus-visible{color:var(--red);outline:none}
+#btnPause kbd{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);padding:0 5px;height:16px;border-radius:5px;background:var(--ink);color:#fff;font:800 9px/16px var(--text)}
+body.touch #btnPause kbd{display:none}
+#pause{position:fixed;inset:0;z-index:27;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(29,37,48,.42);-webkit-backdrop-filter:blur(4px) saturate(.8);backdrop-filter:blur(4px) saturate(.8)}
+#pause .pcard{width:min(380px,100%);padding:28px 26px 24px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;animation:pin .18s ease-out}
+@keyframes pin{from{transform:scale(.94);opacity:0}}
+#pause .tag{font-family:var(--text);font-weight:800;font-size:12px;letter-spacing:.18em;color:var(--red)}
+#pause h2{margin:0;font-family:var(--display);font-weight:var(--dweight);font-size:44px;line-height:1;color:var(--ink)}
+#pause .menu{display:flex;flex-direction:column;align-items:stretch;width:100%;gap:10px;margin-top:6px}
+#pause .keys{font-size:12px;line-height:2.1;margin-top:4px}
+@media (max-width:760px){#btnPause{left:auto;transform:none;right:calc(max(10px,env(safe-area-inset-right)) + 36px);top:calc(max(10px,env(safe-area-inset-top)) + 114px);width:42px;height:42px}#log,body.touch #log{top:176px}}
+body.paused #hotbar,body.paused #prompt,body.paused .hud-bl,body.paused #touch,body.paused #btnPause{opacity:0;pointer-events:none}
 </style>
 </head>
 <body>
@@ -385,6 +401,7 @@ body.dlg #hotbar,body.dlg #prompt,body.dlg .hud-bl{opacity:0;pointer-events:none
     <div class="slot s-dash"><svg viewBox="0 0 24 24"><path d="M3.5 9.5c2.1-2.2 4.2 2.2 6.3 0s4.2-2.2 6.3 0M7.9 14.5c2.1-2.2 4.2 2.2 6.3 0s4.2-2.2 6.3 0"/><path d="M17.5 6.2l2.6 3.3"/></svg><span>Spc</span><b>Tide Step</b></div>
     <div class="slot s-sense"><svg viewBox="0 0 24 24"><path class="f" d="M2.5 12s3.8-6.5 9.5-6.5S21.5 12 21.5 12s-3.8 6.5-9.5 6.5S2.5 12 2.5 12z"/><circle class="d" cx="12" cy="12" r="3.1"/><circle cx="13.2" cy="10.8" r=".6" fill="#fff" stroke="none"/></svg><span>Q</span><b>Blood Sense</b></div>
   </div>
+  <button id="btnPause" aria-label="Pause (Esc)"><i></i><kbd>Esc</kbd></button>
   <div class="hud-bl"><button id="btnLedger">Ledger · Tab</button><button id="btnMute">Sound on</button></div>
 </div>
 
@@ -418,6 +435,18 @@ body.dlg #hotbar,body.dlg #prompt,body.dlg .hud-bl{opacity:0;pointer-events:none
     <div id="ledgerBody"></div>
   </div>
 </div>
+
+<div id="pause" role="dialog" aria-label="Paused" hidden><div class="pcard frame">
+  <div class="tag">THE LEDGER WAITS</div>
+  <h2>Paused</h2>
+  <div class="menu">
+    <button class="btn" id="btnResume">Resume</button>
+    <button class="btn ghost" id="btnPLedger">Open the Ledger</button>
+    <button class="btn ghost" id="btnPSound">Sound: on</button>
+    <button class="btn ghost" id="btnPTitle">Save and quit to title</button>
+  </div>
+  <div class="keys keyhint"><b>Esc</b> resume · <b>WASD</b> move · <b>J</b> sword · <b>K</b> bolt · <b>H</b> heal · <b>E</b> talk · <b>Tab</b> Ledger</div>
+</div></div>
 
 <div id="offer" hidden role="dialog" aria-label="Ledger offer">
   <div class="oh" id="offerLabel">LEDGER OFFER</div>

@@ -713,14 +713,40 @@
       if (IN.take('escape')) AB.Intro.skip();
       if (!AB.UI.offerOpen()) AB.Intro.update(dt);
     } else if (G.state === 'play') {
-      update(dt);
+      if (IN.take('escape') || IN.take('pause')) { if (U.ledgerOpen()) U.closeLedger(); else if (!U.offerOpen()) G.setPaused(!G.paused); }
+      if (!G.paused) update(dt);
       if (Math.floor(G.t * 10) !== Math.floor((G.t - dt) * 10)) { U.updateHud(); U.setQuest(G.currentQuest()); U.drawMinimap(G); }
     }
-    if (G.state === 'play') U.cooldowns(G.player);
+    if (G.state === 'play' && !G.paused) U.cooldowns(G.player);
     draw(dt);
     IN.endFrame();
     requestAnimationFrame(loop);
   }
 
+  // ---------- Pause (Esc, the pause button, or leaving the tab) ----------
+  G.paused = false;
+  G.setPaused = function (on) {
+    if (G.state !== 'play') on = false;
+    if (on === G.paused) return;
+    G.paused = on;
+    document.getElementById('pause').hidden = !on;
+    document.body.classList.toggle('paused', on);
+    AU.duck(on);
+    if (on) { AU.sfx('open'); setTimeout(() => { const b = document.getElementById('btnResume'); if (b) b.focus(); }, 30); }
+    else AU.sfx('ui');
+  };
+  document.addEventListener('visibilitychange', () => { if (document.hidden && G.state === 'play') G.setPaused(true); });
+  addEventListener('load', () => {
+    const $ = id => document.getElementById(id);
+    $('btnPause').addEventListener('click', () => G.setPaused(true));
+    $('btnResume').addEventListener('click', () => G.setPaused(false));
+    $('btnPLedger').addEventListener('click', () => { G.setPaused(false); U.openLedger(); });
+    const snd = () => { $('btnPSound').textContent = AB.Audio.muted ? 'Sound: off' : 'Sound: on'; };
+    $('btnPSound').addEventListener('click', () => { $('btnMute').click(); snd(); });
+    $('btnMute').addEventListener('click', () => setTimeout(snd, 0));
+    $('btnPTitle').addEventListener('click', () => { try { L.save(); } catch (e) {} location.reload(); });
+    $('pause').addEventListener('click', e => { if (e.target.id === 'pause') G.setPaused(false); });
+    snd();
+  });
   addEventListener('load', G.boot);
 })();

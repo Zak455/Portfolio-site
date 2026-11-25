@@ -6,7 +6,15 @@
   const T = AB.TILE;
   let A, H, PAL, wx, wz, THREE, K;
   let S = null, cv = null, building = false, lastAspect = 0;
-  let waterU = null;
+  let waterU = null, bridgeAt = null;
+  // height of the walking surface under a game-pixel position: the arched bridge deck, else the ground
+  function deckY(px, py) {
+    if (!bridgeAt) return 0;
+    const dx = wx(px) - bridgeAt[0], dz = wz(py) - bridgeAt[1];
+    if (Math.abs(dz) > 0.8 || Math.abs(dx) > 1.8) return 0;
+    const top = 0.2 + 0.1 * Math.cos(Math.max(-1, Math.min(1, dx / 1.5)) * 1.4);
+    return Math.abs(dx) <= 1.5 ? top : top * (1 - (Math.abs(dx) - 1.5) / 0.3);
+  }
   const waterMirror = { tMirror: { value: null }, uMirrorMatrix: { value: null } }; // matrix is created once THREE is loaded
   let scene, camera, land, sun, sky, paper, woods, houses = [], runes = [], fire, wellWater, smoke, waterTex, herbMesh, herbSig = '', deadGroups = [], trackMesh, tilt, kay, npcs = new Map(), foes = new Map(), bolts = [], boltLight, glow, cards = [], cardQueue = [];
   const cam = { x: 0, z: 0, init: false };
@@ -95,7 +103,7 @@
       waterMirror.tMirror.value = rt.texture; waterMirror.uMirrorMatrix.value = new THREE.Matrix4();
       S.mirrors.push({ mesh: water, rt, u: waterMirror, y: wy, rough: 0, cam: new THREE.PerspectiveCamera() }); }
     // bridge
-    const bridge = new THREE.Group(); bridge.position.set(wx(Wd.riverX(21) * T), 0, wz(21.5 * T)); land.add(bridge);
+    const bridge = new THREE.Group(); bridge.position.set(wx(Wd.riverX(21) * T), 0, wz(21.5 * T)); land.add(bridge); bridgeAt = [bridge.position.x, bridge.position.z];
     for (let i = -6; i <= 6; i++) H.box(bridge, 0.24, 0.08, 1.45, i % 2 ? PAL.kraft : '#b88a5a', [i * 0.25, 0.16 + 0.1 * Math.cos(i / 6 * 1.4), 0], 0.02);
     for (const s of [-1, 1]) { for (let i = -3; i <= 3; i++) H.box(bridge, 0.07, 0.42, 0.07, PAL.timber, [i * 0.5, 0.35 + 0.1 * Math.cos(i / 3 * 1.4), s * 0.68], 0.02); H.box(bridge, 3.3, 0.06, 0.06, PAL.timber, [0, 0.58, s * 0.68], 0.02); }
 
@@ -309,7 +317,7 @@
     // Kayden
     const kg = kay.g; kg.visible = !(p.inv > 0 && Math.floor(p.t * 20) % 2 === 0) && G.alive !== false;
     const bob = p.moving ? Math.abs(Math.sin(p.t * 12)) * 0.07 : 0;
-    kg.position.set(wx(p.x), bob, wz(p.y)); kg.rotation.set(0, Math.PI / 2 - p.face, 0);
+    kg.position.set(wx(p.x), bob + deckY(p.x, p.y), wz(p.y)); kg.rotation.set(0, Math.PI / 2 - p.face, 0);
     if (p.dashT > 0) kg.rotateX(0.35);
     const sw = p.swing > 0 ? p.swing / 0.22 : 0;
     if (sw > 0) { kay.sword.position.set(0.0, 0.42, 0.12); kay.sword.rotation.set(Math.PI / 2, 0, (sw - 0.5) * 2.6); }
@@ -317,7 +325,7 @@
     kay.sword.children[0].material = H.paint(Ls.flags.swordUp ? '#c9ccd1' : PAL.kraft);
     glow.position.set(kg.position.x, 1.0, kg.position.z); glow.intensity = 0.6 + 2.2 * K.smooth(0.3, 1, AB.World.depth(p.x));
     // villagers
-    G.npcs.forEach(n => { const m = npcModel(n); m.g.visible = n.visible !== false; m.g.position.set(wx(n.x), 0, wz(n.y)); const a = Math.atan2(p.y - n.y, p.x - n.x); m.g.rotation.set(0, Math.PI / 2 - a, 0); });
+    G.npcs.forEach(n => { const m = npcModel(n); m.g.visible = n.visible !== false; m.g.position.set(wx(n.x), deckY(n.x, n.y), wz(n.y)); const a = Math.atan2(p.y - n.y, p.x - n.x); m.g.rotation.set(0, Math.PI / 2 - a, 0); });
     // enemies
     foes.forEach((m, e) => { if (!G.enemies.includes(e)) { land.remove(m.g); disposeTree(m.g); foes.delete(e); } });
     G.enemies.forEach(e => {
@@ -325,12 +333,12 @@
       const want = e.aware ? Math.atan2(p.y - e.y, p.x - e.x) : Math.atan2(e.wy || 0.0001, e.wx || 0.0001);
       if (m.kind === 'slime') {
         const hop = e.aware ? Math.abs(Math.sin(e.t * 5)) : Math.abs(Math.sin(e.t * 2.5)) * 0.4, sq = 1 + (e.aware ? Math.sin(e.t * 5) * 0.12 : 0);
-        m.g.position.set(wx(e.x), hop * 0.28, wz(e.y)); m.g.rotation.set(0, Math.PI / 2 - want, 0); m.body.scale.set(sq, 0.9 / sq, sq);
+        m.g.position.set(wx(e.x), hop * 0.28 + deckY(e.x, e.y), wz(e.y)); m.g.rotation.set(0, Math.PI / 2 - want, 0); m.body.scale.set(sq, 0.9 / sq, sq);
         m.body.material.emissive.set(e.flash > 0 ? '#ffffff' : '#000000'); m.body.material.emissiveIntensity = e.flash > 0 ? 0.8 : 0;
       } else {
         // wolves face +x in their own frame
         let d = (want - m.yaw); d = Math.atan2(Math.sin(d), Math.cos(d)); m.yaw += d * Math.min(1, dt * 8);
-        m.g.position.set(wx(e.x), 0, wz(e.y)); m.g.rotation.set(0, -m.yaw, 0);
+        m.g.position.set(wx(e.x), deckY(e.x, e.y), wz(e.y)); m.g.rotation.set(0, -m.yaw, 0);
         const run = e.aware || (e.wx || e.wy) ? Math.sin(e.t * 16) * 0.55 : 0;
         m.legs.forEach((l, i) => l.rotation.z = (i % 2 ? run : -run));
         m.body.rotation.z = e.lunge > 0 ? 0.18 : 0; m.tail.rotation.z = 1.0 + Math.sin(e.t * 9) * 0.2;
