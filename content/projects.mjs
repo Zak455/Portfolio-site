@@ -660,28 +660,28 @@ export const projects = [
     play: '/play/aetherbound/',
     glance: [{ n: '9', l: 'skills that level only by use' }, { n: '1 of 3', l: 'ability offers every 5 levels' }, { n: '7', l: 'quests in Chapter 1' }],
     // Screenshot of the playable build at /play/aetherbound/, captured Nov 2026.
-    shot: { base: '/assets/img/work/aetherbound', alt: 'Aetherbound: a six-year-old hero fights the Ash Wolf Alpha inside a stone circle at night', caption: 'Aetherbound: the Ash Wolf Alpha, from the playable build on this site, Nov 2026' },
+    shot: { base: '/assets/img/work/aetherbound', alt: 'Aetherbound: a six-year-old hero faces the Ash Wolf Alpha inside a stone circle at dusk, rendered as a tiny 3D diorama', caption: 'Aetherbound: the Ash Wolf Alpha, from the playable build on this site, Nov 2026' },
     number: '09',
     name: 'Aetherbound',
     category: 'Personal Project / Game Design',
     year: '2026',
     summary:
-      'A top-down isekai RPG that runs in the browser: die in 2026, wake up as a baby in a frontier village, and grow stronger by doing. A cold System called the Ledger records every swing, spell and herb.',
+      'An isekai RPG that runs in the browser as a tiny 3D diorama: die in 2026, wake up as a baby in a frontier village, and grow stronger by doing. A cold System called the Ledger records every swing, spell and herb.',
     role: 'Concept, story, game systems, UI and motion design',
     links: [{ label: 'Play Aetherbound', href: '/play/aetherbound/' }],
     contribution: [
       'Game concept, story and characters',
       'Progression design: learn-by-doing skills, character levels, ability offers, titles',
       'System UI: status window, skill trees, Ledger log, offers and quest tracker',
-      'Opening cinematic, world art direction and sound',
+      'Opening cinematic, 3D diorama art direction and sound',
     ],
-    tags: ['Game Design', 'Systems Design', 'UI Design', 'Narrative', 'Canvas', 'Web Audio'],
+    tags: ['Game Design', 'Systems Design', 'UI Design', 'Narrative', 'three.js', 'Web Audio'],
     theme: { accent: '#c8323c', layout: 'wide' },
     sections: {
       introduction: {
         body: [
           'Aetherbound is an original isekai RPG. A man dies in 2026 and is reborn as Kayden Break, a baby in Thornwick, a frontier village at the edge of a monster-haunted forest. He keeps his adult memories, has magic from birth, and sees a cold, slightly sinister System called the Ledger that writes down everything he does.',
-          'Chapter 1 covers his childhood. It plays in the browser on desktop and phone, with keyboard, mouse or touch controls.',
+          'Chapter 1 covers his childhood. It plays in the browser on desktop and phone, with keyboard, mouse or touch controls. The world is built as one small floating model, like a tabletop diorama: soft shadows, a tilt-shift camera that keeps Kayden sharp, and light that turns from day to dusk the deeper he goes into the forest.',
         ],
       },
       objectives: {
@@ -700,8 +700,8 @@ export const projects = [
         ],
         media: [
           { src: '/assets/img/work/aetherbound/boot.webp', alt: 'Aetherbound: the Ledger status window drawing itself in a newborn\'s vision', caption: 'First boot: the Ledger appears at birth', width: 1440, height: 900, wide: true },
-          { src: '/assets/img/work/aetherbound/village.webp', alt: 'Aetherbound: Thornwick village from above, with Kayden, his sister and their mother in the herb garden', caption: 'Thornwick, age 6', width: 1440, height: 900, wide: true },
-          { src: '/assets/img/work/aetherbound/forest.webp', alt: 'Aetherbound: Kayden fires Water Bolts at a bog slime in the forest by the river', caption: 'The Ashwood: skills grow from real fights', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/aetherbound/village.webp', alt: 'Aetherbound: Thornwick village as a 3D diorama, with Kayden, his sister and their mother near the herb garden', caption: 'Thornwick, age 6, as a tabletop model', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/aetherbound/forest.webp', alt: 'Aetherbound: Kayden fires a Water Bolt at a bog slime in the 3D forest', caption: 'The Ashwood: skills grow from real fights', width: 1440, height: 900, wide: true },
           { src: '/assets/img/work/aetherbound/ledger.webp', alt: 'Aetherbound: the Ledger window showing skill trees and levels', caption: 'The Ledger: every skill levels by use', width: 1440, height: 900, wide: true },
           { src: '/assets/img/work/aetherbound/offer.webp', alt: 'Aetherbound: a Ledger offer of three abilities, pick one', caption: 'Every five levels: pick one ability, lose the rest', width: 1440, height: 900, wide: true },
         ],
@@ -711,8 +711,10 @@ export const projects = [
           'Learn by doing, with diminishing returns: XP = base x challenge x novelty x risk, so variety and danger are rewarded',
           'The System is unsettling on purpose: red log entries, Directives with a hidden "Failure: ???", and a trait that says "no effect"',
           'Family members teach the mechanics, so the tutorial is also the story',
-          'Top-down camera chosen to work on desktop, handheld and phone from one build',
-          'All art and sound are generated in code: canvas drawing and Web Audio, no image or audio files to load',
+          'A three-quarter camera on a long lens, with tilt-shift focus on Kayden, so one build reads on desktop, handheld and phone',
+          'Trees between the camera and Kayden sink to stumps, so the forest never hides the player',
+          'Ledger pop-ups appear in the world as little flip signs beside Kayden, in the one red accent kept for him and the Ledger',
+          'The 3D models are built in code with three.js, and the sound is Web Audio plus a recorded narrator for the opening',
         ],
       },
     },

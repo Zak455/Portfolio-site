@@ -11,6 +11,7 @@
     ctx = canvas.getContext('2d');
     W.init();
     U.init();
+    if (AB.R3) AB.R3.init();
     IN.bindCanvas(canvas);
     IN.bindTouch(document.getElementById('touch'));
     addEventListener('resize', resize); resize();
@@ -75,7 +76,7 @@
     W.deadTrees.forEach(d => { if (!d.alive) d.regrow = 120; });
     if (!S.quests.q_walk) S.quests.q_walk = 'active';
     placeMira();
-    G.state = 'play';
+    G.state = 'play'; if (AB.R3 && AB.R3.ok) AB.R3.reset();
     document.getElementById('hud').hidden = false;
     document.getElementById('touch').hidden = false;
     AU.ambience('forest');
@@ -365,6 +366,10 @@
 
   function aimAngle() {
     const p = G.player;
+    if (IN.mouse.used && !IN.touch && AB.R3 && AB.R3.ok) {
+      const gp = AB.R3.ground(IN.mouse.x, IN.mouse.y);
+      if (gp) return Math.atan2(gp.y - p.y, gp.x - p.x);
+    }
     if (IN.mouse.used && !IN.touch) {
       const sx = (p.x - G.cam.x) * G.scale, sy = (p.y - 14 - G.cam.y) * G.scale;
       return Math.atan2(IN.mouse.y - sy, IN.mouse.x - sx);
@@ -566,9 +571,16 @@
   G.fx = { levelUp() { const p = G.player; if (!p) return; E.burst(p.x, p.y - 20, '#e8b04a', 30, 140, 1); E.float(p.x, p.y - 56, 'LEVEL UP', '#e8b04a', true); } };
 
   // ---------- Draw ----------
-  function draw() {
+  function draw(dt) {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.imageSmoothingEnabled = true;
+    const R3 = AB.R3 && AB.R3.ok ? AB.R3 : null;
+    if (R3) {
+      R3.mode = G.state === 'title' ? 'title' : G.state === 'intro' ? 'off' : 'play';
+      R3.frame(G, dt || 1 / 60);
+      if (G.state === 'title') { ctx.clearRect(0, 0, vw, vh); return; }
+      if (G.state !== 'intro') return drawOverlay3d(R3);
+    }
     if (G.state === 'title') return drawTitle();
     if (G.state === 'intro') { AB.Intro.draw(ctx, vw, vh); return; }
     const s = G.scale, p = G.player;
@@ -609,6 +621,62 @@
     if (!G.alive) { ctx.fillStyle = 'rgba(0,0,0,0.75)'; ctx.fillRect(0, 0, vw, vh); ctx.fillStyle = '#c8323c'; ctx.font = '800 28px Cinzel, serif'; ctx.textAlign = 'center'; ctx.fillText('SUBJECT EXPIRED', vw / 2, vh / 2); }
   }
 
+  // 3D mode: the model is drawn by AB.R3; this canvas only carries particles, numbers, health bars and markers.
+  function drawOverlay3d(R3) {
+    const p = G.player;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, vw, vh);
+    if (!p) return;
+    // particles: an affine fit of the ground plane around Kayden
+    const m = R3.overlayTransform(p.x, p.y, 0.45);
+    ctx.setTransform(dpr * m[0], dpr * m[1], dpr * m[2], dpr * m[3], dpr * m[4], dpr * m[5]);
+    for (const q of E.particles) { ctx.globalAlpha = q.life / q.max; ctx.fillStyle = q.color; ctx.fillRect(q.x - q.r / 2, q.y - q.r / 2, q.r, q.r); }
+    ctx.globalAlpha = 1;
+    const k = Math.hypot(m[0], m[1]);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.textAlign = 'center';
+    // Blood Sense: red rings on every enemy, seen through trees
+    if (G.senseT > 0) {
+      ctx.strokeStyle = `rgba(200,50,60,${Math.min(1, G.senseT) * 0.9})`; ctx.lineWidth = 2.5;
+      G.enemies.forEach(e => { if (e.dead) return; const s = R3.project(e.x, e.y, 0.05); const r = (e.r + 8 + Math.sin(G.t * 8) * 2) * k; ctx.beginPath(); ctx.ellipse(s.x, s.y, r, r * 0.7, 0, 0, 7); ctx.stroke(); });
+    }
+    // enemy health bars and appraise labels
+    G.enemies.forEach(e => {
+      if (e.dead) return;
+      const showBar = e.hp < e.d.hp || L.has('appraise') || e.d.boss;
+      if (!showBar) return;
+      const s = R3.project(e.x, e.y, e.type === 'slime' ? 0.55 : (e.d.boss ? 1.25 : 0.95));
+      const w = e.d.boss ? 64 : 34, y = s.y - 8;
+      ctx.fillStyle = 'rgba(246,241,231,0.95)'; roundRect(s.x - w / 2 - 2, y - 2, w + 4, 8, 4); ctx.fill();
+      ctx.fillStyle = '#c8323c'; roundRect(s.x - w / 2, y, Math.max(2, w * Math.max(0, e.hp / e.d.hp)), 4, 2); ctx.fill();
+      if (L.has('appraise') || e.d.boss) {
+        ctx.font = '600 12px Fredoka, sans-serif'; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(246,241,231,0.95)'; ctx.fillStyle = '#1d2530';
+        const txt = `${e.d.name} · Lv ${e.d.lvl}`; ctx.strokeText(txt, s.x, y - 6); ctx.fillText(txt, s.x, y - 6);
+      }
+    });
+    // quest markers over villagers
+    ctx.font = '600 22px Fredoka, sans-serif';
+    G.npcs.forEach(n => {
+      if (n.visible === false) return; const mark = G.npcMarker(n.id); if (!mark) return;
+      const s = R3.project(n.x, n.y, n.id === 'mira' ? 1.05 : 1.5); const y = s.y - 6 + Math.sin(G.t * 4) * 3;
+      ctx.fillStyle = '#f6f1e7'; ctx.beginPath(); ctx.arc(s.x, y - 7, 13, 0, 7); ctx.fill();
+      ctx.lineWidth = 2; ctx.strokeStyle = mark === '!' ? '#d99a2b' : '#c8323c'; ctx.stroke();
+      ctx.fillStyle = mark === '!' ? '#d99a2b' : '#c8323c'; ctx.fillText(mark, s.x, y + 1);
+    });
+    // floating numbers and words
+    for (const t of E.texts) {
+      const s = R3.project(t.x, t.y, 0.6);
+      ctx.globalAlpha = Math.min(1, t.life * 2);
+      ctx.font = (t.big ? '600 20px' : '600 15px') + ' Fredoka, sans-serif';
+      ctx.lineWidth = 4; ctx.strokeStyle = 'rgba(29,37,48,0.85)'; ctx.strokeText(t.text, s.x, s.y);
+      ctx.fillStyle = t.color; ctx.fillText(t.text, s.x, s.y);
+    }
+    ctx.globalAlpha = 1;
+    if (p.hurtFlash > 0) { p.hurtFlash -= 1 / 60; const g = ctx.createRadialGradient(vw / 2, vh / 2, Math.min(vw, vh) * 0.3, vw / 2, vh / 2, Math.max(vw, vh) * 0.75); g.addColorStop(0, 'rgba(200,50,60,0)'); g.addColorStop(1, `rgba(200,50,60,${Math.min(0.7, p.hurtFlash * 1.4)})`); ctx.fillStyle = g; ctx.fillRect(0, 0, vw, vh); }
+    if (!G.alive) { ctx.fillStyle = 'rgba(29,37,48,0.55)'; ctx.fillRect(0, 0, vw, vh); ctx.fillStyle = '#f6f1e7'; ctx.font = '600 34px Fredoka, sans-serif'; ctx.fillText('SUBJECT EXPIRED', vw / 2, vh / 2); }
+  }
+  function roundRect(x, y, w, h, r) { ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x, y, w, h, r); else ctx.rect(x, y, w, h); }
+
   // Title backdrop: drifting ledger pages and embers.
   const tpages = Array.from({ length: 34 }, (_, i) => ({ x: Math.random(), y: Math.random(), z: 0.3 + Math.random(), r: Math.random() - 0.5, id: i }));
   function drawTitle() {
@@ -644,7 +712,7 @@
       update(dt);
       if (Math.floor(G.t * 10) !== Math.floor((G.t - dt) * 10)) { U.updateHud(); U.setQuest(G.currentQuest()); U.drawMinimap(G); }
     }
-    draw();
+    draw(dt);
     IN.endFrame();
     requestAnimationFrame(loop);
   }
