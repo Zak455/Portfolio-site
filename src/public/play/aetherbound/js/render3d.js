@@ -142,6 +142,200 @@
     for (let i = 0; i < 8; i++) { const b = H.put(land, new THREE.SphereGeometry(0.13, 16, 10), boltMat, [0, -5, 0], null, false); b.visible = false; bolts.push(b); }
     boltLight = new THREE.PointLight(PAL.mana, 0, 4, 2); land.add(boltLight);
     glow = new THREE.PointLight(PAL.mana, 0, 5, 2); land.add(glow);
+    makeLife();
+  }
+
+  // ambient life ---------------------------------------------------------
+  // Purely visual: fish that leap from the river, ducks along the banks, birds crossing overhead and
+  // two farmers working the big field. None of it touches game logic; the river mirror reflects it all.
+  const WY = 0.066;                                   // water surface (land-local)
+  let life = null;
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  const riverAt = (ty) => [wx(AB.World.riverX(Math.max(0, Math.min(63.9, ty))) * T), wz(ty * T)];
+  const tyOf = (z) => (z + A.MD / 2) / A.U;
+  function makeLife() {
+    life = { fish: null, jump: null, nextJump: 3, rings: [], drops: null, ducks: [], birds: null, nextBirds: 6, flock: null, farmers: [] };
+    const ringMat = () => new THREE.MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0, depthWrite: false });
+    for (let i = 0; i < 10; i++) { const m = new THREE.Mesh(new THREE.RingGeometry(0.8, 1, 32), ringMat()); m.rotation.x = -Math.PI / 2; m.visible = false; land.add(m); life.rings.push({ m, age: 9, life: 1, size: 0.3 }); }
+    // fish: a little silver-gold body and a forked tail, nose along +x
+    { const g = new THREE.Group(); g.visible = false; land.add(g);
+      const fm = new THREE.MeshPhysicalMaterial({ color: '#c9a35e', metalness: 0.55, roughness: 0.28, clearcoat: 1 });
+      const body = H.put(g, new THREE.SphereGeometry(1, 16, 10), fm, [0, 0, 0]); body.scale.set(0.12, 0.045, 0.035);
+      const tail = H.put(g, new THREE.ConeGeometry(0.05, 0.08, 4), fm, [-0.14, 0, 0], [0, 0, Math.PI / 2]); tail.scale.set(1, 1, 0.25);
+      H.put(g, new THREE.ConeGeometry(0.02, 0.05, 3), fm, [0.01, 0.05, 0], [0, 0, -0.5]);
+      g.scale.setScalar(1.5); life.fish = g; }
+    const dm = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 6, 4), new THREE.MeshBasicMaterial({ color: '#e9f7ff', transparent: true, opacity: 0.85 }), 24);
+    for (let i = 0; i < 24; i++) K.place(dm, i, [0, -9, 0], null, 1e-4); land.add(dm); life.drops = { m: dm, p: [] };
+    // ducks: four mallards and a brown hen, homes spread along the village stretch of river
+    [[14, -0.3, 1], [17.5, 0.35, 0], [25, -0.4, 1], [27.5, 0.2, 1], [33, 0.1, 0]].forEach(([ty, s, drake]) => {
+      const g = new THREE.Group(); g.rotation.order = 'YXZ'; land.add(g);
+      const body = H.put(g, new THREE.SphereGeometry(1, 16, 12), drake ? '#d8d2c4' : '#9a7650', [0, 0.05, 0]); body.scale.set(0.12, 0.065, 0.075);
+      H.put(g, new THREE.ConeGeometry(0.045, 0.09, 8), drake ? '#3b3a38' : '#7f6040', [-0.12, 0.08, 0], [0, 0, 2.0]);
+      const head = new THREE.Group(); head.position.set(0.09, 0.13, 0); g.add(head);
+      H.put(head, new THREE.SphereGeometry(0.045, 14, 10), drake ? '#2f6e45' : '#8a6a46', [0, 0, 0]);
+      if (drake) H.put(head, new THREE.TorusGeometry(0.035, 0.008, 6, 16), '#f4f1e8', [-0.01, -0.035, 0], [Math.PI / 2, 0, 0]);
+      const bill = H.put(head, new THREE.SphereGeometry(1, 10, 6), '#e8a832', [0.05, -0.008, 0]); bill.scale.set(0.035, 0.012, 0.022);
+      H.put(g, new THREE.SphereGeometry(1, 10, 8), drake ? '#7a7f8a' : '#7d5d3d', [-0.01, 0.075, 0.06]).scale.set(0.08, 0.03, 0.02);
+      H.put(g, new THREE.SphereGeometry(1, 10, 8), drake ? '#7a7f8a' : '#7d5d3d', [-0.01, 0.075, -0.06]).scale.set(0.08, 0.03, 0.02);
+      const legs = H.put(g, new THREE.BoxGeometry(0.02, 0.05, 0.08), '#e8a832', [0, -0.005, 0]);
+      const wake = new THREE.Mesh(new THREE.RingGeometry(0.85, 1, 28), ringMat()); wake.rotation.x = -Math.PI / 2; land.add(wake);
+      g.scale.setScalar(1.5);
+      life.ducks.push({ g, head, legs, wake, home: ty, ty, s, tty: ty, ts: s, rest: 0, hd: 0, ph: Math.random() * 6, spd: 0.22 });
+    });
+    // birds: a small flock of dark gulls; wings are pivoted boxes
+    { const flock = new THREE.Group(); flock.visible = false; land.add(flock); const birds = [];
+      for (let i = 0; i < 5; i++) {
+        const b = new THREE.Group(); flock.add(b);
+        const bb = H.put(b, new THREE.SphereGeometry(1, 10, 8), '#3d4350', [0, 0, 0]); bb.scale.set(0.13, 0.04, 0.045);
+        const wings = [-1, 1].map(sd => { const w = new THREE.Group(); w.position.set(0.01, 0.01, sd * 0.03); b.add(w); H.box(w, 0.09, 0.012, 0.24, '#4a505e', [0, 0, sd * 0.12], 0.005); return { w, sd }; });
+        birds.push({ b, wings, off: [-Math.abs(i - 2) * 0.55 - (i ? 0.1 : 0), (i % 2 ? 0.12 : -0.08), (i - 2) * 0.5], ph: Math.random() * 6 });
+      }
+      flock.scale.setScalar(1.15);
+      life.flock = { g: flock, birds, t: 0, dur: 0, from: null, dir: null }; }
+    // farmers: one hoeing down the rows, one planting from a basket (field tiles x 8-16, y 31-40)
+    const hoer = A.villager(land, '#7d8f5a', 'cap', 1);
+    const hoe = new THREE.Group(); hoe.position.set(0.1, 0.32, 0.05); hoer.add(hoe);
+    H.box(hoe, 0.03, 0.5, 0.03, PAL.timber, [0, 0.05, 0], 0.01); H.box(hoe, 0.1, 0.035, 0.16, '#9aa2aa', [0, -0.2, 0.07], 0.01);
+    hoer.rotation.order = 'YXZ';
+    const planter = A.villager(land, '#b06f4e', 'hair', 0.95); planter.rotation.order = 'YXZ';
+    const basket = H.put(planter, new THREE.CylinderGeometry(0.07, 0.055, 0.08, 12), PAL.kraft, [0.02, 0.28, 0.13]);
+    const seedlings = new THREE.InstancedMesh(new THREE.ConeGeometry(0.035, 0.08, 5), new THREE.MeshStandardMaterial({ color: '#6fae46', roughness: 0.8 }), 40);
+    for (let i = 0; i < 40; i++) K.place(seedlings, i, [0, -9, 0], null, 1e-4); seedlings.castShadow = true; land.add(seedlings);
+    for (let i = 0; i < 13; i++) K.place(seedlings, i, [wx((9 + i * 0.5) * T), 0.05, wz(38.1 * T)], [0, rnd(0, 3), 0], 1.2);   // the row already planted
+    life.farmers = [
+      { g: hoer, tool: hoe, kind: 'hoe', row: 33.2, x: 9.2, dir: 1, act: 0, step: 0, pc: 0 },
+      { g: planter, tool: basket, kind: 'plant', row: 37.2, x: 14.8, dir: -1, act: 0, step: 0, seeds: seedlings, n: 13, pc: 0 }
+    ];
+  }
+  function ring(x, z, size, dur, op) {
+    const r = life.rings.reduce((a, b) => (b.age / b.life > a.age / a.life ? b : a));
+    r.m.position.set(x, WY + 0.004, z); r.age = 0; r.life = dur; r.size = size; r.op = op || 0.55; r.m.visible = true;
+  }
+  function splash(x, z, n, up) {
+    ring(x, z, 0.32, 1.1); ring(x, z, 0.18, 0.7, 0.4);
+    for (let i = 0; i < n; i++) { const a = rnd(0, 6.3), v = rnd(0.3, 0.8); life.drops.p.push({ x, y: WY, z, vx: Math.cos(a) * v, vy: rnd(0.8, 1.6) * up, vz: Math.sin(a) * v, t: 0 }); }
+    if (life.drops.p.length > 24) life.drops.p.splice(0, life.drops.p.length - 24);
+  }
+  R._life = () => life;
+  function lifeTick(G, dt, fx, fz, kx, kz) {
+    if (!life) return;
+    const t = G.t || 0, near = (x, z) => Math.max(0, 1 - Math.hypot(x - fx, z - fz) / 6);
+    // rings and droplets
+    life.rings.forEach(r => { if (!r.m.visible) return; r.age += dt; const k = r.age / r.life; if (k >= 1) { r.m.visible = false; return; } r.m.scale.setScalar(r.size * (0.3 + k)); r.m.material.opacity = r.op * (1 - k) * (1 - k); });
+    const dp = life.drops.p; for (let i = 0; i < 24; i++) {
+      const d = dp[i]; if (!d) { K.place(life.drops.m, i, [0, -9, 0], null, 1e-4); continue; }
+      d.t += dt; d.vy -= 5 * dt; d.x += d.vx * dt; d.y += d.vy * dt; d.z += d.vz * dt;
+      K.place(life.drops.m, i, [d.x, d.y, d.z], null, d.y < WY ? 1e-4 : 0.016);
+    }
+    life.drops.p = dp.filter(d => d.y >= WY - 0.01); life.drops.m.instanceMatrix.needsUpdate = true;
+    // fish: every few seconds one leaps somewhere in view
+    const f = life.fish;
+    if (!life.jump) {
+      life.nextJump -= dt;
+      if (life.nextJump <= 0) {
+        let ty = tyOf(fz) + rnd(-7, 7); if (Math.abs(ty - 21.5) < 1.5) ty += 3; ty = Math.max(1, Math.min(63, ty));
+        const [cx, cz] = riverAt(ty), s = rnd(-0.42, 0.42), a = (Math.random() < 0.5 ? 0 : Math.PI) + Math.PI / 2 + rnd(-0.5, 0.5);
+        const len = rnd(0.45, 0.75);
+        life.jump = { x0: cx + s, z0: cz, dx: Math.cos(a) * len, dz: Math.sin(a) * len, h: rnd(0.3, 0.55), t: 0, dur: rnd(0.75, 1.0), out: false };
+        f.rotation.set(0, -a, 0); splash(life.jump.x0, life.jump.z0, 6, 1); AB.Audio && AB.Audio.sfx('splash', 0.35 * near(cx, cz));
+      }
+    } else {
+      const j = life.jump; j.t += dt; const k = j.t / j.dur;
+      if (k >= 1) { f.visible = false; splash(j.x0 + j.dx, j.z0 + j.dz, 8, 1.2); AB.Audio && AB.Audio.sfx('splash', 0.45 * near(j.x0, j.z0)); life.jump = null; life.nextJump = rnd(2.5, 6.5); }
+      else {
+        f.visible = true; const y = WY - 0.04 + 4 * j.h * k * (1 - k);
+        f.position.set(j.x0 + j.dx * k, y, j.z0 + j.dz * k);
+        const vy = 4 * j.h * (1 - 2 * k) / j.dur, vh = Math.hypot(j.dx, j.dz) / j.dur;
+        f.rotation.z = Math.atan2(vy, vh); f.children[1].rotation.y = Math.sin(t * 30) * 0.5;
+        if (Math.random() < dt * 30 && k > 0.1 && k < 0.9) life.drops.p.push({ x: f.position.x, y, z: f.position.z, vx: rnd(-0.2, 0.2), vy: 0, vz: rnd(-0.2, 0.2), t: 0 });
+      }
+    }
+    // ducks: drift between spots, sometimes waddle up onto the bank to rest, scatter if Kayden gets close
+    life.ducks.forEach(d => {
+      const [cx, cz] = riverAt(d.ty), x = cx + d.s, z = cz;
+      const scare = kx != null && Math.hypot(kx - x, kz - z) < 0.9;
+      if (scare && d.spd < 0.5) { d.ts = Math.max(-0.6, Math.min(0.6, d.s + (x > kx ? 0.6 : -0.6))); d.tty = d.ty + (z > kz ? 2 : -2); d.rest = 0; d.spd = 0.7; d.ph += 2; }
+      if (d.rest > 0) d.rest -= dt;
+      else {
+        const [tx] = riverAt(d.tty), ez = d.tty - d.ty, ex = d.ts - d.s, dist = Math.hypot(ex * 2, ez * A.U);
+        if (dist < 0.03) {
+          d.spd = 0.22; const r = Math.random();
+          if (Math.abs(d.s) > 0.9) { d.ts = Math.sign(d.s) * 0.55; d.tty = d.ty + rnd(-0.6, 0.6); }
+          else if (r < 0.22) { d.ts = (Math.random() < 0.5 ? -1 : 1) * rnd(1.0, 1.12); d.tty = d.ty + rnd(-0.5, 0.5); }
+          else { d.ts = rnd(-0.6, 0.6); d.tty = d.home + rnd(-2.5, 2.5); }
+          d.rest = Math.abs(d.s) > 0.9 ? rnd(4, 9) : rnd(0.5, 3);
+        } else {
+          const st = Math.min(1, d.spd * dt / dist); d.s += ex * st; d.ty += ez * st;
+          const want = Math.atan2(ez * A.U, ex); let da = want - d.hd; da = Math.atan2(Math.sin(da), Math.cos(da)); d.hd += da * Math.min(1, dt * 4);
+        }
+      }
+      const onBank = Math.abs(d.s) > 0.86, [nx, nz] = riverAt(d.ty), px = nx + d.s;
+      const moving = d.rest <= 0;
+      const bob = onBank ? (moving ? Math.abs(Math.sin(t * 10 + d.ph)) * 0.02 : 0) : Math.sin(t * 2.2 + d.ph) * 0.006;
+      d.g.position.set(px, (onBank ? 0.075 : WY - 0.01) + bob, nz); const dab = d.rest > 0 && !onBank && Math.sin(t * 0.9 + d.ph) > 0.82;
+      d.g.rotation.set(onBank && moving ? Math.sin(t * 10 + d.ph) * 0.12 : 0, -d.hd, dab ? -0.85 : 0);
+      d.legs.visible = onBank;
+      d.head.rotation.z = dab ? -0.6 : Math.sin(t * 1.7 + d.ph) * 0.08;   // tail up for a dabble now and then
+      d.wake.visible = !onBank; d.wake.position.set(px, WY + 0.003, nz);
+      const wk = (t * (moving ? 1.4 : 0.5) + d.ph) % 1; d.wake.scale.setScalar(0.12 + wk * (moving ? 0.22 : 0.12)); d.wake.material.opacity = 0.35 * (1 - wk);
+    });
+    // birds: every so often a flock crosses the view high overhead
+    const fl = life.flock;
+    if (!fl.g.visible) {
+      life.nextBirds -= dt;
+      if (life.nextBirds <= 0) {
+        const a = rnd(0, 6.3), dir = [Math.cos(a), Math.sin(a)], side = rnd(-3, 3); fl.alt = rnd(3.2, 4.4);
+        const cz = fz + fl.alt * 1.1;   // aim the path at the middle of the screen, allowing for height
+        fl.from = [fx - dir[0] * 16 - dir[1] * side, cz - dir[1] * 16 + dir[0] * side]; fl.dir = dir; fl.t = 0; fl.dur = 32 / 2.6; fl.g.visible = true;
+        fl.g.rotation.set(0, -a, 0);
+      }
+    } else {
+      fl.t += dt; const k = fl.t / fl.dur;
+      if (k >= 1) { fl.g.visible = false; life.nextBirds = rnd(14, 28); }
+      else {
+        fl.g.position.set(fl.from[0] + fl.dir[0] * 32 * k, fl.alt + Math.sin(k * 6) * 0.2, fl.from[1] + fl.dir[1] * 32 * k);
+        fl.birds.forEach(b => {
+          b.b.position.set(b.off[0], b.off[1] + Math.sin(t * 1.3 + b.ph) * 0.06, b.off[2]);
+          const glide = Math.sin(t * 0.7 + b.ph) > 0.4, flap = glide ? 0.12 : Math.sin(t * 11 + b.ph) * 0.65;
+          b.wings.forEach(w => w.w.rotation.x = -w.sd * flap);
+        });
+      }
+    }
+    // farmers
+    life.farmers.forEach(fa => {
+      const px = wx(fa.x * T), pz = wz(fa.row * T);
+      // step aside for Kayden instead of walking through him
+      let ox = 0, oz = 0; if (kx != null) { const ddx = px - kx, ddz = pz - kz, dd = Math.hypot(ddx, ddz); if (dd < 0.42) { ox = ddx / (dd || 1) * (0.42 - dd); oz = ddz / (dd || 1) * (0.42 - dd); } }
+      const blocked = kx != null && Math.hypot(px - kx, pz - kz) < 0.6;
+      fa.act += dt;
+      if (fa.kind === 'hoe') {
+        const cyc = 1.3, c = (fa.act % cyc) / cyc;          // raise, chop, pull back, step
+        if (!blocked) {
+          if (c > 0.75) fa.x += fa.dir * dt * 0.55;
+          if (fa.act - fa.step > cyc && c < 0.1) { fa.step = fa.act; }
+        }
+        const lift = c < 0.4 ? K.smooth(0, 0.4, c) : c < 0.5 ? 1 - K.smooth(0.4, 0.5, c) : 0;
+        fa.tool.rotation.x = -0.9 + lift * 1.6;
+        const kk = Math.floor(fa.act / cyc - 0.48); if (kk !== fa.pc && !blocked) { AB.Audio && AB.Audio.sfx('pick', 0.12 * near(px, pz)); }
+        fa.pc = kk;
+        fa.g.position.set(px + ox, 0, pz + oz); fa.g.rotation.set((1 - lift) * 0.15, fa.dir > 0 ? Math.PI / 2 : -Math.PI / 2, 0);
+      } else {
+        const cyc = 1.8, c = (fa.act % cyc) / cyc, bend = c < 0.5 ? Math.sin(c / 0.5 * Math.PI) : 0;
+        if (!blocked && c >= 0.5) fa.x += fa.dir * dt * 0.42;
+        const kk = Math.floor(fa.act / cyc - 0.24), crossed = kk !== fa.pc; fa.pc = kk;
+        if (crossed && !blocked) {    // a seedling goes in
+          const i = fa.n++ % 40; K.place(fa.seeds, i, [px + fa.dir * 0.14, 0.05, pz], [0, rnd(0, 3), 0], 1.2); fa.seeds.instanceMatrix.needsUpdate = true;
+        }
+        fa.g.position.set(px + ox, -bend * 0.08, pz + oz); fa.g.rotation.set(bend * 0.55, fa.dir > 0 ? Math.PI / 2 : -Math.PI / 2, 0);
+      }
+      if (blocked) fa.g.rotation.y = Math.PI / 2 - Math.atan2(kz - pz, kx - px);
+      // turn round at the end of a row and move to the next furrow
+      if (fa.x > 15.2 || fa.x < 8.8) {
+        fa.dir *= -1; fa.x = Math.max(8.8, Math.min(15.2, fa.x));
+        fa.row += fa.kind === 'hoe' ? 0.9 : -0.9;
+        if (fa.row > 39.4) fa.row = 31.6; if (fa.row < 31.6) fa.row = 39.4;
+      }
+    });
   }
 
   // people --------------------------------------------------------------
@@ -288,6 +482,7 @@
       syncPlay(G, dt, t);
       if (Math.hypot(tx - lastCut.x, tz - lastCut.z) > 0.08) { woods.cut(tx, tz, 3.4); lastCut = { x: tx, z: tz }; }
     }
+    lifeTick(G, dt, ax, az, G.player && R.mode === 'play' ? wx(G.player.x) : null, G.player ? wz(G.player.y) : null);
     const shake = G.shake > 0 ? G.shake * 0.006 : 0;
     const e = el * Math.PI / 180, y = yaw * Math.PI / 180;
     const pos = [ax + Math.sin(y) * Math.cos(e) * dist + (Math.random() - 0.5) * shake, Math.sin(e) * dist, az + Math.cos(y) * Math.cos(e) * dist + (Math.random() - 0.5) * shake];

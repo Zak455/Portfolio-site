@@ -173,7 +173,8 @@
     return true;
   }
   const lastAt = {};
-  A.sfx = function (name) {
+  A.sfx = function (name, vm) {
+    if (vm != null && vm < 0.03) return;
     if (!ctx || A.muted) return;
     const now = ctx.currentTime;
     if (lastAt[name] && now - lastAt[name] < 0.04) return; // no machine-gun stacking
@@ -182,12 +183,12 @@
     if (e) {
       const v = e[0][Math.floor(Math.random() * e[0].length)];
       const rate = /^(swing|hit|thud|chop|squelch|pick|splash)$/.test(name) ? 0.93 + Math.random() * 0.14 : 1;
-      if (play(v, e[1], 0, rate)) {
-        if (e[2]) play(e[2][0], e[2][1], e[2][2] || 0);
+      if (play(v, e[1] * (vm == null ? 1 : vm), 0, rate)) {
+        if (e[2]) play(e[2][0], e[2][1] * (vm == null ? 1 : vm), e[2][2] || 0);
         return;
       }
     }
-    synth(name);
+    if (vm == null || vm > 0.5) synth(name);
   };
 
   // ---------- Ambience ----------
