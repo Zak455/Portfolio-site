@@ -14,7 +14,7 @@
       ledger: $('#ledger'), ledgerBody: $('#ledgerBody'), offer: $('#offer'), offerCards: $('#offerCards'), offerLabel: $('#offerLabel'),
       banner: $('#banner'), slots: document.querySelectorAll('#hotbar .slot'), minimap: $('#minimap'),
     };
-    document.querySelectorAll('#ledger [data-tab]').forEach(b => b.addEventListener('click', () => { ledgerTab = b.dataset.tab; AB.Audio.sfx('ui'); U.renderLedger(); }));
+    document.querySelectorAll('#ledger [data-tab]').forEach(b => b.addEventListener('click', () => { ledgerTab = b.dataset.tab; AB.Audio.sfx('page'); U.renderLedger(); }));
     $('#ledgerClose').addEventListener('click', () => U.closeLedger());
     U.el.dialogue.addEventListener('click', () => U.advance());
     U.el.badge.addEventListener('click', () => U.openLedger('status'));
@@ -27,9 +27,9 @@
   // ---------- HUD ----------
   U.updateHud = function () {
     const S = L.S, e = U.el;
-    e.name.textContent = S.name.toUpperCase();
-    e.lvl.textContent = 'LV ' + S.level;
-    e.title.textContent = AB.TITLES[S.title].name + (S.debt > 0 ? ' · LEDGER DEBT' : '');
+    e.name.textContent = S.name;
+    e.lvl.textContent = S.level;
+    e.title.textContent = AB.TITLES[S.title].name + (S.debt > 0 ? ' · Ledger debt' : '');
     const mh = L.maxHp(), mm = L.maxMp();
     e.hp.style.width = (S.hp / mh * 100) + '%'; e.hpT.textContent = `${Math.ceil(S.hp)} / ${mh}`;
     e.mp.style.width = (S.mp / mm * 100) + '%'; e.mpT.textContent = `${Math.floor(S.mp)} / ${mm}`;
@@ -42,6 +42,16 @@
     slots[2].classList.toggle('locked', !S.skills.healing.unlocked);
     slots[3].classList.toggle('locked', !(L.has('aquaDash')));
     slots[4].classList.toggle('locked', !(L.has('bloodSense')));
+    slots[1].classList.toggle('low', S.mp < 5);
+  };
+  // cooldown sweeps on the skill slots (called every frame)
+  const cdMax = [0.38, 0.32, 0.8, 0.6, 14], cdLast = [];
+  U.cooldowns = function (p) {
+    if (!p || !U.el.slots.length) return;
+    [p.atkCd, p.castCd, p.healCd, p.dashCd, p.senseCd].forEach((c, i) => {
+      const v = Math.max(0, Math.min(1, (c || 0) / cdMax[i])).toFixed(2);
+      if (cdLast[i] !== v) { cdLast[i] = v; U.el.slots[i].style.setProperty('--cd', v); }
+    });
   };
 
   // ---------- LEDGER log (toasts) ----------
@@ -65,7 +75,9 @@
 
   U.prompt = function (t) {
     if (!t) { U.el.prompt.hidden = true; return; }
-    U.el.prompt.hidden = false; U.el.prompt.textContent = t;
+    U.el.prompt.hidden = false;
+    const m = String(t).match(/^(E|Tap USE) · (.*)$/);
+    if (m && m[2]) U.el.prompt.innerHTML = `<kbd>${escapeHtml(m[1])}</kbd>${escapeHtml(m[2])}`; else U.el.prompt.textContent = t;
   };
 
   U.banner = function (title, sub, ms) {
@@ -79,13 +91,17 @@
   U.dialogueActive = () => !!dlg;
   U.showDialogue = function (lines, done) {
     dlg = { lines, i: 0, done, typed: 0 };
+    document.body.classList.add('dlg');
     U.show(U.el.dialogue, true);
     renderLine();
   };
   function renderLine() {
     const l = dlg.lines[dlg.i];
     U.el.who.textContent = l.who || '';
-    U.el.who.className = 'who ' + (l.who === 'LEDGER' ? 'sys' : l.who === 'Kayden' ? 'me' : '');
+    U.el.who.className = 'who';
+    U.el.dialogue.classList.toggle('sys', l.who === 'LEDGER'); U.el.dialogue.classList.toggle('me', l.who === 'Kayden');
+    const npc = AB.Game && AB.Game.npcs && AB.Game.npcs.find(n => n.name && l.who && n.name.split(' ')[0] === l.who.split(' ')[0]);
+    const dot = document.getElementById('dlgDot'); if (dot) dot.style.background = npc ? npc.color : '';
     U.el.text.textContent = '';
     dlg.full = l.text; dlg.typed = 0;
     U.el.dialogue.classList.toggle('thought', l.who === 'Kayden' && l.thought);
@@ -102,13 +118,13 @@
     if (dlg.typed < dlg.full.length) { dlg.typed = dlg.full.length; U.el.text.textContent = dlg.full; return; }
     AB.Audio.sfx('ui');
     dlg.i++;
-    if (dlg.i >= dlg.lines.length) { const d = dlg.done; dlg = null; U.show(U.el.dialogue, false); if (d) d(); return; }
+    if (dlg.i >= dlg.lines.length) { const d = dlg.done; dlg = null; document.body.classList.remove('dlg'); U.show(U.el.dialogue, false); if (d) d(); return; }
     renderLine();
   };
 
   // ---------- LEDGER window ----------
   U.ledgerOpen = () => !U.el.ledger.hidden;
-  U.openLedger = function (tab) { if (tab) ledgerTab = tab; U.show(U.el.ledger, true); AB.Audio.sfx('glitch'); U.renderLedger(); };
+  U.openLedger = function (tab) { if (tab) ledgerTab = tab; U.show(U.el.ledger, true); AB.Audio.sfx('open'); U.renderLedger(); };
   U.closeLedger = function () { U.show(U.el.ledger, false); AB.Audio.sfx('ui'); };
   U.renderLedger = function () {
     const S = L.S;
@@ -187,15 +203,17 @@ TRAIT      Ledger-Marked (no effect)</pre>`;
     const px = g.player.x / T, py = g.player.y / T;
     const ox = Math.max(0, Math.min(W.W - vw, px - vw / 2)), oy = Math.max(0, Math.min(W.H - vh, py - vh / 2));
     ctx.imageSmoothingEnabled = false;
-    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, c.width, c.height);
+    ctx.fillStyle = '#dfe9c8'; ctx.fillRect(0, 0, c.width, c.height);
+    ctx.filter = 'brightness(2.1) saturate(1.25)';
     ctx.drawImage(W.minimap, ox, oy, vw, vh, 0, 0, c.width, c.height);
+    ctx.filter = 'none';
     const dot = (x, y, col, r) => { ctx.fillStyle = col; ctx.fillRect((x / T - ox) * scale - r / 2, (y / T - oy) * scale - r / 2, r, r); };
     if (L.has('herbalist')) W.herbs.forEach(h => h.alive && dot(h.x, h.y, '#b8e0a0', 2));
     g.npcs.forEach(n => n.visible && dot(n.x, n.y, g.npcMarker(n.id) ? '#e8b04a' : '#e8e1d3', 3));
     if (g.senseT > 0) g.enemies.forEach(e => !e.dead && dot(e.x, e.y, '#ff2a3a', 3));
     const qt = g.questTarget();
     if (qt) dot(qt.x, qt.y, '#c8323c', 4);
-    dot(g.player.x, g.player.y, '#ffffff', 4);
+    dot(g.player.x, g.player.y, '#c8323c', 6); dot(g.player.x, g.player.y, '#ffffff', 2);
   };
 
   AB.UI = U;

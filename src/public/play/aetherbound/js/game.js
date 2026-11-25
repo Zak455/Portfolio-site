@@ -337,6 +337,7 @@
     if (S.title === 'wolfbane' && e.d.kind === 'beast') dmg *= 1.1;
     dmg = Math.round(dmg);
     e.hp -= dmg; e.flash = 0.12; e.aware = true;
+    if (e.type === 'slime') AU.sfx('squelch');
     e.kb.x = Math.cos(ang) * (e.d.boss ? 60 : 260); e.kb.y = Math.sin(ang) * (e.d.boss ? 60 : 260);
     E.float(e.x, e.y - e.r * 2 - 4, (crit ? 'CRIT ' : '') + dmg, crit ? '#e8b04a' : '#ffffff', crit);
     if (src === 'sword') L.skillXP('oneHand', 5, { target: e.d.lvl, key: 'sword:' + e.type });
@@ -416,7 +417,7 @@
       d.hp--; AU.sfx('chop'); E.burst(d.x, d.y - 20, '#6a5040', 8, 70);
       L.skillXP('woodcutting', 5, { key: 'chop' });
       if (d.hp <= 0) {
-        d.alive = false; d.regrow = 150; d.hp = 3; S.counts.chops++;
+        d.alive = false; d.regrow = 150; d.hp = 3; S.counts.chops++; AU.sfx('treefall');
         L.skillXP('woodcutting', 10, { key: 'fell' });
         E.float(d.x, d.y - 40, '+1 firewood', '#e8b04a');
       }
@@ -495,6 +496,7 @@
     if (IN.take('dash') && L.has('aquaDash') && p.dashCd <= 0 && S.mp >= 8) { S.mp -= 8; p.dashT = 0.16; p.dashCd = 0.6; AU.sfx('splash'); L.skillXP('water', 1, { key: 'dash' }); }
     if (IN.take('ability') && L.has('bloodSense') && p.senseCd <= 0) { G.senseT = 6; p.senseCd = 14; AU.sfx('heartbeat'); U.log('Blood Sense: the forest pulses red.', 'skill'); }
     if (G.senseT > 0) G.senseT -= dt;
+    { const tx = p.x / T, ty = p.y / T, rx = W.riverX(ty); AU.ambDepth((tx - rx - 3) / 30, 1 - Math.abs(tx - rx) / 9); }
 
     // Regen + meditation.
     const regen = (1.4 + S.stats.int * 0.2) * (L.has('manaFont') ? 1.6 : 1) * (p.still > 1 ? 2 : 1);
@@ -576,7 +578,9 @@
     ctx.imageSmoothingEnabled = true;
     const R3 = AB.R3 && AB.R3.ok ? AB.R3 : null;
     if (R3) {
-      R3.mode = G.state === 'title' ? 'title' : G.state === 'intro' ? 'off' : 'play';
+      const rk = G.state === 'intro' && AB.Intro.revealK ? AB.Intro.revealK() : -1;
+      R3.revealK = rk;
+      R3.mode = G.state === 'title' ? 'title' : G.state === 'intro' ? (rk >= 0 ? 'reveal' : 'off') : 'play';
       R3.frame(G, dt || 1 / 60);
       if (G.state === 'title') { ctx.clearRect(0, 0, vw, vh); return; }
       if (G.state !== 'intro') return drawOverlay3d(R3);
@@ -712,6 +716,7 @@
       update(dt);
       if (Math.floor(G.t * 10) !== Math.floor((G.t - dt) * 10)) { U.updateHud(); U.setQuest(G.currentQuest()); U.drawMinimap(G); }
     }
+    if (G.state === 'play') U.cooldowns(G.player);
     draw(dt);
     IN.endFrame();
     requestAnimationFrame(loop);

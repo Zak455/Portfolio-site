@@ -1,0 +1,240 @@
+Aetherbound SFX - source list
+All sources are relative to: E:\WORK\Sonniss.com - GDC 2024 - Game Audio Bundle (Sonniss GDC 2024 Game Audio Bundle; bundle left unmodified).
+Time ranges are positions in the source file (m:ss.sss).
+
+amb-city-rain.mp3
+  source: Systematic Sound - General Ambience Series - Nightscapes 01\AMBUrbn_Nighttime-Urban Side Street Empty Rain Dops Hum_SYSO_SYSO009.wav
+  range:  1:22.500 - 2:02.500
+  notes:  40 s, 44.1 kHz stereo, 2 s fade in/out, loudness-normalized to -18 LUFS (source section -36.47 LUFS), 96 kbps
+
+amb-creek.mp3
+  source: Bolt - Immersive Creek -  Ambisonic Recordings of Undisturbed Creeks in Vermont\WATRFlow_Babbling Brook, Snow Melt, Calm, Constant, Bubbling_BOLT_Immersive Creek_RODE NTSF1 XY.wav
+  range:  0:52.000 - 1:32.000
+  notes:  40 s, 44.1 kHz stereo, 2 s fade in/out, loudness-normalized to -18 LUFS (source section -24.01 LUFS), 96 kbps
+
+amb-forest-day.mp3
+  source: Justsoundeffects - Forest Ambiences\AMBForst_Spring Afternoon Edge of Mixed Forest Yellowhammer Eurasian Blackcap Tree Pipit Insects_JSE_FA.wav
+  range:  0:34.000 - 1:14.000
+  notes:  40 s, 44.1 kHz stereo, 2 s fade in/out, loudness-normalized to -18 LUFS (source section -28.46 LUFS), 96 kbps
+
+amb-forest-night.mp3
+  source: Systematic Sound - General Ambience Series - Nightscapes 01\AMBForst_Nighttime-Woodlands Windy Trees Rustling Quiet_SYSO_SYSO009.wav
+  range:  2:51.000 - 3:31.000
+  notes:  40 s, 44.1 kHz stereo, 2 s fade in/out, loudness-normalized to -18 LUFS (source section -42.84 LUFS), 96 kbps
+
+amb-owls.mp3
+  source: Justsoundeffects - Forest Ambiences\BIRDPrey_Spring Night Deciduous Forest Many Tawny Owls Wind Leaves Rustling_JSE_FA.wav
+  range:  0:06.000 - 0:46.000
+  notes:  40 s, 44.1 kHz stereo, 2 s fade in/out, loudness-normalized to -18 LUFS (source section -23.11 LUFS), 96 kbps
+
+amb-rain-thunder.mp3
+  source: Sonik Sound Library - Spatial Rain & Thunders\THUN_Weather, Rain, Light Rain with Thuder Rumbles and Vehicles Passing on Wet Floor_KS_Spatial Rain & Thunders-Stereo_KSL_KS010.wav
+  range:  0:20.000 - 1:00.000
+  notes:  40 s, 44.1 kHz stereo, 2 s fade in/out, loudness-normalized to -18 LUFS (source section -39.04 LUFS), 96 kbps
+
+amb-traffic-night.mp3
+  source: Sculptunes - Rome - Urban City Surround\AMBUrbn_Rome-LateNight-Traffic.wav
+  range:  0:54.000 - 1:34.000
+  notes:  front L/R channels of the quad file used as stereo; 40 s, 44.1 kHz stereo, 2 s fade in/out, loudness-normalized to -18 LUFS (source section -28.12 LUFS), 96 kbps
+
+amb-wind-trees.mp3
+  source: Pole Position - Wind In Trees\Wind - Oak - Calm - Close - Inside Canopy - XY - MKH8060.wav
+  range:  1:32.000 - 2:12.000
+  notes:  40 s, 44.1 kHz stereo, 2 s fade in/out, loudness-normalized to -18 LUFS (source section -48.90 LUFS), 96 kbps
+
+c-boom.mp3
+  source: BluezoneCorp - Modern Cinematic Impact\Bluezone_BC0294_modern_cinematic_impact_boom_003.wav
+  range:  0:00.000 - 0:04.000
+  notes:  stereo, 4.000 s, 44.1 kHz, peak -1 dBFS, 128 kbps, hit the max length so ends with a 400 ms fade
+
+c-gong.mp3
+  source: Orbital Emitter - Cinematic Transitions for Editors Volume 2\80,TheGong.wav
+  range:  0:00.117 - 0:04.697
+  notes:  stereo, 4.580 s, 44.1 kHz, peak -1 dBFS, 128 kbps, tail cut below -50 dBFS + 30 ms fade-out
+
+c-hit.mp3
+  source: Mechanical Wave - Cinematic Feel\DSGNBoom_Cinematic Hit_MWSFX_CF 05.wav
+  range:  0:00.085 - 0:05.085
+  notes:  stereo, 5.000 s, 44.1 kHz, peak -1 dBFS, 128 kbps, hit the max length so ends with a 400 ms fade
+
+c-horn.mp3
+  source: Mechanical Wave - Cinematic Feel\DSGNBram_Cinematic Horn_MWSFX_CF 05.wav
+  range:  0:00.221 - 0:06.221
+  notes:  stereo, 6.000 s, 44.1 kHz, peak -1 dBFS, 128 kbps, hit the max length so ends with a 400 ms fade
+
+c-impact.mp3
+  source: BluezoneCorp - Modern Cinematic Impact\Bluezone_BC0294_modern_cinematic_impact_022.wav
+  range:  0:00.000 - 0:03.000
+  notes:  stereo, 3.000 s, 44.1 kHz, peak -1 dBFS, 128 kbps, hit the max length so ends with a 360 ms fade
+
+c-metal-boom.mp3
+  source: Jake Fielding - Haunted Metal Vol.1 - Cinematic Hits & Impacts\DSGNBoom_Cinematic Metallic Hit, Boom, Trailer, Sub_JF_Haunted Metal Vol 1_02.wav
+  range:  0:00.330 - 0:05.330
+  notes:  stereo, 5.000 s, 44.1 kHz, peak -1 dBFS, 128 kbps, hit the max length so ends with a 400 ms fade
+
+c-perc.mp3
+  source: BluezoneCorp - Modern Cinematic Impact\Bluezone_BC0294_modern_cinematic_impact_percussion_009.wav
+  range:  0:00.000 - 0:01.760
+  notes:  stereo, 1.760 s, 44.1 kHz, peak -1 dBFS, 128 kbps, tail cut below -50 dBFS + 30 ms fade-out
+
+c-reveal.mp3
+  source: Orbital Emitter - Cinematic Transitions for Editors Volume 2\08,DragonReveal - dramatic and recap.wav
+  range:  0:00.044 - 0:08.044
+  notes:  stereo, 8.000 s, 44.1 kHz, peak -1 dBFS, 128 kbps, hit the max length so ends with a 400 ms fade
+
+c-riser.mp3
+  source: Jake Fielding - Haunted Metal Vol.2 - Cinematic Creaks & Risers\DSGNRise_Cinematic Metallic Riser, Trailer, Designed,_JF_Haunted Metal Vol 2_39.wav
+  range:  0:01.864 - 0:04.794
+  notes:  stereo, 2.930 s, 44.1 kHz, peak -1 dBFS, 128 kbps, whole build kept, ends 0.6 s after the riser's peak with 300 ms fade
+
+c-searing.mp3
+  source: Orbital Emitter - Cinematic Transitions for Editors Volume 2\27,Searing.wav
+  range:  0:00.007 - 0:03.977
+  notes:  stereo, 3.970 s, 44.1 kHz, peak -1 dBFS, 128 kbps, tail cut below -50 dBFS + 30 ms fade-out
+
+c-strings.mp3
+  source: Orbital Emitter - Cinematic Transitions for Editors Volume 2\112,StringsSectionRiser.wav
+  range:  0:00.064 - 0:08.064
+  notes:  stereo, 8.000 s, 44.1 kHz, peak -1 dBFS, 128 kbps, hit the max length so ends with a 400 ms fade
+
+c-underwater.mp3
+  source: BluezoneCorp - Designed Water\Bluezone_BC0298_designed_water_underwater_005.wav
+  range:  0:00.067 - 0:04.297
+  notes:  soft loop bed; stereo, 4.230 s, 44.1 kHz, peak -1 dBFS, 128 kbps, tail cut below -50 dBFS + 400 ms fade-out, 400 ms fade-in
+
+c-whoosh.mp3
+  source: Mechanical Wave - Cinematic Feel\WHSH_Sci-Fi Heavy Whoosh_MWSFX_CF 29.wav
+  range:  0:00.103 - 0:03.103
+  notes:  stereo, 3.000 s, 44.1 kHz, peak -1 dBFS, 128 kbps, hit the max length so ends with a 360 ms fade
+
+sfx-bolt.mp3
+  source: Rescopic Sound - Distinct Whooshes\WHSH_Watery-Whoosh FIzzy Fast 03_RSCPC_DW.wav
+  range:  0:00.979 - 0:01.669
+  notes:  mono, 0.690 s, 44.1 kHz, peak -1 dBFS, 128 kbps, loudest 0.7 s of the whoosh (peak sweep), 40 ms fade-in / 120 ms fade-out
+
+sfx-carpass.mp3
+  source: Sonik Sound Library - Spatial Rain & Thunders\THUN_Weather, Rain, Light Rain with Thuder Rumbles and Vehicles Passing on Wet Floor_KS_Spatial Rain & Thunders-Stereo_KSL_KS010.wav
+  range:  1:31.250 - 1:35.250
+  notes:  car passing on wet road, light rain under it; stereo, 4.000 s, 44.1 kHz, peak -1 dBFS, 128 kbps, hit the max length so ends with a 250 ms fade, 150 ms fade-in
+
+sfx-chop.mp3
+  source: InMotionAudio - Wood\WOODBrk_Snap09_InMotionAudio_Wood.wav
+  range:  0:00.565 - 0:00.735
+  notes:  main snap (3rd of 4 events); mono, 0.170 s, 44.1 kHz, peak -1 dBFS, 128 kbps, tail cut below -50 dBFS + 30 ms fade-out
+
+sfx-heal.mp3
+  source: Doex Studio - 90s Anime SFX Pack\Short_PowerUp_005.wav
+  range:  0:04.325 - 0:05.765
+  notes:  2nd of 4 takes; mono, 1.440 s, 44.1 kHz, peak -1 dBFS, 128 kbps, tail cut below -50 dBFS + 30 ms fade-out
+
+sfx-hit1.mp3
+  source: Rogue Waves - Anime Studio\FGHTImpt_Fight Combo x4_RogueWaves_AnimeStudio.wav
+  range:  0:00.232 - 0:00.412
+  notes:  2nd of the 4 hits; mono, 0.180 s, 44.1 kHz, peak -1 dBFS, 128 kbps, tail cut below -50 dBFS + 30 ms fade-out
+
+sfx-hit2.mp3
+  source: Rogue Waves - Anime Studio\FGHTImpt_Fight Combo x4_RogueWaves_AnimeStudio.wav
+  range:  0:00.612 - 0:00.962
+  notes:  4th of the 4 hits; mono, 0.350 s, 44.1 kHz, peak -1 dBFS, 128 kbps, hit the max length so ends with a 42 ms fade
+
+sfx-horn.mp3
+  source: Dramatic Cat - Audi Q7\VEHHorn_Audi Q7 EXTERIOR Horn Short And Long MONO_DRCA_AUQ7_Kmr81i.wav
+  range:  0:02.515 - 0:04.015
+  notes:  long horn blast (3rd take); mono, 1.500 s, 44.1 kHz, peak -1 dBFS, 128 kbps, hit the max length so ends with a 80 ms fade
+
+sfx-pop.mp3
+  source: Rogue Waves - Kawaii UI\TOONPop_Syringe Pop 4_RogueWaves_KawaiiUI.wav
+  range:  0:00.029 - 0:00.129
+  notes:  mono, 0.100 s, 44.1 kHz, peak -1 dBFS, 128 kbps, tail cut below -50 dBFS + 30 ms fade-out
+
+sfx-punch.mp3
+  source: Doex Studio - 90s Anime SFX Pack\Noise_Punch_006.wav
+  range:  0:00.052 - 0:00.552
+  notes:  mono, 0.500 s, 44.1 kHz, peak -1 dBFS, 128 kbps, hit the max length so ends with a 60 ms fade
+
+sfx-rustle.mp3
+  source: Sonic Bat - Videogame Foley Essentials Vol. II\SBvfe2_Dry Tree Branches Contact 024.wav
+  range:  0:00.530 - 0:00.940
+  notes:  main contact (2nd of 3); mono, 0.410 s, 44.1 kHz, peak -1 dBFS, 128 kbps, tail cut below -50 dBFS + 30 ms fade-out
+
+sfx-shield.mp3
+  source: Justsoundeffects - Melee Weapons\WEAPArmr_Metal Shield Block Hits_JSE_MW.wav
+  range:  0:02.430 - 0:03.030
+  notes:  2nd of 5 takes (loudest); mono, 0.600 s, 44.1 kHz, peak -1 dBFS, 128 kbps, hit the max length so ends with a 72 ms fade
+
+sfx-slash.mp3
+  source: Rogue Waves - Anime Studio\WEAPSwrd_Mecha Energy Sword Cut_RogueWaves_AnimeStudio.wav
+  range:  0:00.007 - 0:00.607
+  notes:  mono, 0.600 s, 44.1 kHz, peak -1 dBFS, 128 kbps, hit the max length so ends with a 72 ms fade
+
+sfx-splash.mp3
+  source: BluezoneCorp - Designed Water\Bluezone_BC0298_designed_water_impact_006.wav
+  range:  0:00.000 - 0:01.000
+  notes:  mono, 1.000 s, 44.1 kHz, peak -1 dBFS, 128 kbps, hit the max length so ends with a 120 ms fade
+
+sfx-squelch.mp3
+  source: Justsoundeffects - Gore Mini Pack\GORESplt_Gore Splatter 01_JSE_GMP.wav
+  range:  0:04.825 - 0:05.395
+  notes:  3rd of 5 takes; mono, 0.570 s, 44.1 kHz, peak -1 dBFS, 128 kbps, tail cut below -50 dBFS + 30 ms fade-out
+
+sfx-stone.mp3
+  source: BluezoneCorp - Stone Impact\Bluezone_BC0297_stone_impact_015.wav
+  range:  0:00.000 - 0:00.800
+  notes:  mono, 0.800 s, 44.1 kHz, peak -1 dBFS, 128 kbps, hit the max length so ends with a 96 ms fade
+
+sfx-swing.mp3
+  source: Rescopic Sound - Distinct Whooshes\WHSH_Pure SciFi-Whoosh Fast 03_RSCPC_DW.wav
+  range:  0:00.381 - 0:00.881
+  notes:  mono, 0.500 s, 44.1 kHz, peak -1 dBFS, 128 kbps, loudest 0.5 s of the whoosh (peak sweep), 40 ms fade-in / 120 ms fade-out
+
+sfx-swing2.mp3
+  source: Rescopic Sound - Distinct Whooshes\WHSH_Airy-Whoosh Wind Gust 11_RSCPC_DW.wav
+  range:  0:01.171 - 0:01.671
+  notes:  mono, 0.500 s, 44.1 kHz, peak -1 dBFS, 128 kbps, loudest 0.5 s of the whoosh (peak sweep), 40 ms fade-in / 120 ms fade-out
+
+sfx-treefall.mp3
+  source: Mechanical Wave - Lumberjack\WOODBrk_Tree Crack and Fall-13_MWSFX_TJ.wav
+  range:  0:00.013 - 0:03.513
+  notes:  mono, 3.500 s, 44.1 kHz, peak -1 dBFS, 128 kbps, hit the max length so ends with a 400 ms fade
+
+sfx-water-shimmer.mp3
+  source: BluezoneCorp - Designed Water\Bluezone_BC0298_designed_water_texture_014.wav
+  range:  0:00.004 - 0:01.504
+  notes:  mono, 1.500 s, 44.1 kHz, peak -1 dBFS, 128 kbps, hit the max length so ends with a 180 ms fade
+
+sfx-wood-drop.mp3
+  source: InMotionAudio - Wood\WOODImpt_Drops20_InMotionAudio_Wood.wav
+  range:  0:00.021 - 0:00.501
+  notes:  mono, 0.480 s, 44.1 kHz, peak -1 dBFS, 128 kbps, tail cut below -50 dBFS + 30 ms fade-out
+
+ui-charge.mp3
+  source: Rogue Waves - Anime Studio\DSGNMisc_Charge Down Classic 1_RogueWaves_AnimeStudio.wav
+  range:  0:00.000 - 0:01.200
+  notes:  mono, 1.200 s, 44.1 kHz, peak -1 dBFS, 128 kbps, hit the max length so ends with a 144 ms fade
+
+ui-click.mp3
+  source: Rescopic Sound - User Interaction\UIClick_Select Middle 29_RSCPC_USIN.wav
+  range:  0:00.016 - 0:00.216
+  notes:  mono, 0.200 s, 44.1 kHz, peak -1 dBFS, 128 kbps, hit the max length so ends with a 30 ms fade
+
+ui-confirm.mp3
+  source: Rescopic Sound - User Interaction\UIAlert_Confirm Middle 12_RSCPC_USIN.wav
+  range:  0:00.000 - 0:00.660
+  notes:  mono, 0.660 s, 44.1 kHz, peak -1 dBFS, 128 kbps, tail cut below -50 dBFS + 30 ms fade-out
+
+ui-open.mp3
+  source: Rescopic Sound - User Interaction\UIMvmt_Window Open Thin 05_RSCPC_USIN.wav
+  range:  0:00.004 - 0:00.754
+  notes:  mono, 0.750 s, 44.1 kHz, peak -1 dBFS, 128 kbps, tail cut below -50 dBFS + 30 ms fade-out
+
+ui-page.mp3
+  source: Mechanical Wave - Cardboard and Paper\PAPRHndl_Large Book Squeak Page Turn_ 01_MWSFX_CDAP.wav
+  range:  0:01.740 - 0:02.360
+  notes:  page-turn part (after the squeak); mono, 0.620 s, 44.1 kHz, peak -1 dBFS, 128 kbps, tail cut below -50 dBFS + 30 ms fade-out
+
+ui-pop.mp3
+  source: Rogue Waves - Kawaii UI\UIClick_Hand Pop UI Diminished 1_RogueWaves_KawaiiUI.wav
+  range:  0:00.002 - 0:00.212
+  notes:  mono, 0.210 s, 44.1 kHz, peak -1 dBFS, 128 kbps, tail cut below -50 dBFS + 30 ms fade-out
+
+Not produced: sfx-brake.mp3 - no tire skid / brake screech recording found in the car folders (Pole Position cars, Dramatic Cat Audi Q2/Q7, Bryan Gold Corvette, Justsoundeffects Renault R4) or Bolt Berlin Vignettes; the only 'brake' file is a Porsche interior parking-brake lever, which is not a skid.
