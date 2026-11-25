@@ -13,9 +13,10 @@ class PrepScene {
     UI.stage(2, 'Prepare');
     UI.basket([]);
     UI.clearAction();
+    this.d3 = !!(window.Prep3D && Prep3D.start(this));
     this.next();
   }
-  exit() { UI.hint(''); UI.caption(''); UI.clearAction(); }
+  exit() { if (this.d3) Prep3D.stop(); UI.hint(''); UI.caption(''); UI.clearAction(); }
 
   resize() {
     const W = G.W, H = G.H, portrait = W < H;
@@ -136,6 +137,14 @@ class PrepScene {
     for (const b of this.bowls) b.t = Math.min(1, b.t + dt * 2);
   }
   draw(c) {
+    if (this.d3) {
+      c.clearRect(0, 0, G.W, G.H);
+      if (this.task) { c.save(); const k = this.task.intro; c.globalAlpha = clamp(k * 1.5); c.translate(this.bx, this.by); c.scale(0.85 + 0.15 * k, 0.85 + 0.15 * k); c.translate(-this.bx, -this.by); this.task.draw(c); c.restore(); }
+      this.fx.draw(c); this.motes.draw(c);
+      const vg = c.createRadialGradient(G.W / 2, G.H / 2, Math.min(G.W, G.H) * 0.35, G.W / 2, G.H / 2, Math.max(G.W, G.H) * 0.8);
+      vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(20,8,2,.5)'); c.fillStyle = vg; c.fillRect(0, 0, G.W, G.H);
+      return;
+    }
     c.drawImage(this.bg, 0, 0, G.W, G.H);
     this.drawBowls(c);
     if (this.task) {
@@ -675,6 +684,11 @@ class GrindTask {
   update() {}
   draw(c) {
     const { bx, by } = this.sc, R = this.R;
+    if (this.sc.d3) {
+      if (!this.done && !G.pointer.down) { const k = (G.t % 1.6) / 1.6; c.strokeStyle = `rgba(255,245,220,${0.7 * (1 - k)})`; c.lineWidth = 2; c.setLineDash([4, 8]); c.beginPath(); c.arc(bx, by, R * 0.55, G.t, G.t + Math.PI * 1.5); c.stroke(); c.setLineDash([]); }
+      UI.ring(c, this.sc.bx + this.sc.bw / 2 - 34, this.sc.by - this.sc.bh / 2 + 34, 16, this.p);
+      return;
+    }
     c.fillStyle = 'rgba(30,15,5,.35)'; c.beginPath(); c.ellipse(bx + 10, by + 16, R * 1.15, R * 1.1, 0, 0, TAU); c.fill();
     const g = c.createRadialGradient(bx - R * 0.3, by - R * 0.4, R * 0.2, bx, by, R * 1.15);
     g.addColorStop(0, '#d6d0c4'); g.addColorStop(1, '#8f877a');
@@ -726,6 +740,7 @@ class RollTask {
   update() {}
   draw(c) {
     const { bx, by, s } = this.sc;
+    if (this.sc.d3) { UI.ring(c, this.sc.bx + this.sc.bw / 2 - 34, this.sc.by - this.sc.bh / 2 + 34, 16, this.p); return; }
     // flour
     c.fillStyle = 'rgba(255,252,245,.35)'; c.beginPath(); c.ellipse(bx, by, s * 1.3, s * 1.0, 0, 0, TAU); c.fill();
     c.fillStyle = 'rgba(40,20,5,.2)'; c.beginPath(); c.ellipse(bx + 6, by + 8, s * (0.55 + this.p * 0.6), s * (0.5 + this.p * 0.5), 0, 0, TAU); c.fill();

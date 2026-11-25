@@ -15,9 +15,10 @@ class CookScene {
     UI.stage(3, 'Cook');
     UI.basket([]);
     UI.bellows(true, (v) => { this.bellows = v; if (v) Audio2.sfxPuff(); });
+    this.d3 = !!(window.Cook3D && Cook3D.start(this));
     this.next();
   }
-  exit() { UI.bellows(false); UI.hint(''); UI.caption(''); UI.clearAction(); UI.meter(null); }
+  exit() { if (this.d3) Cook3D.stop(); UI.bellows(false); UI.hint(''); UI.caption(''); UI.clearAction(); UI.meter(null); }
 
   resize() {
     const W = G.W, H = G.H, portrait = W < H;
@@ -363,6 +364,15 @@ class CookScene {
   // ── Draw ─────────────────────────────────────────────────────────────────
   draw(c) {
     const W = G.W, H = G.H, h = this.heat;
+    if (this.d3) {
+      c.clearRect(0, 0, W, H);
+      this.steam.draw(c); this.fx.draw(c);
+      const vg = c.createRadialGradient(this.hx, this.vy, Math.min(W, H) * 0.35, this.hx, this.vy, Math.max(W, H) * 0.85);
+      vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(10,4,0,.5)'); c.fillStyle = vg; c.fillRect(0, 0, W, H);
+      this.drawTray(c, true); this.drawHeatGauge(c);
+      if (this.step && !this.step.finished) this.drawPrompt(c);
+      return;
+    }
     c.drawImage(this.bg, 0, 0, W, H);
     // glow inside the hearth
     c.save(); c.globalCompositeOperation = 'lighter';
@@ -506,11 +516,12 @@ class CookScene {
     c.restore();
     c.strokeStyle = 'rgba(200,160,100,.8)'; c.lineWidth = 5; c.beginPath(); c.moveTo(vr * 0.2, -vr * 0.75); c.quadraticCurveTo(vr * 0.05, -vr * 0.4, 0, 0); c.stroke();
   }
-  drawTray(c) {
+  drawTray(c, guideOnly) {
     const st = this.step;
     if (!st || st.def.type !== 'add' || st.added) return;
     const tr = st.tray;
     const x = tr.drag ? tr.dx : tr.x, y = tr.drag ? tr.dy : tr.y + Math.sin(G.t * 2.5) * 4;
+    if (!guideOnly) {
     c.save(); c.globalCompositeOperation = 'lighter'; softCircle(c, tr.x, tr.y, tr.s * 2.2, '#ffd890', 0.25 + 0.1 * Math.sin(G.t * 3)); c.restore();
     // bowl
     c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(tr.x + 3, tr.y + tr.s * 0.6, tr.s * 1.25, tr.s * 0.4, 0, 0, TAU); c.fill();
@@ -518,6 +529,7 @@ class CookScene {
     c.fillStyle = g; c.beginPath(); c.ellipse(tr.x, tr.y + tr.s * 0.2, tr.s * 1.2, tr.s * 0.62, 0, 0, Math.PI); c.fill();
     c.fillStyle = '#4e5e6a'; c.beginPath(); c.ellipse(tr.x, tr.y + tr.s * 0.2, tr.s * 1.2, tr.s * 0.3, 0, 0, TAU); c.fill();
     drawSprite(c, st.def.ing, x, y, tr.s * 0.75, st.def.opt || {}, 0, 1, tr.drag ? 1.15 : 1);
+    }
     if (!tr.drag) {
       // guiding arc toward the vessel
       c.strokeStyle = `rgba(255,240,210,${0.3 + 0.2 * Math.sin(G.t * 3)})`; c.setLineDash([4, 8]); c.lineDashOffset = -G.t * 30; c.lineWidth = 2;

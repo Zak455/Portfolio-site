@@ -46,8 +46,9 @@ class ForageScene {
     UI.clearAction();
     // gentle intro pan
     this.camX = 0;
+    this.d3 = !!(window.Forage3D && Forage3D.start(this));
   }
-  exit() { UI.hint(''); UI.clearAction(); UI.overlay(''); }
+  exit() { if (this.d3) Forage3D.stop(); UI.hint(''); UI.clearAction(); UI.overlay(''); }
 
   resize() {
     const W = G.W, H = G.H;
@@ -359,12 +360,21 @@ class ForageScene {
     const W = G.W, H = G.H, P = this.P;
     const cam = this.camX;
     const px = (G.pointer.x / W - 0.5) * 10;
+    if (this.d3) return this.drawWorld3(c);
     // parallax layers
     for (const L of this.layers) {
       const ox = -cam * L.par - (L.par < 1 ? px * L.par : 0);
       c.drawImage(L.cv, ox, 0, L.w, H);
     }
-    // god rays
+    this.drawRays(c);
+    c.save();
+    c.translate(-cam, 0);
+    this.drawStreamAndItems(c);
+    c.restore();
+  }
+
+  drawRays(c) {
+    const W = G.W, H = G.H, P = this.P, cam = this.camX;
     if (this.r.time !== 'dusk') {
       c.save(); c.globalCompositeOperation = 'lighter';
       const sx = W * P.sunX - cam * 0.02, sy = this.gy * P.sunY;
@@ -381,8 +391,40 @@ class ForageScene {
       }
       c.restore();
     }
-    c.save();
-    c.translate(-cam, 0);
+  }
+
+  // 3D mode: the woods are rendered underneath; only the live 2D marks are drawn here.
+  drawWorld3(c) {
+    const P = this.P;
+    this.drawRays(c);
+    c.save(); c.translate(-this.camX, 0);
+    this.drawRipples(c);
+    for (const it of this.items) {
+      if (it.gone || it.taken) continue;
+      if (it.kind === 'animal' && this.mode === 'explore') {
+        const k = (G.t % 2.2) / 2.2;
+        c.strokeStyle = rgba(P.rim, (1 - k) * 0.5); c.lineWidth = 1.5;
+        c.beginPath(); c.ellipse(it.wx, it.wy, it.s * (0.4 + k * 0.4), it.s * (0.08 + k * 0.08), 0, 0, TAU); c.stroke();
+      } else if (it.kind === 'fish') {
+        const k = (G.t % 2.6) / 2.6;
+        c.strokeStyle = `rgba(255,255,255,${(1 - k) * 0.7})`; c.lineWidth = 1.4;
+        c.beginPath(); c.ellipse(it.wx, it.wy, 8 + k * 30, 3 + k * 9, 0, 0, TAU); c.stroke();
+      } else if (it.kind === 'plant' && Math.random() < 0.02) this.fx.add({ kind: 'star', x: it.wx - this.camX + rand(-it.s, it.s) * 0.6, y: it.wy - it.s * rand(0.3, 1), life: 0.9, size: rand(2, 4), color: '#fffbe0', add: true, vy: -10 });
+    }
+    c.restore();
+  }
+
+  drawRipples(c) {
+    if (this.ripples) for (const r of this.ripples) {
+      if (r.t < 0) continue;
+      const k = r.t / 1.6;
+      c.strokeStyle = `rgba(255,255,255,${(1 - k) * 0.6 * r.a})`; c.lineWidth = 1.5;
+      c.beginPath(); c.ellipse(r.x, r.y, 6 + k * 40, 2 + k * 12, 0, 0, TAU); c.stroke();
+    }
+  }
+
+  drawStreamAndItems(c) {
+    const W = G.W, P = this.P, cam = this.camX;
     // stream shimmer
     if (this.streamPts) {
       c.save(); c.globalCompositeOperation = 'lighter';
@@ -398,12 +440,7 @@ class ForageScene {
       }
       c.restore();
     }
-    if (this.ripples) for (const r of this.ripples) {
-      if (r.t < 0) continue;
-      const k = r.t / 1.6;
-      c.strokeStyle = `rgba(255,255,255,${(1 - k) * 0.6 * r.a})`; c.lineWidth = 1.5;
-      c.beginPath(); c.ellipse(r.x, r.y, 6 + k * 40, 2 + k * 12, 0, 0, TAU); c.stroke();
-    }
+    this.drawRipples(c);
     // merge tufts + items by depth
     const vis = [];
     for (const t of this.tufts) if (t.x > cam - 40 && t.x < cam + W + 40) vis.push({ y: t.y, t });
@@ -414,7 +451,6 @@ class ForageScene {
       if (v.t) drawTuft(c, v.t, P, wind);
       else this.drawItem(c, v.it);
     }
-    c.restore();
   }
 
   drawItem(c, it) {
@@ -483,6 +519,7 @@ class ForageScene {
 
   draw(c) {
     const W = G.W, H = G.H;
+    if (this.d3) c.clearRect(0, 0, W, H);
     c.save();
     if (this.zoom !== 1 && this.focus) {
       // zoom about focus point (world coords) placed at screen (W/2, sy)
