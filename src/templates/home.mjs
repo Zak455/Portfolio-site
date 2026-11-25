@@ -1,5 +1,5 @@
 import { esc, arrow, arrowRight, picture, productShot, ctaBand } from './components.mjs';
-import { processGraphic, serviceIcon } from './motion-graphics.mjs';
+import { serviceIcon } from './motion-graphics.mjs';
 
 // One section heading style everywhere: small eyebrow, clear title, optional intro.
 function head({ eyebrow, title, intro, id, dark = false, center = false }) {
@@ -54,6 +54,18 @@ function areas(extra) {
 }
 
 /* ── Work ─────────────────────────────────────────────────────────────────── */
+// The first projects get the big stacking cards; the rest sit in a compact grid.
+const FEATURED = 4;
+function moreCard(p) {
+  return `<article class="more-card" aria-labelledby="m-${esc(p.slug)}" data-fade>
+  <a class="more-visual" href="/work/${esc(p.slug)}/" tabindex="-1" aria-hidden="true" data-cursor="View case">${productShot(p, { sizes: '(min-width: 960px) 44vw, 92vw' })}</a>
+  <p class="work-meta"><span>${esc(p.number)}</span>${esc(p.category)}</p>
+  <h4 class="more-name" id="m-${esc(p.slug)}"><a href="/work/${esc(p.slug)}/">${esc(p.name)}</a></h4>
+  <p class="more-summary">${esc(p.summary)}</p>
+  <p class="more-links"><a class="text-link" href="/work/${esc(p.slug)}/">Case study ${arrowRight}<span class="sr-only">: ${esc(p.name)}</span></a>${p.play ? `<a class="text-link" href="${esc(p.play)}">Play ${arrowRight}<span class="sr-only">: ${esc(p.name)}</span></a>` : ''}</p>
+</article>`;
+}
+
 function workCard(p, i, all) {
   return `<article class="work-card" style="--i:${i}" aria-labelledby="w-${esc(p.slug)}" data-stack>
   <a class="work-visual" href="/work/${esc(p.slug)}/" tabindex="-1" aria-hidden="true" data-cursor="View case" style="view-transition-name:shot-${esc(p.slug)}">${productShot(p, { sizes: '(min-width: 960px) 58vw, 92vw' })}</a>
@@ -73,7 +85,9 @@ function work(projects, extra) {
   return `<section class="section" id="work" aria-labelledby="work-title" data-section="work">
   <div class="wrap">
     ${head({ eyebrow: 'Selected work', title: 'Products I’ve helped shape.', intro: 'Enterprise access-control products at Spintly, from brand and website to web portals and mobile apps. Screenshots are of the live products. Plus a playable side project.', id: 'work-title' })}
-    <div class="work-stack">${projects.map(workCard).join('')}</div>
+    <div class="work-stack">${projects.slice(0, FEATURED).map((p, i) => workCard(p, i, projects)).join('')}</div>
+    ${projects.length > FEATURED ? `<h3 class="more-title" data-fade>More work</h3>
+    <div class="more-grid">${projects.slice(FEATURED).map(moreCard).join('')}</div>` : ''}
     <div class="archive" data-fade>
       <p class="eyebrow">Also in the archive</p>
       <p>${esc(extra.body)}</p>
@@ -98,16 +112,6 @@ function aboutSection(site, about) {
       <blockquote class="tile tile--quote" data-fade><p>“${esc(about.philosophy)}”</p></blockquote>
       ${about.principles.map((p, i) => `<div class="tile" data-fade><span class="card-num">0${i + 1}</span><h3 class="card-title">${esc(p.title)}</h3><p class="tile-text">${esc(p.text)}</p></div>`).join('')}
     </div>
-  </div>
-</section>`;
-}
-
-/* ── Process: motion graphic ──────────────────────────────────────────────── */
-function processSection() {
-  return `<section class="section" id="process" aria-labelledby="process-title">
-  <div class="wrap">
-    ${head({ eyebrow: 'Process', title: 'From research to release.', intro: 'How a product idea moves through my hands: three stages, one continuous thread.', id: 'process-title' })}
-    <div data-fade>${processGraphic()}</div>
   </div>
 </section>`;
 }
@@ -168,10 +172,11 @@ function storySection(story, site) {
 }
 
 /* ── Services (dark) ──────────────────────────────────────────────────────── */
-function servicesSection(services) {
+function servicesSection(services, capabilities = [], tools = []) {
+  const ai = capabilities.find((c) => /AI/.test(c.title));
   return `<section class="section section--dark" id="services" aria-labelledby="services-title" data-section="services">
   <div class="wrap">
-    ${head({ eyebrow: 'Services', title: 'How I can help.', intro: 'Three ways I work with product teams and founders, together or on their own.', id: 'services-title', dark: true })}
+    ${head({ eyebrow: 'What I bring', title: 'How I help a product team.', intro: 'Three things I do end to end, plus the tools and AI workflow behind them.', id: 'services-title', dark: true })}
     <ol class="card-grid card-grid--3" role="list">${services
       .map((s, i) => `<li class="card card--dark" data-fade data-glow>
         <div class="card-top"><span class="card-num">${esc(s.n)}</span><span class="mg" data-mg>${serviceIcon(i)}</span></div>
@@ -180,6 +185,10 @@ function servicesSection(services) {
         <ul class="chips chips--dark" role="list">${s.items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>
       </li>`)
       .join('')}</ol>
+    <div class="kit" data-fade>
+      <div class="kit-row"><p class="kit-label">Tools <span>Advanced in all</span></p><ul class="chips chips--dark" role="list">${tools.map((t) => `<li>${esc(t.name)}</li>`).join('')}</ul></div>
+      ${ai ? `<div class="kit-row"><p class="kit-label">AI in my workflow</p><ul class="chips chips--dark chips--ai" role="list">${ai.items.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></div>` : ''}
+    </div>
   </div>
 </section>`;
 }
@@ -200,20 +209,9 @@ function faqSection(faq, site) {
 }
 
 /* ── Toolkit ──────────────────────────────────────────────────────────────── */
-function toolkit(capabilities, tools) {
-  return `<section class="section section--soft" id="toolkit" aria-labelledby="toolkit-title">
-  <div class="wrap">
-    ${head({ eyebrow: 'Toolkit', title: 'What I bring to a team.', id: 'toolkit-title' })}
-    <div class="card-grid card-grid--2">
-      ${capabilities.map((c) => `<div class="card" data-fade><h3 class="card-title">${esc(c.title)}</h3><ul class="chips" role="list">${c.items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul></div>`).join('')}
-      <div class="card" data-fade><h3 class="card-title card-title--badge">Tools <span class="badge-level">Advanced in all</span></h3><ul class="chips" role="list">${tools.map((t) => `<li>${esc(t.name)}</li>`).join('')}</ul></div>
-    </div>
-  </div>
-</section>`;
-}
 
 /* ── Experience ───────────────────────────────────────────────────────────── */
-function experienceSection(experience) {
+function experienceSection(experience, learning = '') {
   const rows = experience
     .map((e, i) => {
       const current = /present/i.test(e.period);
@@ -222,7 +220,6 @@ function experienceSection(experience) {
         e.summary ? `<p>${esc(e.summary)}</p>` : '',
         e.roles?.length ? `<ol class="xp-roles" role="list">${e.roles.map((r) => `<li><span>${esc(r.title)}</span><span class="xp-dim">${esc(r.period)}</span></li>`).join('')}</ol>` : '',
         e.highlights?.length ? `<p class="xp-label">Selected work</p><ul class="xp-list" role="list">${e.highlights.map((h) => `<li>${esc(h)}</li>`).join('')}</ul>` : '',
-        e.focus?.length ? `<p class="xp-label">Focus</p><ul class="xp-list" role="list">${e.focus.map((h) => `<li>${esc(h)}</li>`).join('')}</ul>` : '',
       ].join('');
       const top = `<span class="xp-company">${esc(e.company)}${current ? ' <span class="xp-now">Current</span>' : ''}</span>
         <span class="xp-role">${esc(role)}</span>
@@ -235,34 +232,23 @@ function experienceSection(experience) {
   return `<section class="section" id="experience" aria-labelledby="xp-title" data-section="experience">
   <div class="wrap">
     ${head({ eyebrow: 'Experience', title: 'Where I’ve worked.', id: 'xp-title' })}
-    <ol class="xp-list-wrap" role="list" data-fade>${rows}</ol>
+    <div class="xp-grid">
+      <ol class="xp-list-wrap" role="list" data-fade>${rows}</ol>
+      ${learning}
+    </div>
   </div>
 </section>`;
 }
 
 /* ── Credentials ──────────────────────────────────────────────────────────── */
-function credentials(education, publications, certifications) {
-  const items = [
-    ...education.map((e) => ({ type: 'education', label: 'Degree', title: e.degree, by: `${e.school} · ${e.period}` })),
-    ...publications.map((t) => ({ type: 'publication', label: 'Publication', title: t, by: '' })),
-    ...certifications.map((t) => {
-      const [title, by = ''] = t.split(' · ');
-      return { type: 'certification', label: 'Certificate', title, by };
-    }),
-  ];
-  const n = (t) => items.filter((i) => i.type === t).length;
-  const tabs = [['all', 'All', items.length], ['education', 'Education', n('education')], ['publication', 'Publication', n('publication')], ['certification', 'Certifications', n('certification')]];
-  return `<section class="section section--soft" id="credentials" aria-labelledby="creds-title">
-  <div class="wrap">
-    ${head({ eyebrow: 'Credentials', title: 'Education & learning.', id: 'creds-title' })}
-    <div class="tabs" role="toolbar" aria-label="Filter credentials" data-filter>
-      ${tabs.map(([k, l, c], i) => `<button type="button" class="tab" data-filter-key="${k}" aria-pressed="${i === 0}">${l} <span>${c}</span></button>`).join('')}
-    </div>
-    <ul class="cred-list" role="list">${items
-      .map((it) => `<li class="cred" data-type="${it.type}"><span class="cred-type">${esc(it.label)}</span><span class="cred-title">${esc(it.title)}</span><span class="cred-by">${esc(it.by)}</span></li>`)
-      .join('')}</ul>
-  </div>
-</section>`;
+function learningColumn(education, publications, certifications) {
+  const group = (label, items) => (items.length ? `<div class="learn-group"><p class="xp-label">${label}</p><ul class="learn-list" role="list">${items.join('')}</ul></div>` : '');
+  return `<aside class="learn" aria-labelledby="learn-title" data-fade>
+    <h3 class="learn-title" id="learn-title">Education &amp; learning</h3>
+    ${group('Degree', education.map((e) => `<li><b>${esc(e.degree)}</b><span>${esc(e.school)} · ${esc(e.period)}</span></li>`))}
+    ${group('Publication', publications.map((t) => `<li><b>${esc(t)}</b></li>`))}
+    ${group('Certificates', certifications.map((t) => { const [title, by = ''] = t.split(' · '); return `<li><b>${esc(title)}</b>${by ? `<span>${esc(by)}</span>` : ''}</li>`; }))}
+  </aside>`;
 }
 
 export function homePage({ site, projects, additionalWork, about, experience, education = [], publications = [], certifications = [], capabilities, tools, story = [], services = [], faq = [] }) {
@@ -272,15 +258,10 @@ export function homePage({ site, projects, additionalWork, about, experience, ed
     work(projects, additionalWork),
     aboutSection(site, about),
     ctaBand(site, { eyebrow: 'Hiring?', title: 'Liked the work? Let’s talk about your product.', text: 'I design enterprise SaaS end to end, from research to shipped UI. Happy to walk you through any case study.' }),
-    processSection(),
     storySection(story, site),
+    servicesSection(services, capabilities, tools),
     ctaBand(site, { eyebrow: 'For recruiters', title: 'Hiring a Senior UI/UX Designer?', text: '3+ years designing enterprise SaaS across web and mobile. My one-page CV is a click away.', tone: 'tint' }),
-    servicesSection(services),
-    toolkit(capabilities, tools),
-    ctaBand(site, { eyebrow: 'Skills match?', title: 'Need these skills on your team?', text: 'Research, product UI, design systems and motion: one designer, one conversation.' }),
-    experienceSection(experience),
-    credentials(education, publications, certifications),
-    ctaBand(site, { eyebrow: 'Let’s connect', title: 'Have a role or project in mind?', text: 'Send a note with the role or the problem, and I’ll reply with how I’d approach it.', tone: 'tint' }),
+    experienceSection(experience, learningColumn(education, publications, certifications)),
     faqSection(faq, site),
   ].join('\n');
 }

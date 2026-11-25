@@ -41,7 +41,11 @@ export const site = {
     email: 'fuzailgfx@gmail.com',
     linkedin: 'https://www.linkedin.com/in/fuzail-360',
     github: 'https://github.com/Zak455',
+    // Shown on the CV only. The site shows a WhatsApp button instead of the number.
     phone: '+91 73509 20817',
+    // WhatsApp: number in international format, digits only, and the message it opens with.
+    whatsapp: '917350920817',
+    whatsappText: 'Hi Fuzail, I came across your portfolio and would like to talk about a role.',
     // CV page built from content/ (src/templates/cv.mjs); its PDF lives in src/assets/cv/.
     // Set to null to hide the CV links.
     cv: '/cv/',
