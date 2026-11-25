@@ -515,8 +515,23 @@
     kg.position.set(wx(p.x), bob + deckY(p.x, p.y), wz(p.y)); kg.rotation.set(0, Math.PI / 2 - p.face, 0);
     if (p.dashT > 0) kg.rotateX(0.35);
     const sw = p.swing > 0 ? p.swing / 0.22 : 0;
-    if (sw > 0) { kay.sword.position.set(0.0, 0.42, 0.12); kay.sword.rotation.set(Math.PI / 2, 0, (sw - 0.5) * 2.6); }
-    else { kay.sword.position.set(0.12, 0.3, 0); kay.sword.rotation.set(0, 0, 0); }
+    // weapons ride on his back (sword hilt over the right shoulder, hatchet head over the left) and come
+    // to hand only while he is using one; the game picks the hatchet when a dead tree is the target
+    if (!kay.axe) {
+      const ax = new THREE.Group(); kay.g.add(ax);
+      H.box(ax, 0.035, 0.36, 0.035, PAL.timber, [0, 0.1, 0], 0.012);
+      H.box(ax, 0.13, 0.075, 0.03, '#9aa2aa', [0.045, 0.25, 0], 0.01);
+      kay.axe = ax;
+    }
+    const inHand = p.hold > 0 || sw > 0, tool = p.tool === 'axe' ? kay.axe : kay.sword, other = tool === kay.axe ? kay.sword : kay.axe;
+    const toBack = (o) => { if (o === kay.sword) { o.position.set(0.09, 0.47, -0.2); o.rotation.set(0, 0, Math.PI - 0.55); } else { o.position.set(-0.07, 0.26, -0.2); o.rotation.set(0, 0, 0.5); } };
+    kay.axe.visible = !!Ls.flags.hatchet;
+    if (!inHand) { toBack(kay.sword); toBack(kay.axe); }
+    else {
+      toBack(other);
+      if (sw > 0) { tool.position.set(0.0, 0.42, 0.12); tool.rotation.set(Math.PI / 2, 0, (sw - 0.5) * 2.6); }
+      else { tool.position.set(0.12, 0.3, 0.02); tool.rotation.set(0.25, 0, 0); }
+    }
     kay.sword.children[0].material = H.paint(Ls.flags.swordUp ? '#c9ccd1' : PAL.kraft);
     glow.position.set(kg.position.x, 1.0, kg.position.z); glow.intensity = 0.6 + 2.2 * K.smooth(0.3, 1, AB.World.depth(p.x));
     // villagers

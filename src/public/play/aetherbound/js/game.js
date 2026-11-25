@@ -18,6 +18,8 @@
     document.getElementById('btnNew').addEventListener('click', () => newGame());
     const cont = document.getElementById('btnContinue');
     cont.hidden = !L.hasSave();
+    // with a save, Continue is the main (red) button; a first visit only has New life, so that one is red
+    if (cont.hidden) document.getElementById('btnNew').classList.remove('ghost');
     cont.addEventListener('click', () => continueGame());
     document.getElementById('btnSkip').addEventListener('click', () => AB.Intro.skip());
     document.getElementById('btnRestart').addEventListener('click', () => { L.wipe(); location.reload(); });
@@ -384,9 +386,16 @@
   function attack() {
     const p = G.player, S = L.S;
     if (p.atkCd > 0) return;
+    // pick the right tool: the hatchet when a dead tree is the closest thing in reach, else the sword
+    let tree = null, td = 1e9, ed = 1e9;
+    for (const d of W.deadTrees) { if (!d.alive) continue; const dist = Math.hypot(d.x - p.x, d.y - p.y); if (dist <= 54 && dist < td) { tree = d; td = dist; } }
+    for (const e of G.enemies) { if (!e.dead) ed = Math.min(ed, Math.hypot(e.x - p.x, e.y - p.y) - e.r); }
+    const axe = !!(tree && S.flags.hatchet && td < ed);
+    p.tool = axe ? 'axe' : 'sword'; p.hold = 1.6;
     p.atkCd = 0.38; p.swing = 0.22;
-    p.face = aimAngle();
+    if (axe) p.face = Math.atan2(tree.y - p.y, tree.x - p.x); else p.face = aimAngle();
     AU.sfx('swing');
+    if (axe) { chopTree(tree); return; }
     const reach = 50, dmg = L.swordDmg();
     let hit = false;
     for (const e of G.enemies) {
@@ -408,12 +417,12 @@
         L.skillXP('oneHand', 4, { target: 1 });
       }
     }
-    // Dead trees.
-    for (const d of W.deadTrees) {
-      if (!d.alive) continue;
-      const dist = Math.hypot(d.x - p.x, d.y - p.y);
-      if (dist > 54) continue;
-      if (!S.flags.hatchet) { if (!G._noHatchet) { G._noHatchet = true; U.log('Too thick for a sword. Old Hesk has a hatchet.', 'warn'); } continue; }
+    // Dead trees need the hatchet.
+    if (tree && !S.flags.hatchet && !G._noHatchet) { G._noHatchet = true; U.log('Too thick for a sword. Old Hesk has a hatchet.', 'warn'); }
+  }
+  function chopTree(d) {
+    const S = L.S;
+    {
       d.hp--; AU.sfx('chop'); E.burst(d.x, d.y - 20, '#6a5040', 8, 70);
       L.skillXP('woodcutting', 5, { key: 'chop' });
       if (d.hp <= 0) {
@@ -421,7 +430,6 @@
         L.skillXP('woodcutting', 10, { key: 'fell' });
         E.float(d.x, d.y - 40, '+1 firewood', '#e8b04a');
       }
-      break;
     }
   }
 
@@ -487,6 +495,7 @@
     p.t += dt;
     p.atkCd -= dt; p.castCd -= dt; p.healCd -= dt; p.inv -= dt; p.dashCd -= dt; p.senseCd -= dt;
     if (p.swing > 0) p.swing -= dt;
+    if (p.hold > 0) p.hold -= dt;
     G.hurtT += dt;
 
     // Actions.
