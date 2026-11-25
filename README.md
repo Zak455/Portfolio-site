@@ -82,3 +82,15 @@ node render-og.mjs # needs `npm run dev` running in the repo root
 ```bash
 "/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" --headless=new --no-pdf-header-footer --virtual-time-budget=6000 --print-to-pdf="src/assets/cv/Fuzail-Khan-CV.pdf" http://localhost:4173/cv/
 ```
+
+## Game screenshots
+
+The Hollowmere, Hearthwild and Aetherbound case study images (cards and in-game shots) are captured from the playable builds by `tools/capture-games.mjs`, which drives headless Edge at 1440×900 @2x and jumps straight to each scene. With `npm run preview` (or `npm run dev`) running:
+
+```bash
+node tools/capture-games.mjs              # every game
+node tools/capture-games.mjs hearthwild   # one game
+node tools/capture-games.mjs aetherbound/offer   # one shot
+```
+
+Set `OUT_DIR` to write somewhere else first if you want to review before replacing.

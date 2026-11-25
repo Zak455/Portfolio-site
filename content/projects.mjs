@@ -524,7 +524,7 @@ export const projects = [
     play: '/play/hollowmere/',
     glance: [{ n: '4', l: 'suspects to interrogate' }, { n: '8', l: 'crime scene hotspots' }, { n: '3', l: 'investigation spaces: scene, lab, séance room' }],
     // Screenshot of the playable build at /play/hollowmere/, captured Nov 2026.
-    shot: { base: '/assets/img/work/hollowmere', alt: 'Hollowmere title screen: Case OC-1221 field report with the four suspects', caption: 'Hollowmere: opening field report, from the playable build on this site, Nov 2026' },
+    shot: { base: '/assets/img/work/hollowmere', alt: 'Hollowmere field report for Case 01, The Solstice Vigil, with the four redesigned suspect portraits', caption: 'Hollowmere: Case 01 field report, from the playable build on this site, Nov 2026' },
     number: '07',
     name: 'Hollowmere',
     category: 'Personal Project / Game Design',
@@ -570,9 +570,9 @@ export const projects = [
           'Sanity ties it together. As it drops, the vignette closes in, the heartbeat speeds up, and below 40% the interface itself starts to hallucinate. At zero you black out. A correct accusation shows the full timeline, the red herrings and a rank from S to C.',
         ],
         media: [
-          { src: '/assets/img/work/hollowmere/crime-scene.webp', alt: 'Hollowmere crime scene: top-down plan of the study with glowing hotspots, plus the upper landing and servants’ corridor, and the Occult Case Log', caption: 'Cursed crime scene: eight hotspots across three rooms', width: 1440, height: 900, wide: true },
-          { src: '/assets/img/work/hollowmere/seance-room.webp', alt: 'Hollowmere séance room: suspect Cordelia Marsh with composure meter, motive, alibi and questions to ask', caption: 'Séance room: question suspects and present evidence', width: 1440, height: 900, wide: true },
-          { src: '/assets/img/work/hollowmere/lab.webp', alt: 'Hollowmere paranormal lab with EMF, UV and EVP instruments', caption: 'Paranormal lab: EMF, UV and EVP scans', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/hollowmere/crime-scene.webp', alt: 'Hollowmere crime scene: the study lit by the torch around the salt circle, with glowing hotspots and the Occult Case Log', caption: 'Cursed crime scene: sweep the torch to find eight hotspots', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/hollowmere/seance-room.webp', alt: 'Hollowmere séance room: Cordelia Marsh answers a question, beside her composure meter, motive and alibi', caption: 'Séance room: question suspects, then present evidence', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/hollowmere/lab.webp', alt: 'Hollowmere paranormal lab: a UV blacklight sweep of the shattered mirror reveals glowing runes and a lab result', caption: 'Paranormal lab: a UV sweep turns a clue into a lab result', width: 1440, height: 900, wide: true },
         ],
       },
       decisions: {
@@ -595,7 +595,7 @@ export const projects = [
     play: '/play/hearthwild/',
     glance: [{ n: '5', l: 'dishes, dawn to dusk' }, { n: '3', l: 'stages: forage, prepare, cook' }, { n: '6', l: 'kinds of prep: brush, chop, fillet, peel, grind, roll' }],
     // Screenshot of the playable build at /play/hearthwild/, captured Nov 2026.
-    shot: { base: '/assets/img/work/hearthwild', alt: 'Hearthwild title screen: a thatched cottage in a meadow at golden hour', caption: 'Hearthwild: title screen, from the playable build on this site, Nov 2026' },
+    shot: { base: '/assets/img/work/hearthwild', alt: 'Hearthwild title screen: a thatched cottage at the edge of a 3D forest at dusk', caption: 'Hearthwild: title screen, from the playable build on this site, Nov 2026' },
     number: '08',
     name: 'Hearthwild',
     category: 'Personal Project / Game Design',
@@ -634,11 +634,11 @@ export const projects = [
           'Cooking happens at a stone hearth. You work the bellows to keep the flame in a heat band, drag ingredients into the pan, stir in circles, flick to toss, baste, and pull the dish off at golden. The finished dish is then plated in real-time 3D, one piece at a time, under the light of that hour, and earns up to three stars in a recipe journal. After the fifth dish, all five come together on a candlelit table under the stars.',
         ],
         media: [
-          { src: '/assets/img/work/hearthwild/forage.webp', alt: 'Hearthwild foraging scene at golden hour: a pheasant in a meadow with glowing blackberries and juniper', caption: 'Forage: the hedgerows at golden hour', width: 1440, height: 900, wide: true },
-          { src: '/assets/img/work/hearthwild/fish.webp', alt: 'Hearthwild fishing: a float on a bright stream with a tension gauge', caption: 'Fishing the morning stream', width: 1440, height: 900, wide: true },
-          { src: '/assets/img/work/hearthwild/prep.webp', alt: 'Hearthwild preparation: plucking a pheasant on a wooden board as feathers drift away', caption: 'Prepare: plucking at the board', width: 1440, height: 900, wide: true },
-          { src: '/assets/img/work/hearthwild/cook.webp', alt: 'Hearthwild hearth: pheasant and blackberries in a skillet over a fire, with a doneness bar', caption: 'Cook: bellows, heat band and the golden window', width: 1440, height: 900, wide: true },
-          { src: '/assets/img/work/hearthwild/plate.webp', alt: 'Hearthwild pheasant with blackberry sauce, plated in 3D', caption: 'The finished dish, plated in real-time 3D', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/hearthwild/forage.webp', alt: 'Hearthwild foraging in real-time 3D: chanterelles and wild garlic glowing in a birch meadow at first light', caption: 'Forage: chanterelles at first light, in real-time 3D', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/hearthwild/fish.webp', alt: 'Hearthwild: the stream below the alders in 3D, with trout and sorrel to find', caption: 'The stream below the alders: brook trout and sorrel', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/hearthwild/prep.webp', alt: 'Hearthwild preparation: jointing a rabbit on a wooden board by following dotted guide lines', caption: 'Prepare: jointing the rabbit at the board', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/hearthwild/cook.webp', alt: 'Hearthwild hearth: a skillet over the fire, a knob of butter to drop in and the bellows ready', caption: 'Cook: bellows, heat band and the golden window', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/hearthwild/plate.webp', alt: 'Hearthwild pheasant with blackberry and juniper, plated in 3D with a three-star rating', caption: 'The finished dish, plated in real-time 3D', width: 1440, height: 900, wide: true },
         ],
       },
       decisions: {
@@ -660,7 +660,7 @@ export const projects = [
     play: '/play/aetherbound/',
     glance: [{ n: '9', l: 'skills that level only by use' }, { n: '1 of 3', l: 'ability offers every 5 levels' }, { n: '7', l: 'quests in Chapter 1' }],
     // Screenshot of the playable build at /play/aetherbound/, captured Nov 2026.
-    shot: { base: '/assets/img/work/aetherbound', alt: 'Aetherbound: a six-year-old hero faces the Ash Wolf Alpha inside a stone circle at dusk, rendered as a tiny 3D diorama', caption: 'Aetherbound: the Ash Wolf Alpha, from the playable build on this site, Nov 2026' },
+    shot: { base: '/assets/img/work/aetherbound', alt: 'Aetherbound title screen: a Chapter 1 card beside a 3D diorama of the village, river and forest', caption: 'Aetherbound: title screen, from the playable build on this site, Nov 2026' },
     number: '09',
     name: 'Aetherbound',
     category: 'Personal Project / Game Design',
@@ -699,10 +699,11 @@ export const projects = [
           'His family teaches the systems: his mother magic and healing, his father the sword, the old family hunter tracking and gathering, and a wandering mage pushes him into the forest. A fever in the village is solved with one piece of modern knowledge. The chapter ends at a stone circle in the deep forest, against the Ash Wolf Alpha that took his sister.',
         ],
         media: [
-          { src: '/assets/img/work/aetherbound/boot.webp', alt: 'Aetherbound: the Ledger status window drawing itself in a newborn\'s vision', caption: 'First boot: the Ledger appears at birth', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/aetherbound/boot.webp', alt: 'Aetherbound: the Ledger status window drawing itself over the cinematic opening, in a newborn\'s vision', caption: 'First boot: the Ledger appears at birth', width: 1440, height: 900, wide: true },
           { src: '/assets/img/work/aetherbound/village.webp', alt: 'Aetherbound: Thornwick village as a 3D diorama, with Kayden, his sister and their mother near the herb garden', caption: 'Thornwick, age 6, as a tabletop model', width: 1440, height: 900, wide: true },
-          { src: '/assets/img/work/aetherbound/forest.webp', alt: 'Aetherbound: Kayden fires a Water Bolt at a bog slime in the 3D forest', caption: 'The Ashwood: skills grow from real fights', width: 1440, height: 900, wide: true },
-          { src: '/assets/img/work/aetherbound/ledger.webp', alt: 'Aetherbound: the Ledger window showing skill trees and levels', caption: 'The Ledger: every skill levels by use', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/aetherbound/forest.webp', alt: 'Aetherbound: the river and its railed bridge in Thornwick, with ducks on the water and real reflections', caption: 'The river: ducks, fish and real reflections', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/aetherbound/alpha.webp', alt: 'Aetherbound: Kayden faces the Ash Wolf Alpha inside the stone circle in the forest', caption: 'The stone circle: facing the Ash Wolf Alpha', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/aetherbound/ledger.webp', alt: 'Aetherbound: the Ledger status tab with stats, title and unassigned stat points', caption: 'The Ledger: every skill levels by use', width: 1440, height: 900, wide: true },
           { src: '/assets/img/work/aetherbound/offer.webp', alt: 'Aetherbound: a Ledger offer of three abilities, pick one', caption: 'Every five levels: pick one ability, lose the rest', width: 1440, height: 900, wide: true },
         ],
       },
