@@ -652,6 +652,71 @@ export const projects = [
       },
     },
   },
+  {
+    slug: 'aetherbound',
+    // Personal project: kept out of the CV's "product case studies" count.
+    personal: true,
+    company: 'Personal project',
+    play: '/play/aetherbound/',
+    glance: [{ n: '9', l: 'skills that level only by use' }, { n: '1 of 3', l: 'ability offers every 5 levels' }, { n: '7', l: 'quests in Chapter 1' }],
+    // Screenshot of the playable build at /play/aetherbound/, captured Nov 2026.
+    shot: { base: '/assets/img/work/aetherbound', alt: 'Aetherbound: a six-year-old hero fights the Ash Wolf Alpha inside a stone circle at night', caption: 'Aetherbound: the Ash Wolf Alpha, from the playable build on this site, Nov 2026' },
+    number: '09',
+    name: 'Aetherbound',
+    category: 'Personal Project / Game Design',
+    year: '2026',
+    summary:
+      'A top-down isekai RPG that runs in the browser: die in 2026, wake up as a baby in a frontier village, and grow stronger by doing. A cold System called the Ledger records every swing, spell and herb.',
+    role: 'Concept, story, game systems, UI and motion design',
+    links: [{ label: 'Play Aetherbound', href: '/play/aetherbound/' }],
+    contribution: [
+      'Game concept, story and characters',
+      'Progression design: learn-by-doing skills, character levels, ability offers, titles',
+      'System UI: status window, skill trees, Ledger log, offers and quest tracker',
+      'Opening cinematic, world art direction and sound',
+    ],
+    tags: ['Game Design', 'Systems Design', 'UI Design', 'Narrative', 'Canvas', 'Web Audio'],
+    theme: { accent: '#c8323c', layout: 'wide' },
+    sections: {
+      introduction: {
+        body: [
+          'Aetherbound is an original isekai RPG. A man dies in 2026 and is reborn as Kayden Break, a baby in Thornwick, a frontier village at the edge of a monster-haunted forest. He keeps his adult memories, has magic from birth, and sees a cold, slightly sinister System called the Ledger that writes down everything he does.',
+          'Chapter 1 covers his childhood. It plays in the browser on desktop and phone, with keyboard, mouse or touch controls.',
+        ],
+      },
+      objectives: {
+        list: [
+          'Make progress feel earned: skills grow only from doing the thing, so the way you play becomes your build',
+          'Make the System a character, not just a menu: it has a voice, it gives orders, and it watches',
+          'Keep it grounded and emotional: a family, a mentor, a sister to protect, and a second chance not to waste',
+        ],
+      },
+      role: { useContribution: true },
+      final: {
+        body: [
+          'The game opens in a rainy city at night, with a phone at 3% and unanswered messages from his mother. A bus, a kid on the crossing, and then a black void full of floating pages, one for every life. His is almost blank. The Ledger opens a new entry, and he wakes up as a newborn. His first input is clenching a tiny fist, and the Ledger offers him his first ability.',
+          'Every skill levels only by use: sword hits, Water Bolts, healing real wounds, meditating to refill mana, tracking wolves, sneaking, foraging, chopping wood, and using knowledge from his first life. XP depends on how hard the target is, whether the action is new, and how close you are to dying, so grinding weak targets stops paying. Each skill level feeds the character level, each level gives a stat point, and every five levels the Ledger offers three abilities. You keep one and lose the rest.',
+          'His family teaches the systems: his mother magic and healing, his father the sword, the old family hunter tracking and gathering, and a wandering mage pushes him into the forest. A fever in the village is solved with one piece of modern knowledge. The chapter ends at a stone circle in the deep forest, against the Ash Wolf Alpha that took his sister.',
+        ],
+        media: [
+          { src: '/assets/img/work/aetherbound/boot.webp', alt: 'Aetherbound: the Ledger status window drawing itself in a newborn\'s vision', caption: 'First boot: the Ledger appears at birth', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/aetherbound/village.webp', alt: 'Aetherbound: Thornwick village from above, with Kayden, his sister and their mother in the herb garden', caption: 'Thornwick, age 6', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/aetherbound/forest.webp', alt: 'Aetherbound: Kayden fires Water Bolts at a bog slime in the forest by the river', caption: 'The Ashwood: skills grow from real fights', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/aetherbound/ledger.webp', alt: 'Aetherbound: the Ledger window showing skill trees and levels', caption: 'The Ledger: every skill levels by use', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/aetherbound/offer.webp', alt: 'Aetherbound: a Ledger offer of three abilities, pick one', caption: 'Every five levels: pick one ability, lose the rest', width: 1440, height: 900, wide: true },
+        ],
+      },
+      decisions: {
+        list: [
+          'Learn by doing, with diminishing returns: XP = base x challenge x novelty x risk, so variety and danger are rewarded',
+          'The System is unsettling on purpose: red log entries, Directives with a hidden "Failure: ???", and a trait that says "no effect"',
+          'Family members teach the mechanics, so the tutorial is also the story',
+          'Top-down camera chosen to work on desktop, handheld and phone from one build',
+          'All art and sound are generated in code: canvas drawing and Web Audio, no image or audio files to load',
+        ],
+      },
+    },
+  },
 ];
 
 // Order and titles of the case study storytelling structure.
