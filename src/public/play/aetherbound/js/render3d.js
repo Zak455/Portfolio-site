@@ -6,6 +6,8 @@
   const T = AB.TILE;
   let A, H, PAL, wx, wz, THREE, K;
   let S = null, cv = null, building = false, lastAspect = 0;
+  let waterU = null;
+  const waterMirror = { tMirror: { value: null }, uMirrorMatrix: { value: null } }; // matrix is created once THREE is loaded
   let scene, camera, land, sun, sky, paper, woods, houses = [], runes = [], fire, wellWater, smoke, waterTex, herbMesh, herbSig = '', deadGroups = [], trackMesh, tilt, kay, npcs = new Map(), foes = new Map(), bolts = [], boltLight, glow, cards = [], cardQueue = [];
   const cam = { x: 0, z: 0, init: false };
   let lastCut = { x: 1e9, z: 1e9 };
@@ -81,10 +83,17 @@
     const pts = []; for (let y = -0.4; y <= 64.4; y += 2) pts.push([wx(Wd.riverX(Math.min(63.9, Math.max(0, y))) * T), wz(y * T)]);
     const flat = (hex) => K.canvasTex(64, 64, (ctx) => { ctx.fillStyle = hex; ctx.fillRect(0, 0, 64, 64); });
     H.ribbon(land, pts, { width: 2.5, height: 0.05, texture: flat(PAL.stone[1]) });
-    waterTex = K.canvasTex(256, 128, (ctx, Wc, Hc) => { ctx.fillStyle = PAL.water; ctx.fillRect(0, 0, Wc, Hc); ctx.fillStyle = 'rgba(255,255,255,0.35)'; for (let i = 0; i < 6; i++) ctx.fillRect(20 + i * 40, 30 + (i % 3) * 25, 22, 4); });
-    waterTex.wrapS = THREE.RepeatWrapping;
-    H.ribbon(land, pts, { width: 1.65, height: 0.08, texture: waterTex, period: 1.4 });
-    land.children[land.children.length - 1].material.roughness = 0.2;
+    // water: a white map only so the mesh keeps its uvs (x = metres along the river, y = bank to bank);
+    // colour, flow, ripples, caustics and bank foam are procedural in the shader below.
+    waterTex = flat('#ffffff'); waterTex.wrapS = THREE.RepeatWrapping;
+    H.ribbon(land, pts, { width: 1.65, height: 0.06, texture: waterTex, period: 1 });
+    const water = land.children[land.children.length - 1];
+    water.material = waterMaterial(waterTex); water.receiveShadow = true;
+    // planar reflection: Stage re-renders the scene from a camera mirrored in the water plane each frame
+    { land.updateMatrixWorld(true); const wy = land.localToWorld(new THREE.Vector3(0, 0.06, 0)).y;
+      const rt = new THREE.WebGLRenderTarget(Math.round(S.W * 0.5), Math.round(S.H * 0.5), { type: THREE.HalfFloatType, generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter });
+      waterMirror.tMirror.value = rt.texture; waterMirror.uMirrorMatrix.value = new THREE.Matrix4();
+      S.mirrors.push({ mesh: water, rt, u: waterMirror, y: wy, rough: 0, cam: new THREE.PerspectiveCamera() }); }
     // bridge
     const bridge = new THREE.Group(); bridge.position.set(wx(Wd.riverX(21) * T), 0, wz(21.5 * T)); land.add(bridge);
     for (let i = -6; i <= 6; i++) H.box(bridge, 0.24, 0.08, 1.45, i % 2 ? PAL.kraft : '#b88a5a', [i * 0.25, 0.16 + 0.1 * Math.cos(i / 6 * 1.4), 0], 0.02);
@@ -165,6 +174,60 @@
   }
   function disposeTree(o) { o.traverse(x => { if (x.geometry) x.geometry.dispose(); const ms = Array.isArray(x.material) ? x.material : [x.material]; ms.forEach(mm => { if (mm && mm.map) mm.map.dispose(); }); }); }
 
+
+  // ---------------------------------------------------------------- river water
+  // A standard PBR material (so it keeps the sun, sky reflections and tree shadows) with the colour and
+  // surface normal replaced: deep teal in the channel, shallow turquoise at the banks, two layers of
+  // drifting noise for ripples, bright caustic threads and foam where the water meets the stones.
+  function waterMaterial(map) {
+    const m = new THREE.MeshPhysicalMaterial({ map, roughness: 0.07, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.05, envMapIntensity: 1.1, ior: 1.33 });
+    m.onBeforeCompile = (sh) => {
+      sh.uniforms.uTime = { value: 0 }; waterU = sh.uniforms;
+      if (!waterMirror.uMirrorMatrix.value) waterMirror.uMirrorMatrix.value = new THREE.Matrix4();
+      Object.assign(sh.uniforms, waterMirror);
+      sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform mat4 uMirrorMatrix; varying vec4 vMirrorCoord;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvMirrorCoord = uMirrorMatrix * (modelMatrix * vec4(transformed, 1.0));');
+      const lib = `uniform float uTime; uniform sampler2D tMirror; varying vec4 vMirrorCoord;
+        float wH(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+        float wN(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(wH(i),wH(i+vec2(1,0)),f.x),mix(wH(i+vec2(0,1)),wH(i+vec2(1,1)),f.x),f.y);}
+        float wF(vec2 p){float v=0.,a=.5;for(int i=0;i<4;i++){v+=a*wN(p);p=p*2.03+vec2(1.7,9.2);a*=.5;}return v;}
+        vec2 wP(){return vec2(vMapUv.x, vMapUv.y*1.65);}
+        float wHeight(vec2 p){return wF(p*vec2(2.2,3.)+vec2(-uTime*.55,0.))*.6+wF(p*vec2(4.5,5.)+vec2(-uTime*.9,uTime*.12))*.4;}
+      `;
+      sh.fragmentShader = sh.fragmentShader.replace('#include <uv_pars_fragment>', '#include <uv_pars_fragment>\n' + lib)
+        .replace('#include <map_fragment>', `
+          vec2 wp = wP(); float across = vMapUv.y; float edge = min(across, 1. - across);
+          float depth = smoothstep(0.04, 0.5, edge);
+          float n1 = wF(wp*vec2(2.2,3.)+vec2(-uTime*.55,0.)), n2 = wF(wp*vec2(4.5,5.)+vec2(-uTime*.9,uTime*.12));
+          vec3 shallow = vec3(.30,.66,.68), deep = vec3(.035,.24,.34), sand = vec3(.78,.74,.60);
+          vec3 wc = mix(shallow, deep, depth);
+          wc = mix(sand, wc, smoothstep(0.0, 0.09, edge));
+          wc *= .92 + .16 * n1;
+          float foam = smoothstep(.16, .05, edge) * smoothstep(.42, .7, wF(wp*vec2(6.,8.)+vec2(-uTime*.7,0.)));
+          foam += smoothstep(.78, .95, n2) * .15 * (1. - depth);
+          wc = mix(wc, vec3(.95,.98,1.), clamp(foam, 0., .85));
+          diffuseColor.rgb = wc;`)
+        .replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
+          { float hh = wHeight(wP());
+            vec3 sx = dFdx(-vViewPosition), sy = dFdy(-vViewPosition);
+            float dhx = dFdx(hh), dhy = dFdy(hh);
+            vec3 r1 = cross(sy, normal), r2 = cross(normal, sx); float det = dot(sx, r1);
+            vec3 grad = sign(det) * (dhx * r1 + dhy * r2);
+            normal = normalize(abs(det) * normal - grad * 0.016); }`)
+        .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+          { float c = pow(1. - abs(sin((n1 + n2) * 11.)), 7.); totalEmissiveRadiance += vec3(.75,.95,1.) * c * .1 * (.4 + depth); }`)
+        .replace('#include <opaque_fragment>', `{
+            vec4 mc = vMirrorCoord; mc.xy += vec2(n1 - .5, n2 - .5) * .022 * mc.w;
+            vec3 refl = min(texture2DProj(tMirror, mc, 1.2).rgb, vec3(8.));
+            float cv = saturate(dot(normalize(vViewPosition), normal));
+            float k = (.58 + .35 * pow(1. - cv, 2.)) * (1. - clamp(foam, 0., 1.) * .8) * smoothstep(.0, .06, edge);
+            outgoingLight = mix(outgoingLight, refl * vec3(.68,.82,.88), k); }
+          #include <opaque_fragment>`);
+    };
+    m.customProgramCacheKey = () => 'aetherbound-water';
+    return m;
+  }
+
   // ---------------------------------------------------------------- per frame
   // mode: 'title' (the model turns slowly behind the menu) or 'play' (follow Kayden)
   R.frame = function (G, dt) {
@@ -174,7 +237,7 @@
     if (R.mode === 'off') return;
     R.titleT = (R.titleT || 0) + dt;
     // ambient life
-    waterTex.offset.x -= dt * 0.25;
+    if (waterU) waterU.uTime.value += dt;
     const fl = 1 + Math.sin(t * 17) * 0.12 + Math.sin(t * 7.3) * 0.08; fire.f1.scale.set(1, fl, 1); fire.f2.scale.set(1, 2 - fl, 1); fire.light.intensity = 2.2 * fl;
     let n = 0;
     houses.forEach((h, k) => { if (!h.chimney) return; for (let j = 0; j < 3 && n < 30; j++, n++) { const age = ((t * 0.35 + j / 3 + k * 0.17) % 1); smoke.set(n, h.chimney, age, { size: 0.09, rise: 1.3, drift: 0.45 }); } });
