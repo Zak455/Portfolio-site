@@ -3,14 +3,15 @@
   const I = {};
   let t = 0, done = null, phase = 'city', waitFist = false, fistT = -1, montageT = -1, offerShown = false;
   let rain = [], pages = [], windows = [];
+  // [start, end, text, voice file]. Ends cover the recorded line length.
   const subs = [
-    [0.8, 6.5, 'Thirty-four years old. Same rain, same street, same excuses.'],
-    [6.8, 13.0, 'My mother kept calling. I kept meaning to call back.'],
-    [15.2, 18.6, 'A kid on the crossing. Headlights. I moved before I thought.'],
-    [23.0, 28.5, 'So this is what dying looks like. A filing system.'],
-    [29.0, 35.0, 'My page was almost empty. I had wasted all of it.'],
-    [37.0, 41.5, 'Warm. Loud. Someone was crying, and I realised it was me.'],
-    [41.8, 46.0, 'A woman sang words I did not know. One of them was my new name.'],
+    [0.8, 6.4, 'Thirty-four years old. Same rain, same street, same excuses.', 'n01'],
+    [7.0, 11.1, 'My mother kept calling. I kept meaning to call back.', 'n02'],
+    [12.2, 17.6, 'A kid on the crossing. Headlights. I moved before I thought.', 'n03'],
+    [23.0, 27.2, 'So this is what dying looks like. A filing system.', 'n04'],
+    [29.0, 33.7, 'My page was almost empty. I had wasted all of it.', 'n05'],
+    [36.6, 42.5, 'Warm. Loud. Someone was crying, and I realised it was me.', 'n06'],
+    [42.9, 47.9, 'A woman sang words I did not know. One of them was my new name.', 'n07'],
   ];
   const notes = [
     [2.0, 'Mom', 'Are you eating okay?'],
@@ -27,6 +28,7 @@
     pages = Array.from({ length: 40 }, (_, i) => ({ x: Math.random(), y: Math.random(), z: rand(0.3, 1.2), r: rand(-0.4, 0.4), vr: rand(-0.2, 0.2), id: i }));
     windows = Array.from({ length: 140 }, () => ({ b: Math.floor(Math.random() * 9), x: Math.random(), y: Math.random(), on: Math.random() < 0.35 }));
     AB.Audio.ambience('rain');
+    AB.Audio.preloadVoices(['n01','n02','n03','n04','n05','n06','n07','m01','m02','m03','m04']);
     I.cues = {};
   };
 
@@ -35,10 +37,10 @@
   I.skip = function () {
     if (phase === 'boot' && !offerShown) { offerShown = true; birthOffer(); return; }
     if (phase === 'boot' || phase === 'montage') { if (AB.UI.offerOpen()) return; finish(); return; }
-    t = 46; phase = 'boot'; AB.Audio.ambience('void');
+    AB.Audio.stopVoice(); t = 48.3; phase = 'boot'; AB.Audio.ambience('void');
   };
 
-  function finish() { const d = done; done = null; AB.Audio.ambience(null); if (d) d(); }
+  function finish() { AB.Audio.stopVoice(); const d = done; done = null; AB.Audio.ambience(null); if (d) d(); }
 
   function birthOffer() {
     AB.Ledger.S.offers = [];
@@ -56,23 +58,26 @@
 
   I.update = function (dt) {
     t += dt;
+    if (phase !== 'boot' && phase !== 'montage') for (const sb of subs) cue('v' + sb[3], sb[0], () => AB.Audio.voice(sb[3]));
     if (phase === 'city') {
-      cue('brake', 14.6, () => AB.Audio.sfx('brake'));
-      cue('impact', 19.0, () => { AB.Audio.sfx('impact'); AB.Audio.ambience(null); });
-      if (t > 21.5) { phase = 'void'; AB.Audio.ambience('void'); AB.Audio.sfx('glitch'); }
+      cue('brake', 15.2, () => AB.Audio.sfx('brake'));
+      cue('impact', 18.4, () => { AB.Audio.sfx('impact'); AB.Audio.ambience(null); });
+      if (t > 21.0) { phase = 'void'; AB.Audio.ambience('void'); AB.Audio.sfx('glitch'); }
     } else if (phase === 'void') {
       cue('g2', 26, () => AB.Audio.sfx('glitch'));
       cue('g3', 31, () => AB.Audio.sfx('glitch'));
       if (t > 36) { phase = 'birth'; AB.Audio.ambience(null); }
     } else if (phase === 'birth') {
       if (Math.floor(t / 0.9) !== Math.floor((t - dt) / 0.9)) AB.Audio.sfx('heartbeat');
-      if (t > 46.5) { phase = 'boot'; AB.Audio.ambience('void'); AB.Audio.sfx('glitch'); }
+      if (t > 48.3) { phase = 'boot'; AB.Audio.ambience('void'); AB.Audio.sfx('glitch'); }
     } else if (phase === 'boot') {
-      if (t > 52 && !waitFist) waitFist = true;
+      if (t > 53.8 && !waitFist) waitFist = true;
       if (fistT >= 0) { fistT += dt; if (fistT > 1.8 && !offerShown) { offerShown = true; birthOffer(); } }
     } else if (phase === 'montage') {
+      const before = montageT;
       montageT += dt;
-      if (montageT > 10.5) finish();
+      for (let i = 0; i < 4; i++) if (before < i * BEAT + 0.15 && montageT >= i * BEAT + 0.15) AB.Audio.voice('m0' + (i + 1));
+      if (montageT > MONTAGE_END) finish();
     }
   };
 
@@ -184,7 +189,7 @@
   }
 
   function drawVoid(ctx, w, h) {
-    const lt = t - 21.5;
+    const lt = t - 21.0;
     for (const p of pages) {
       const z = p.z;
       const x = ((p.x + Math.sin(lt * 0.1 + p.id) * 0.02) * w);
@@ -243,7 +248,7 @@
   }
 
   function drawBoot(ctx, w, h) {
-    const lt = t - 46.5;
+    const lt = t - 48.3;
     ctx.fillStyle = '#050506'; ctx.fillRect(0, 0, w, h);
     // Faint warm room behind the glass.
     const g = ctx.createRadialGradient(w / 2, h / 2, 10, w / 2, h / 2, Math.max(w, h));
@@ -289,19 +294,20 @@
     }
   }
 
+  const BEAT = 6.0, MONTAGE_END = BEAT * 3 + 5.6;
   function drawMontage(ctx, w, h) {
-    const beats = [[0, 'Age 1', 'First words. Nobody expects them to be this clear.'], [2.5, 'Age 3', 'A sister is born. Mira. She grabs my finger and does not let go.'], [5.0, 'Age 5', 'Secret spell practice behind the barn. The Ledger counts every one.'], [7.5, 'Age 6', 'Thornwick. A frontier village at the edge of the Ashwood.']];
+    const beats = [[0 * BEAT, 'Age 1', 'First words. Nobody expects them to be this clear.'], [1 * BEAT, 'Age 3', 'A sister is born. Mira. She grabs my finger and does not let go.'], [2 * BEAT, 'Age 5', 'Secret spell practice behind the barn. The Ledger counts every one.'], [3 * BEAT, 'Age 6', 'Thornwick. A frontier village at the edge of the Ashwood.']];
     let cur = beats[0];
     for (const b of beats) if (montageT >= b[0]) cur = b;
     const lt = montageT - cur[0];
-    const al = Math.min(1, lt * 2, (2.5 - lt) * 2 + (cur === beats[3] ? 9 : 0));
+    const al = Math.min(1, lt * 2, (BEAT - lt) * 2 + (cur === beats[3] ? 9 : 0));
     ctx.fillStyle = '#050506'; ctx.fillRect(0, 0, w, h);
     ctx.globalAlpha = Math.max(0, al);
     ctx.textAlign = 'center';
     ctx.fillStyle = '#c8323c'; ctx.font = `800 ${Math.min(56, w / 12)}px Cinzel, serif`; ctx.fillText(cur[1].toUpperCase(), w / 2, h * 0.45);
     ctx.fillStyle = '#e8e1d3'; ctx.font = `italic ${Math.max(16, Math.min(24, w / 40))}px "Cormorant Garamond", Georgia, serif`; ctx.fillText(cur[2], w / 2, h * 0.45 + 48);
     ctx.globalAlpha = 1;
-    if (montageT > 9.6) { ctx.fillStyle = `rgba(0,0,0,${Math.min(1, (montageT - 9.6) / 0.9)})`; ctx.fillRect(0, 0, w, h); }
+    if (montageT > MONTAGE_END - 0.9) { ctx.fillStyle = `rgba(0,0,0,${Math.min(1, (montageT - MONTAGE_END + 0.9) / 0.9)})`; ctx.fillRect(0, 0, w, h); }
   }
 
   I.phase = () => phase;

@@ -17,8 +17,26 @@
     ambGain.connect(master);
   };
 
+  // Narration (recorded voice files). HTMLAudio so it works without decoding up front.
+  const voices = {};
+  let curVoice = null;
+  A.voice = function (name) {
+    A.stopVoice();
+    if (A.muted) return;
+    let el = voices[name];
+    if (!el) { el = voices[name] = new Audio('voice/' + name + '.mp3'); el.preload = 'auto'; }
+    el.currentTime = 0; el.volume = 0.95;
+    const p = el.play(); if (p && p.catch) p.catch(() => {});
+    curVoice = el;
+  };
+  A.stopVoice = function () { if (curVoice) { try { curVoice.pause(); } catch (e) {} curVoice = null; } };
+  A.preloadVoices = function (names) {
+    names.forEach(n => { if (!voices[n]) { const el = new Audio('voice/' + n + '.mp3'); el.preload = 'auto'; voices[n] = el; } });
+  };
+
   A.setMuted = function (m) {
     A.muted = m;
+    if (m) A.stopVoice();
     if (master) master.gain.setTargetAtTime(m ? 0 : 0.6, ctx.currentTime, 0.05);
   };
 
