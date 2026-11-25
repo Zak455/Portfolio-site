@@ -126,8 +126,10 @@ class TitleScene {
     UI.hideAll();
     Audio2.ambience('meadow');
     $('#title').classList.add('on');
+    this.camX = this.cam();
+    this.d3 = !!(window.Forage3D && Forage3D.title(this));
   }
-  exit() { $('#title').classList.remove('on'); }
+  exit() { if (this.d3) Forage3D.stop(); $('#title').classList.remove('on'); }
   resize() {
     const W = G.W, H = G.H;
     this.P = SKY.golden;
@@ -141,8 +143,9 @@ class TitleScene {
   update(dt) {
     this.t += dt;
     this.fx.update(dt); this.smoke.update(dt);
-    const cam = this.cam();
-    const cx = G.W * 0.72 - cam * 0.55 + this.cs * 0.36, cy = this.gy + 6 - this.cs * 1.05;
+    const cam = this.cam(); this.camX = cam;
+    let cx = G.W * 0.72 - cam * 0.55 + this.cs * 0.36, cy = this.gy + 6 - this.cs * 1.05;
+    if (this.d3 && this.chim) [cx, cy] = this.chim;
     if (Math.random() < dt * 8) this.smoke.add({ kind: 'glow', x: cx, y: cy, vx: rand(4, 14), vy: rand(-26, -14), life: rand(5, 8), size: rand(10, 18), color: '#e8d8d0', a: 0.18, fadeIn: true, drag: 0.995, flutter: 0.4, seed: rand(0, 9) });
     for (const s of this.smoke.p) s.size += dt * 6;
     if (Math.random() < dt * 4) this.fx.add({ kind: 'glow', x: rand(0, G.W), y: rand(this.gy - 40, G.H), vx: rand(-10, 10), vy: rand(-12, 4), life: rand(3, 6), size: rand(5, 10), color: '#fff0a0', add: true, fadeIn: true, flutter: 2, seed: rand(0, 9), a: 0.8 });
@@ -150,6 +153,11 @@ class TitleScene {
   cam() { return (Math.sin(this.t * 0.05) * 0.5 + 0.5) * (this.worldW - G.W); }
   draw(c) {
     const W = G.W, H = G.H, cam = this.cam();
+    if (this.d3) {
+      c.clearRect(0, 0, W, H); this.smoke.draw(c); this.fx.draw(c);
+      const vg = c.createLinearGradient(0, 0, 0, H); vg.addColorStop(0, 'rgba(20,10,30,.35)'); vg.addColorStop(0.4, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(20,10,5,.55)');
+      c.fillStyle = vg; c.fillRect(0, 0, W, H); return;
+    }
     for (const L of this.layers) {
       c.drawImage(L.cv, -cam * L.par, 0, L.w, H);
       if (L.par === 0.55) drawCottage(c, W * 0.72 - cam * 0.55, this.gy + 6, this.cs, this.P);

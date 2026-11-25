@@ -452,7 +452,7 @@ const BUILD = {
 
 // ── Stage ──────────────────────────────────────────────────────────────────
 const D = { ok: false };
-let renderer, cv3d, scene, camera, raf = 0, mode = null, t0 = 0, last = 0;
+let renderer, cv3d, scene, camera, raf = 0, mode = null, t0 = 0, last = 0, cust = null;
 const anims = [];
 let steam = [], flies = null, flames = [], lights = {}, view = null, camRig = {};
 
@@ -475,6 +475,7 @@ function size() {
   const W = innerWidth, H = innerHeight;
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, W < 700 ? 1.75 : 2));
   renderer.setSize(W, H, false); cv3d.style.width = W + 'px'; cv3d.style.height = H + 'px';
+  if (mode === 'custom') { cust.resize && cust.resize(W, H); return; }
   camera.aspect = W / H; frame(); camera.updateProjectionMatrix();
   if (scene.fog) { scene.fog.near = camRig.dist * camRig.fogN; scene.fog.far = camRig.dist * camRig.fogF; }
 }
@@ -545,7 +546,7 @@ function start(m) {
     const dt = Math.min(0.05, (now - last) / 1000), t = (now - t0) / 1000; last = now;
     for (let i = anims.length - 1; i >= 0; i--) { const a = anims[i], k = Math.min(1, (now - a.s) / a.d); a.f(k); if (k >= 1) anims.splice(i, 1); }
     tickSteam(dt);
-    if (mode === 'plate') camPlate(t); else camFeast(t, dt);
+    if (mode === 'custom') { if (cust.tick(dt, t) === false) return; } else if (mode === 'plate') camPlate(t); else camFeast(t, dt);
     renderer.render(scene, camera);
   };
   raf = requestAnimationFrame(loop);
@@ -553,6 +554,7 @@ function start(m) {
 function stop() {
   cancelAnimationFrame(raf); raf = 0; anims.length = 0; mode = null; steam = []; flames = []; flies = null;
   if (cv3d) cv3d.classList.remove('on');
+  if (cust && cust.dispose) cust.dispose(); cust = null;
   if (scene) { scene.traverse((o) => { if (o.geometry) o.geometry.dispose(); if (o.material) [].concat(o.material).forEach((m) => m.dispose()); }); scene = null; }
 }
 const easeOut = (k) => 1 - Math.pow(1 - k, 3);
@@ -689,7 +691,36 @@ D.thumb = (r) => {
   } catch (e) { return null; }
 };
 
+// Generic hook for the other 3D stages: they build their own scene and drive it every frame.
+D.custom = (o) => {
+  if (!D.ok) return false;
+  stop();
+  scene = o.scene; camera = o.camera; cust = o; scene.environment = scene.environment || D.env;
+  start('custom');
+  return true;
+};
+D.env3 = () => D.env;
 D.stop = () => stop();
+// A camera whose z=0 plane maps 1:1 onto screen pixels: world (x, -y, 0) lands on screen (x, y).
+// The eye sits at screen height ey and looks straight ahead (a shift lens), so verticals stay upright.
+export function screenCam(cam, W, H, ey, fov = 30) {
+  const D0 = H / (2 * Math.tan((fov * Math.PI) / 360));
+  cam.fov = fov; cam.aspect = W / H; cam.near = 2; cam.far = D0 * 6;
+  cam.position.set(W / 2, -ey, D0); cam.lookAt(W / 2, -ey, 0);
+  cam.setViewOffset(W, H, 0, H / 2 - ey, W, H); cam.updateProjectionMatrix();
+  cam.userData = { D: D0, W, H, ey };
+  return cam;
+}
+// Screen point (x, y) at depth z: world position plus the factor that keeps pixel sizes true.
+export function unproject(cam, x, y, z = 0) {
+  const { D: D0, W, ey } = cam.userData, k = D0 / (D0 - z);
+  return { p: new THREE.Vector3(W / 2 + (x - W / 2) / k, -(ey + (y - ey) / k), z), s: 1 / k };
+}
+// Depth at which a screen point lands on a horizontal floor at screen height fy (as seen at z=0).
+export function floorZ(cam, y, fy) { const { D: D0, ey } = cam.userData; const k = (y - ey) / (fy - ey); return D0 * (1 - 1 / k); }
+export const setSeed = (v) => { seed = v; };
+export { THREE, T, M, glossy, blob, leaf, instanced, sprig, berryCluster, chanterelle, elderflower, flecks, salt, droplets, fillet, hazelnut, carrotCoin, meatChunk, breastWhole, breastSlices, porciniSlice, handPie, juniper, shadowed, flatLie, normUV, canvasTex, rr, rnd, fbm, keyLight, speckle, RoomEnvironment, D as Dish3D };
+
 D.ok = (() => { try { return init(); } catch (e) { console.warn('3D plating unavailable', e); return false; } })();
 window.Dish3D = D;
 window.dispatchEvent(new Event('dish3d'));
