@@ -9,7 +9,7 @@
     road: '#d8c193', kraft: '#cb9c68', skin: '#f2c8a2', smoke: '#ffffff', water: '#8fd0e0', lampGlow: '#ffc56e',
     terracotta: '#b9674b', thatch: '#c9a26a', timber: '#7a5238', soil: '#7d5a40', slime: '#7cc46a', wolf: '#6d6f7c', mana: '#7cc6ff',
   };
-  const FONT = '600 160px "Fredoka"';
+  const FONT = '700 160px "Almendra"';
   const D2R = Math.PI / 180;
   const mix = (a, b, k) => a.map((v, i) => v + (b[i] - v) * k);
 

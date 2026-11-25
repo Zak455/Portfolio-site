@@ -654,12 +654,12 @@
       ctx.fillStyle = 'rgba(246,241,231,0.95)'; roundRect(s.x - w / 2 - 2, y - 2, w + 4, 8, 4); ctx.fill();
       ctx.fillStyle = '#c8323c'; roundRect(s.x - w / 2, y, Math.max(2, w * Math.max(0, e.hp / e.d.hp)), 4, 2); ctx.fill();
       if (L.has('appraise') || e.d.boss) {
-        ctx.font = '600 12px Fredoka, sans-serif'; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(246,241,231,0.95)'; ctx.fillStyle = '#1d2530';
+        ctx.font = '600 12px Almendra, Georgia, serif'; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(246,241,231,0.95)'; ctx.fillStyle = '#1d2530';
         const txt = `${e.d.name} · Lv ${e.d.lvl}`; ctx.strokeText(txt, s.x, y - 6); ctx.fillText(txt, s.x, y - 6);
       }
     });
     // quest markers over villagers
-    ctx.font = '600 22px Fredoka, sans-serif';
+    ctx.font = '600 22px Almendra, Georgia, serif';
     G.npcs.forEach(n => {
       if (n.visible === false) return; const mark = G.npcMarker(n.id); if (!mark) return;
       const s = R3.project(n.x, n.y, n.id === 'mira' ? 1.05 : 1.5); const y = s.y - 6 + Math.sin(G.t * 4) * 3;
@@ -671,13 +671,13 @@
     for (const t of E.texts) {
       const s = R3.project(t.x, t.y, 0.6);
       ctx.globalAlpha = Math.min(1, t.life * 2);
-      ctx.font = (t.big ? '600 20px' : '600 15px') + ' Fredoka, sans-serif';
+      ctx.font = (t.big ? '600 20px' : '600 15px') + ' Almendra, Georgia, serif';
       ctx.lineWidth = 4; ctx.strokeStyle = 'rgba(29,37,48,0.85)'; ctx.strokeText(t.text, s.x, s.y);
       ctx.fillStyle = t.color; ctx.fillText(t.text, s.x, s.y);
     }
     ctx.globalAlpha = 1;
     if (p.hurtFlash > 0) { p.hurtFlash -= 1 / 60; const g = ctx.createRadialGradient(vw / 2, vh / 2, Math.min(vw, vh) * 0.3, vw / 2, vh / 2, Math.max(vw, vh) * 0.75); g.addColorStop(0, 'rgba(200,50,60,0)'); g.addColorStop(1, `rgba(200,50,60,${Math.min(0.7, p.hurtFlash * 1.4)})`); ctx.fillStyle = g; ctx.fillRect(0, 0, vw, vh); }
-    if (!G.alive) { ctx.fillStyle = 'rgba(29,37,48,0.55)'; ctx.fillRect(0, 0, vw, vh); ctx.fillStyle = '#f6f1e7'; ctx.font = '600 34px Fredoka, sans-serif'; ctx.fillText('SUBJECT EXPIRED', vw / 2, vh / 2); }
+    if (!G.alive) { ctx.fillStyle = 'rgba(29,37,48,0.55)'; ctx.fillRect(0, 0, vw, vh); ctx.fillStyle = '#f6f1e7'; ctx.font = '600 34px Almendra, Georgia, serif'; ctx.fillText('SUBJECT EXPIRED', vw / 2, vh / 2); }
   }
   function roundRect(x, y, w, h, r) { ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x, y, w, h, r); else ctx.rect(x, y, w, h); }
 
