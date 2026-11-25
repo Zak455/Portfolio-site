@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <title>Aetherbound · Chapter 1: Childhood</title>
 <meta name="description" content="Aetherbound: a top-down isekai RPG. Die in 2026, wake up as a baby in a frontier village, and grow stronger by doing. Every swing, spell and herb is counted by the Ledger.">
-<meta name="theme-color" content="#060608">
+<meta name="theme-color" content="#b4d2de">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=JetBrains+Mono:wght@400;700&family=Fredoka:wght@500;600&family=Nunito+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#e8e1d3;--dim:#a9a296;--red:#c8323c;--red2:#ff2a3a;--blue:#4a9eff;--gold:#e8b04a;--glass:rgba(8,8,10,.86);--line:#2a2a30}
 *{box-sizing:border-box}
@@ -151,6 +151,78 @@ body.touch #hotbar,body.touch .keyhint{display:none}
 body.touch #prompt{bottom:180px}
 body.touch #dialogue{bottom:16px}
 
+
+/* ---- Tiny Diorama skin: cream cards, ink, Fredoka, one red accent ---- */
+:root{--ink:#1d2530;--dim:#56616e;--red:#c8323c;--red2:#c8323c;--blue:#2f7fd0;--gold:#c0861f;--glass:rgba(246,241,231,.95);--line:#d9d0bf;--paper:#b4d2de}
+html,body{background:var(--paper)}
+canvas#gl{position:fixed;inset:0;width:100%;height:100%;display:block}
+canvas#game{background:transparent}
+#title{background:radial-gradient(ellipse at 50% 55%,rgba(180,210,222,.0),rgba(180,210,222,.35))}
+#title .tcard{background:var(--glass);border:1px solid var(--line);border-radius:22px;padding:28px clamp(18px,4vw,44px) 24px;max-width:760px;box-shadow:0 18px 50px rgba(29,37,48,.18);display:flex;flex-direction:column;align-items:center;gap:14px}
+#title h1{font-family:Fredoka,sans-serif;font-weight:600;letter-spacing:.02em;text-shadow:none;color:var(--ink);font-size:clamp(40px,8vw,84px)}
+#title .sub{font-family:"Nunito Sans",sans-serif;font-style:normal;color:var(--dim);font-size:clamp(15px,2vw,18px)}
+#title .tag{font-family:Fredoka,sans-serif;font-weight:500;letter-spacing:.14em}
+.btn{background:var(--red);color:#fff6e6;border:0;border-radius:999px;font-family:Fredoka,sans-serif;font-weight:600;letter-spacing:.06em;box-shadow:0 3px 0 #8f1f27}
+.btn:hover,.btn:focus-visible{background:#b02a33}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line);box-shadow:0 3px 0 var(--line)}
+.btn.ghost:hover,.btn.ghost:focus-visible{background:#f1ead9}
+.keys{color:var(--dim);font-family:"Nunito Sans",sans-serif}
+.keys b{color:var(--ink);border:1px solid var(--line);border-radius:6px;background:#fff}
+.hud-tl{background:var(--glass);border:1px solid var(--line);border-radius:14px;padding:10px 12px 8px;box-shadow:0 6px 18px rgba(29,37,48,.12)}
+.hud-tl .nm{font-family:Fredoka,sans-serif;font-weight:600;letter-spacing:.06em;font-size:15px}
+.hud-tl .tt{color:var(--dim)}
+.bar{border:0;border-radius:6px;background:#e6dccb;overflow:hidden}
+.bar b{color:#fff;text-shadow:0 1px 1px rgba(0,0,0,.45)}
+#barMp{background:#dbe4ee}#barXp{background:#ece2cc}
+#badge{background:var(--red);color:#fff6e6;border:0}
+#minimap{border:3px solid #f6f1e7;border-radius:12px;box-shadow:0 6px 18px rgba(29,37,48,.15)}
+#quest{border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:12px;font-family:"Nunito Sans",sans-serif;font-size:12px}
+#quest.directive{border-left-color:var(--red)}
+#quest .qt{font-family:Fredoka,sans-serif;font-weight:600;font-size:14px}
+#log .entry{border:1px solid var(--line);border-left:4px solid var(--red);border-radius:10px;font-family:"Nunito Sans",sans-serif;font-size:12px}
+#log .entry.warn{background:#fbe9e6;border-left-color:var(--red)}
+#log .entry.new{border-left-color:var(--blue)}#log .entry.title{border-left-color:var(--ink)}
+.slot{border:1px solid var(--line);border-radius:12px;font-family:"Nunito Sans",sans-serif}
+.slot b{font-family:Fredoka,sans-serif;font-weight:600}
+.slot:first-child{border:2px solid var(--red)}
+#prompt{border-radius:999px;font-family:"Nunito Sans",sans-serif;font-weight:700;box-shadow:0 4px 14px rgba(29,37,48,.15)}
+#banner .b1{font-family:Fredoka,sans-serif;font-weight:600;letter-spacing:.08em;color:var(--ink);text-shadow:0 2px 0 #f6f1e7,0 0 24px rgba(246,241,231,.9)}
+#banner .b2{font-family:"Nunito Sans",sans-serif;color:var(--ink);text-shadow:0 0 12px rgba(246,241,231,1)}
+.hud-bl button{background:var(--glass);border:1px solid var(--line);border-radius:999px;font-family:"Nunito Sans",sans-serif;font-weight:700}
+#dialogue{background:var(--glass);border:1px solid var(--line);border-top:4px solid var(--red);border-radius:18px;box-shadow:0 14px 40px rgba(29,37,48,.2)}
+#dialogue .who{font-family:Fredoka,sans-serif;font-weight:600;color:var(--gold);letter-spacing:.04em;font-size:16px}
+#dialogue .who.sys{color:var(--red);font-family:Fredoka,sans-serif}
+#dialogue .who.me{color:var(--blue)}
+#dialogue #dlgText{font-family:"Nunito Sans",sans-serif;font-size:18px;line-height:1.45}
+#dialogue.thought #dlgText{color:#3d5a78}
+#ledger{background:rgba(29,37,48,.35)}
+.lw{background:#f6f1e7;border:1px solid var(--line);border-top:4px solid var(--red);border-radius:18px;box-shadow:0 24px 60px rgba(29,37,48,.3);overflow:hidden}
+.lw header{border-bottom:1px solid var(--line)}
+.lw header h2{font-family:Fredoka,sans-serif;font-weight:600;letter-spacing:.12em}
+.lw nav button{font-family:Fredoka,sans-serif;font-weight:500}
+#ledgerClose{border:1px solid var(--line);border-radius:999px;background:#fff}
+#ledgerBody{font-family:"Nunito Sans",sans-serif;font-size:13px}
+pre.status{color:var(--ink)}
+.stat,.skill{border-bottom:1px solid var(--line)}
+.stat button,.ti button{background:var(--red);color:#fff6e6;border:0;border-radius:8px}
+.skill .sb{background:#e6dccb;border-radius:3px;overflow:hidden}
+.ab,.ti,.qq,.bx{border:1px solid var(--line);border-radius:12px;background:#fffaf0}
+#offer{background:rgba(29,37,48,.5)}
+#offer .oh{color:#fff6e6}#offer h3{color:#fff;font-family:Fredoka,sans-serif;font-weight:600}#offer .op{color:#e8eef3}
+#offerCards .card{background:#f6f1e7;border:2px solid var(--line);border-radius:16px;color:var(--ink)}
+#offerCards .card:hover,#offerCards .card:focus-visible{border-color:var(--red);box-shadow:0 12px 30px rgba(29,37,48,.3)}
+#offerCards b{font-family:Fredoka,sans-serif;font-weight:600}
+#end{background:rgba(180,210,222,.92)}
+#end h2{font-family:Fredoka,sans-serif;font-weight:600;color:var(--ink)}
+#end p{font-family:"Nunito Sans",sans-serif;font-style:normal;color:var(--dim);font-size:18px}
+#end .small{color:var(--ink)}
+#joy{border:2px solid rgba(246,241,231,.9);background:rgba(246,241,231,.35)}
+#joyKnob{background:rgba(246,241,231,.95);border:0}
+.tb{background:rgba(246,241,231,.92);border:1px solid var(--line);color:var(--ink);font-family:Fredoka,sans-serif;font-weight:600}
+.tb.a{border:2px solid var(--red)}.tb.c{border:2px solid var(--blue)}.tb.u{border:2px solid var(--gold)}
+#btnSkip{z-index:30}
+@media (min-width:980px){#title{align-items:flex-start;padding-left:6vw}#title .tcard{max-width:500px;align-items:flex-start;text-align:left}#title h1{font-size:clamp(40px,4.3vw,62px)}#title .menu{justify-content:flex-start}}
+
 @media (max-width:760px){
   .hud-tl{width:190px;left:10px;top:10px}
   .hud-tr{right:10px;top:10px;width:160px}
@@ -167,7 +239,7 @@ body.touch #dialogue{bottom:16px}
 <body>
 <canvas id="game" aria-label="Aetherbound game view"></canvas>
 
-<div id="title">
+<div id="title"><div class="tcard">
   <div class="tag">A TOP-DOWN ISEKAI RPG · CHAPTER 1: CHILDHOOD</div>
   <h1>AETHER<span>BOUND</span></h1>
   <div class="sub">You died in 2026 with a mostly blank life. You wake up as a baby in a frontier village, with your memories, magic, and a cold System that records everything you do.</div>
@@ -179,7 +251,7 @@ body.touch #dialogue{bottom:16px}
     <b>WASD</b> move · <b>J</b> / click sword · <b>K</b> / right-click Water Bolt · <b>H</b> heal · <b>E</b> talk, gather · <b>Tab</b> Ledger · <b>M</b> sound
   </div>
   <div class="keys">Skills level up by using them. Every 5 levels the Ledger offers you a new ability.</div>
-</div>
+</div></div>
 <button class="btn ghost" id="btnSkip" hidden>Skip ▸</button>
 
 <div id="hud" hidden>
@@ -264,6 +336,10 @@ body.touch #dialogue{bottom:16px}
 <script src="js/ledger.js"></script>
 <script src="js/entities.js"></script>
 <script src="js/ui.js"></script>
+<script src="js/vendor/three.min.js"></script>
+<script src="js/vendor/stage.js"></script>
+<script src="js/diorama.js"></script>
+<script src="js/render3d.js"></script>
 <script src="js/intro.js"></script>
 <script src="js/game.js"></script>
 </body>
