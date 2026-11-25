@@ -188,9 +188,21 @@
 
     let ax, az, dist, el, yaw = 0, depth = 0;
     const portrait = innerWidth / innerHeight;
-    if (R.mode === 'title' || !G.player) {
+    if (R.mode === 'title' || R.mode === 'reveal' || !G.player) {
       const a = R.titleT * 0.03;
-      ax = wx(27 * T) + Math.sin(a) * 1.5; az = wz(24 * T); dist = 88 / Math.min(1, Math.max(0.55, portrait / 1.3)); el = 30; yaw = -14 + Math.sin(a * 0.7) * 10;
+      // frame the whole tile; on wide screens slide it right of the menu card, on tall ones below it
+      const wide = innerWidth >= 980 && portrait >= 1.25;
+      const useW = wide ? 0.6 : 0.96, useH = wide ? 0.9 : 0.55;
+      const fitW = 30 / (Math.tan(10 * Math.PI / 180) * portrait * useW), fitH = 21 / (Math.tan(10 * Math.PI / 180) * useH);
+      ax = Math.sin(a) * 1.2; az = 1; dist = Math.max(fitW, fitH); el = 32; yaw = -12 + Math.sin(a * 0.7) * 9;
+      R.viewShift = wide ? [-0.2, 0] : [0, -0.2];
+      if (R.mode === 'reveal') {
+        // end of the opening: drop from high above the whole tile down onto Thornwick
+        const k = K.smooth(0, 1, R.revealK || 0), vx = wx(22 * T), vz = wz(20 * T);
+        const far = Math.max(fitW, fitH) * 1.15;
+        ax = vx * k; az = 1 + (vz - 1) * k; dist = far + (30 - far) * k; el = 64 - 26 * k; yaw = -48 + 36 * k;
+        R.viewShift = null;
+      }
       [kay.g].forEach(o => o.visible = false); npcs.forEach(m => m.g.visible = false); foes.forEach(m => m.g.visible = false);
       woods.cut(0, -999, 0); lastCut = { x: 1e9, z: 1e9 };
     } else {
@@ -201,6 +213,7 @@
       const k = 1 - Math.exp(-dt * 5); cam.x += (tx - cam.x) * k; cam.z += (tz - cam.z) * k;
       ax = cam.x; az = cam.z;
       dist = Math.min(44, Math.max(22, 9 / (0.353 * Math.min(1.2, portrait)))); el = 42;
+      R.viewShift = null;
       syncPlay(G, dt, t);
       if (Math.hypot(tx - lastCut.x, tz - lastCut.z) > 0.08) { woods.cut(tx, tz, 3.4); lastCut = { x: tx, z: tz }; }
     }
@@ -208,6 +221,9 @@
     const e = el * Math.PI / 180, y = yaw * Math.PI / 180;
     const pos = [ax + Math.sin(y) * Math.cos(e) * dist + (Math.random() - 0.5) * shake, Math.sin(e) * dist, az + Math.cos(y) * Math.cos(e) * dist + (Math.random() - 0.5) * shake];
     K.look(camera, pos, [ax, 0.35, az], 20);
+    if (R.viewShift) camera.setViewOffset(1000 * portrait, 1000, R.viewShift[0] * 1000 * portrait, R.viewShift[1] * 1000, 1000 * portrait, 1000);
+    else if (camera.view && camera.view.enabled) camera.clearViewOffset();
+    camera.far = Math.max(400, dist * 2.5); camera.updateProjectionMatrix();
     // light: bright day in Thornwick, warm dusk deep in the Ashwood
     const dusk = K.smooth(0.15, 0.95, depth);
     const c1 = new THREE.Color('#ffe9cc'), c2 = new THREE.Color('#ffaf78');
@@ -221,7 +237,7 @@
     runes.forEach(m => m.emissiveIntensity = 3 * K.smooth(0.75, 1, depth));
     // tilt-shift band sits on Kayden (or the village on the title)
     const f = R.project(R.mode === 'play' && G.player ? G.player.x : 22 * T, R.mode === 'play' && G.player ? G.player.y : 20 * T, 0.4);
-    tilt.uniforms.focus.value = 1 - f.y / innerHeight; tilt.uniforms.amt.value = R.mode === 'title' ? 1.2 : 1;
+    tilt.uniforms.focus.value = 1 - f.y / innerHeight; tilt.uniforms.amt.value = R.mode === 'title' ? 1.2 : R.mode === 'reveal' ? 1.6 : 1;
     S.seek(0, 1);
   };
 
@@ -267,7 +283,7 @@
       c.t += dt;
       const pop = K.ease.outBack ? K.ease.outBack(K.clamp(c.t / 0.35)) : K.clamp(c.t / 0.35), out = K.smooth(2.6, 3.0, c.t);
       c.s.g.scale.setScalar(Math.max(0.001, 0.62 * pop * (1 - out)));
-      c.s.g.position.set(kg.position.x + 0.55 + c.slot * 0.2, 0, kg.position.z - 0.35 - c.slot * 0.9);
+      c.s.g.position.set(kg.position.x + 0.6 + c.slot * 0.35, 0, kg.position.z - 0.3 - c.slot * 1.25);
       c.s.flip.rotation.x = Math.PI * K.smooth(0.35, 0.75, c.t);
     });
     cards = cards.filter(c => { if (c.t > 3.05) { land.remove(c.s.g); disposeTree(c.s.g); return false; } return true; });

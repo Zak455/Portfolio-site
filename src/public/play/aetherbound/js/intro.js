@@ -2,7 +2,8 @@
 (function () {
   const I = {};
   let t = 0, done = null, phase = 'city', waitFist = false, fistT = -1, montageT = -1, offerShown = false;
-  let rain = [], pages = [], windows = [];
+  let rain = [], pages = [], windows = [], lastDt = 1 / 60;
+  const st3 = {};
   // [start, end, text, voice file]. Ends cover the recorded line length.
   const subs = [
     [0.8, 6.4, 'Thirty-four years old. Same rain, same street, same excuses.', 'n01'],
@@ -28,6 +29,7 @@
     pages = Array.from({ length: 40 }, (_, i) => ({ x: Math.random(), y: Math.random(), z: rand(0.3, 1.2), r: rand(-0.4, 0.4), vr: rand(-0.2, 0.2), id: i }));
     windows = Array.from({ length: 140 }, () => ({ b: Math.floor(Math.random() * 9), x: Math.random(), y: Math.random(), on: Math.random() < 0.35 }));
     AB.Audio.ambience('rain');
+    if (AB.Intro3D) AB.Intro3D.init();
     AB.Audio.preloadVoices(['n01','n02','n03','n04','n05','n06','n07','m01','m02','m03','m04']);
     I.cues = {};
   };
@@ -40,13 +42,22 @@
     AB.Audio.stopVoice(); t = 48.3; phase = 'boot'; AB.Audio.ambience('void');
   };
 
-  function finish() { AB.Audio.stopVoice(); const d = done; done = null; AB.Audio.ambience(null); if (d) d(); }
+  function finish() {
+    AB.Audio.stopVoice(); const d = done; done = null; AB.Audio.ambience(null);
+    if (AB.Intro3D) AB.Intro3D.dispose();
+    if (d) d();
+  }
+  // 0..1 while the last montage beat flies down onto the real village model; -1 otherwise.
+  I.revealK = function () {
+    if (phase !== 'montage' || !AB.Intro3D || !AB.Intro3D.ok || montageT < 3 * BEAT) return -1;
+    return Math.min(1, (montageT - 3 * BEAT) / (MONTAGE_END - 3 * BEAT - 0.6));
+  };
 
   function birthOffer() {
     AB.Ledger.S.offers = [];
     AB.Ledger.queueOffer('Birth gift');
     const o = AB.Ledger.S.offers.shift();
-    AB.UI.showOffer(o, a => { AB.Ledger.takeAbility(a); phase = 'montage'; montageT = 0; });
+    AB.UI.showOffer(o, a => { AB.Ledger.takeAbility(a); phase = 'montage'; montageT = 0; AB.Audio.ambience('forest'); AB.Audio.sfx('whoosh'); });
   }
 
   I.input = function () {
@@ -57,16 +68,22 @@
   };
 
   I.update = function (dt) {
-    t += dt;
+    t += dt; lastDt = dt;
     if (phase !== 'boot' && phase !== 'montage') for (const sb of subs) cue('v' + sb[3], sb[0], () => AB.Audio.voice(sb[3]));
     if (phase === 'city') {
+      cue('str', 0.4, () => AB.Audio.sfx('strings'));
+      cue('pass', 3.5, () => AB.Audio.sfx('carpass'));
       cue('brake', 15.2, () => AB.Audio.sfx('brake'));
-      cue('impact', 18.4, () => { AB.Audio.sfx('impact'); AB.Audio.ambience(null); });
+      cue('riser', 16.2, () => AB.Audio.sfx('riser'));
+      cue('impact', 18.4, () => { AB.Audio.sfx('impact'); AB.Audio.ambienceCut(); AB.Audio.ambience(null); });
       if (t > 21.0) { phase = 'void'; AB.Audio.ambience('void'); AB.Audio.sfx('glitch'); }
     } else if (phase === 'void') {
+      cue('uw', 21.1, () => AB.Audio.sfx('underwater'));
       cue('g2', 26, () => AB.Audio.sfx('glitch'));
+      cue('sear', 33.2, () => AB.Audio.sfx('searing'));
+      cue('wh', 34.5, () => AB.Audio.sfx('whoosh'));
       cue('g3', 31, () => AB.Audio.sfx('glitch'));
-      if (t > 36) { phase = 'birth'; AB.Audio.ambience(null); }
+      if (t > 36) { phase = 'birth'; AB.Audio.ambience(null); AB.Audio.sfx('gong'); }
     } else if (phase === 'birth') {
       if (Math.floor(t / 0.9) !== Math.floor((t - dt) / 0.9)) AB.Audio.sfx('heartbeat');
       if (t > 48.3) { phase = 'boot'; AB.Audio.ambience('void'); AB.Audio.sfx('glitch'); }
@@ -77,12 +94,23 @@
       const before = montageT;
       montageT += dt;
       for (let i = 0; i < 4; i++) if (before < i * BEAT + 0.15 && montageT >= i * BEAT + 0.15) AB.Audio.voice('m0' + (i + 1));
+      for (let i = 1; i < 3; i++) if (before < i * BEAT - 0.25 && montageT >= i * BEAT - 0.25) AB.Audio.sfx('whoosh');
+      if (before < 3 * BEAT - 0.3 && montageT >= 3 * BEAT - 0.3) { AB.Audio.sfx('reveal'); AB.Audio.sfx('chorn'); }
       if (montageT > MONTAGE_END) finish();
     }
   };
 
   // ---------- Drawing ----------
   I.draw = function (ctx, w, h) {
+    const X = AB.Intro3D;
+    if (X && X.ok) {
+      st3.phase = phase; st3.t = t; st3.montageT = montageT;
+      st3.beat = phase === 'montage' ? Math.min(3, Math.floor(Math.max(0, montageT) / BEAT)) : -1;
+      X.frame(st3, lastDt);
+      ctx.clearRect(0, 0, w, h);
+      drawFilm(ctx, w, h);
+      return;
+    }
     ctx.fillStyle = '#000'; ctx.fillRect(0, 0, w, h);
     if (phase === 'city') drawCity(ctx, w, h);
     else if (phase === 'void') drawVoid(ctx, w, h);
@@ -310,6 +338,192 @@
     if (montageT > MONTAGE_END - 0.9) { ctx.fillStyle = `rgba(0,0,0,${Math.min(1, (montageT - MONTAGE_END + 0.9) / 0.9)})`; ctx.fillRect(0, 0, w, h); }
   }
 
+  // ---------- Film overlays (3D opening) ----------
+  // The 3D sets are drawn by AB.Intro3D underneath; this canvas only carries type: subtitles in the
+  // letterbox, the phone, the Ledger's typed lines, the boot window and the chapter cards.
+  let dispFont = null;
+  function display() {
+    if (!dispFont) { try { dispFont = getComputedStyle(document.documentElement).getPropertyValue('--display').trim(); } catch (e) {} dispFont = dispFont || 'Cinzel, serif'; }
+    return dispFont;
+  }
+  function barH(w, h) { const asp = w / h; return (asp > 1.2 ? Math.max(0, Math.min(0.12, (1 - asp / 2.39) / 2)) : 0.05) * h; }
+  function fadeIn(x, a, b) { return Math.max(0, Math.min(1, (x - a) / (b - a))); }
+  function rr(ctx, x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+  function spaced(ctx, s, x, y, sp) {
+    // letter-spaced text, centred on x
+    let tw = 0; for (const ch of s) tw += ctx.measureText(ch).width + sp; tw -= sp;
+    let cx = x - tw / 2; const al = ctx.textAlign; ctx.textAlign = 'left';
+    for (const ch of s) { ctx.fillText(ch, cx, y); cx += ctx.measureText(ch).width + sp; }
+    ctx.textAlign = al;
+  }
+
+  function filmSub(ctx, w, h, s, al) {
+    const bh = barH(w, h), fs = Math.max(15, Math.min(23, w / 46));
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, al);
+    ctx.font = `italic 500 ${fs}px "Cormorant Garamond", Georgia, serif`;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    const y = bh > fs * 2.2 ? h - bh / 2 : h - Math.max(54, h * 0.09);
+    ctx.shadowColor = 'rgba(0,0,0,0.9)'; ctx.shadowBlur = 10;
+    ctx.fillStyle = '#efe7d6'; ctx.fillText(s, w / 2, y);
+    ctx.restore();
+  }
+
+  function drawFilm(ctx, w, h) {
+    const bh = barH(w, h);
+    ctx.textBaseline = 'alphabetic';
+    if (phase === 'city') {
+      // opening slug
+      const sa = Math.min(fadeIn(t, 0.6, 1.6), 1 - fadeIn(t, 5.2, 6.2));
+      if (sa > 0) {
+        ctx.save(); ctx.globalAlpha = sa; ctx.textAlign = 'left'; ctx.fillStyle = '#e8e1d3';
+        const fs = Math.max(11, Math.min(14, w / 90)), x = Math.max(20, w * 0.05), y = bh + Math.max(34, h * 0.07);
+        ctx.font = `600 ${fs}px "JetBrains Mono", monospace`; ctx.fillText('EARTH · 2026', x, y);
+        ctx.fillStyle = '#9aa3b5'; ctx.fillText('WEDNESDAY, 23:47', x, y + fs * 1.6);
+        ctx.fillStyle = '#c8323c'; ctx.fillRect(x, y + fs * 2.4, 34, 2);
+        ctx.restore();
+      }
+      // the phone: messages he never answers
+      const pa = Math.min(fadeIn(t, 1.6, 2.4), 1 - fadeIn(t, 12.4, 13.2));
+      if (pa > 0) {
+        const pw = Math.min(250, w * 0.3), x = w - pw - Math.max(20, w * 0.05);
+        let y = bh + Math.max(28, h * 0.06);
+        ctx.save(); ctx.globalAlpha = pa;
+        ctx.font = `600 11px "JetBrains Mono", monospace`; ctx.textAlign = 'left';
+        ctx.fillStyle = 'rgba(232,225,211,0.7)'; ctx.fillText('23:47', x + 4, y); ctx.textAlign = 'right'; ctx.fillStyle = '#ff5a5f'; ctx.fillText('▮ 3%', x + pw - 4, y); ctx.textAlign = 'left';
+        y += 12;
+        for (const [at, who, msg] of notes) {
+          if (t < at) continue;
+          const k = fadeIn(t, at, at + 0.35), nh = 50;
+          ctx.globalAlpha = pa * k;
+          const yy = y + (1 - k) * -10;
+          ctx.fillStyle = 'rgba(18,22,32,0.62)'; rr(ctx, x, yy, pw, nh, 12); ctx.fill();
+          ctx.strokeStyle = 'rgba(255,255,255,0.12)'; ctx.lineWidth = 1; ctx.stroke();
+          ctx.fillStyle = who === 'System' ? '#ff5a5f' : '#7cc6ff'; ctx.beginPath(); ctx.arc(x + 18, yy + 18, 6, 0, 7); ctx.fill();
+          ctx.fillStyle = '#f1ece2'; ctx.font = `700 12px "Nunito Sans", system-ui, sans-serif`; ctx.fillText(who, x + 32, yy + 22);
+          ctx.fillStyle = 'rgba(241,236,226,0.75)'; ctx.font = `12px "Nunito Sans", system-ui, sans-serif`; ctx.fillText(msg, x + 14, yy + 40);
+          y += nh + 8;
+        }
+        ctx.restore();
+      }
+    } else if (phase === 'void') {
+      const lt = t - 21.0;
+      const lines = [[1.5, '[SUBJECT EXPIRED]'], [4.0, 'Cause: blunt trauma. Others recorded: 7.'], [8.0, 'Record review: 34 years. Mostly blank.'], [11.5, 'Opening new entry.']];
+      const fs = Math.max(12, Math.min(16, w / 60));
+      ctx.save(); ctx.textAlign = 'center'; ctx.shadowColor = 'rgba(200,50,60,0.7)'; ctx.shadowBlur = 12;
+      let y = h * 0.2 + bh * 0.4;
+      for (const [at, s] of lines) {
+        if (lt < at) continue;
+        const n = Math.min(s.length, Math.floor((lt - at) * 28));
+        const glitch = Math.random() < 0.04;
+        ctx.globalAlpha = lt > 13.4 ? Math.max(0, 1 - (lt - 13.4)) : 1;
+        ctx.font = `700 ${fs}px "JetBrains Mono", monospace`;
+        ctx.fillStyle = glitch ? '#e8e1d3' : '#ff4d57';
+        ctx.fillText(s.slice(0, n) + (n < s.length ? '█' : ''), w / 2 + (glitch ? rand(-4, 4) : 0), y);
+        y += fs * 1.8;
+      }
+      ctx.restore();
+    } else if (phase === 'birth') {
+      const lt = t - 36;
+      if (lt > 5 && lt < 10) {
+        ctx.save(); ctx.globalAlpha = Math.min(1, lt - 5, (10 - lt) * 1.5) * 0.85;
+        ctx.font = `${Math.max(18, Math.min(28, w / 40))}px "Cormorant Garamond", Georgia, serif`; ctx.textAlign = 'center';
+        ctx.shadowColor = 'rgba(255,190,120,0.8)'; ctx.shadowBlur = 16; ctx.fillStyle = '#fff1dc';
+        ctx.fillText('ᚲᚨᛃᛞᛖᚾ · ᛗᛁ ᛚᛁᛏᛚᛖ ᛚᛁᚷᚺᛏ', w / 2, bh + h * 0.12);
+        ctx.restore();
+      }
+    } else if (phase === 'boot') {
+      drawBootPanel(ctx, w, h);
+    } else if (phase === 'montage') {
+      drawChapter(ctx, w, h, bh);
+    }
+    for (const [a, b, s] of subs) if (t >= a && t <= b) filmSub(ctx, w, h, s, Math.min(1, (t - a) * 2, (b - t) * 2));
+  }
+
+  function drawBootPanel(ctx, w, h) {
+    const lt = t - 48.3, S = AB.Ledger.S;
+    const rows = [['NAME', S.name.toUpperCase()], ['AGE', '0'], ['LEVEL', '1'], ['HP', '4 / 4'], ['MANA', '1 / 1'], ['ORIGIN', 'Earthborn'], ['TRAIT', 'Ledger-Marked (no effect)'], ['STATUS', 'Infant. Helpless. Watched.']];
+    const fs = Math.max(12, Math.min(16, w / 52)), lh = fs * 1.75;
+    const pw = Math.min(w - 32, fs * 30), ph = lh * (rows.length + 2.6), x = w / 2 - pw / 2, y = h * 0.47 - ph / 2;
+    const open = fadeIn(lt, 0, 0.5);
+    ctx.save();
+    ctx.globalAlpha = open;
+    ctx.fillStyle = 'rgba(8,8,12,0.78)'; rr(ctx, x, y, pw, ph * (0.2 + 0.8 * open), 6); ctx.fill();
+    ctx.strokeStyle = 'rgba(200,50,60,0.85)'; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.fillStyle = '#c8323c'; ctx.fillRect(x, y, pw, lh * 1.25);
+    ctx.fillStyle = '#fff2ea'; ctx.font = `700 ${fs}px "JetBrains Mono", monospace`; ctx.textAlign = 'left';
+    ctx.fillText('LEDGER', x + 14, y + lh * 0.85); ctx.textAlign = 'right'; ctx.fillText('SUBJECT 2026-Δ-00', x + pw - 14, y + lh * 0.85);
+    ctx.textAlign = 'left';
+    rows.forEach(([k, v], i) => {
+      const at = 0.4 + i * 0.4; if (lt < at) return;
+      const n = Math.min(v.length, Math.floor((lt - at) * 50)), glitch = Math.random() < 0.03, ry = y + lh * (2.2 + i);
+      ctx.fillStyle = '#8b8577'; ctx.font = `600 ${fs * 0.85}px "JetBrains Mono", monospace`; ctx.fillText(k, x + 16, ry);
+      ctx.fillStyle = k === 'TRAIT' ? '#e8b04a' : '#efe7d6'; ctx.font = `${fs}px "JetBrains Mono", monospace`;
+      ctx.fillText(v.slice(0, n), x + 16 + fs * 6.2 + (glitch ? rand(-3, 3) : 0), ry);
+    });
+    ctx.restore();
+    if (waitFist) {
+      ctx.save(); ctx.textAlign = 'center';
+      const py = y + ph + lh * 1.6;
+      if (fistT < 0) {
+        ctx.globalAlpha = 0.6 + Math.sin(t * 4) * 0.4;
+        ctx.fillStyle = '#ff4d57'; ctx.font = `700 ${fs}px "JetBrains Mono", monospace`;
+        ctx.shadowColor = 'rgba(200,50,60,0.8)'; ctx.shadowBlur = 10;
+        ctx.fillText(AB.Input.touch ? '[DIRECTIVE] Clench your fist. (tap)' : '[DIRECTIVE] Clench your fist. (Space / click)', w / 2, py);
+      } else {
+        ctx.fillStyle = '#9fd8ff'; ctx.font = `700 ${fs + 2}px "JetBrains Mono", monospace`;
+        ctx.shadowColor = 'rgba(124,198,255,0.9)'; ctx.shadowBlur = 14;
+        ctx.fillText('[Mana Sense +1]   A faint warmth answers.', w / 2, py);
+        const g = ctx.createRadialGradient(w / 2, h, 0, w / 2, h, 60 + fistT * 260);
+        g.addColorStop(0, `rgba(124,198,255,${0.35 * Math.max(0, 1 - fistT / 1.8)})`); g.addColorStop(1, 'rgba(124,198,255,0)');
+        ctx.shadowBlur = 0; ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+      }
+      ctx.restore();
+    }
+  }
+
+  function drawChapter(ctx, w, h, bh) {
+    const beats = [['AGE 1', 'First words. Nobody expects them to be this clear.'], ['AGE 3', 'A sister is born. Mira. She grabs my finger and does not let go.'], ['AGE 5', 'Secret spell practice behind the barn. The Ledger counts every one.']];
+    const b = Math.min(3, Math.floor(Math.max(0, montageT) / BEAT)), lt = montageT - b * BEAT;
+    ctx.save();
+    if (b < 3) {
+      // lower-third chapter card
+      const al = Math.min(1, fadeIn(lt, 0.3, 1.0), (BEAT - 0.3 - lt) * 2);
+      const x = Math.max(22, w * 0.06), y = h - bh - Math.max(70, h * 0.14), big = Math.max(30, Math.min(64, w / 15));
+      ctx.globalAlpha = Math.max(0, al); ctx.textAlign = 'left';
+      ctx.shadowColor = 'rgba(0,0,0,0.7)'; ctx.shadowBlur = 18;
+      ctx.fillStyle = '#ffe7b8'; ctx.font = `800 ${big}px ${display()}`;
+      ctx.fillText(beats[b][0], x + (1 - fadeIn(lt, 0.3, 1.3)) * -20, y);
+      ctx.fillStyle = '#e8b04a'; ctx.fillRect(x, y + 12, Math.min(260, w * 0.3) * fadeIn(lt, 0.5, 1.5), 2);
+      ctx.fillStyle = '#f6efe2'; ctx.font = `italic 500 ${Math.max(15, Math.min(22, w / 48))}px "Cormorant Garamond", Georgia, serif`;
+      wrapText(ctx, beats[b][1], x, y + 40, Math.min(560, w - x * 2), Math.max(20, Math.min(28, w / 38)));
+    } else {
+      // the reveal: Thornwick
+      const al = Math.min(fadeIn(lt, 1.4, 2.6), 1 - fadeIn(montageT, MONTAGE_END - 1.2, MONTAGE_END - 0.5));
+      ctx.globalAlpha = Math.max(0, al); ctx.textAlign = 'center';
+      const big = Math.max(40, Math.min(96, w / 10)), y = h * 0.3;
+      const sh = ctx.createRadialGradient(w / 2, y, 0, w / 2, y, Math.max(w * 0.42, big * 4));
+      sh.addColorStop(0, 'rgba(20,14,8,0.5)'); sh.addColorStop(1, 'rgba(20,14,8,0)');
+      ctx.save(); ctx.translate(w / 2, y); ctx.scale(1, 0.45); ctx.translate(-w / 2, -y); ctx.fillStyle = sh; ctx.fillRect(0, y - w, w, w * 2); ctx.restore();
+      ctx.shadowColor = 'rgba(40,20,10,0.7)'; ctx.shadowBlur = 24;
+      ctx.fillStyle = '#fff4dc'; ctx.font = `800 ${big}px ${display()}`;
+      spaced(ctx, 'THORNWICK', w / 2, y, big * 0.08 * (1 + (1 - fadeIn(lt, 1.4, 4)) * 0.6));
+      ctx.fillStyle = '#ffe7b8'; ctx.font = `700 ${Math.max(11, Math.min(14, w / 80))}px "JetBrains Mono", monospace`;
+      spaced(ctx, 'AGE 6 · CHAPTER 1 · CHILDHOOD', w / 2, y + big * 0.55, 3);
+      ctx.fillStyle = '#fff8ec'; ctx.font = `italic 500 ${Math.max(16, Math.min(24, w / 44))}px "Cormorant Garamond", Georgia, serif`;
+      ctx.fillText('A frontier village at the edge of the Ashwood.', w / 2, y + big * 0.55 + 34);
+    }
+    ctx.restore();
+    if (montageT > MONTAGE_END - 0.9) { ctx.fillStyle = `rgba(0,0,0,${Math.min(1, (montageT - MONTAGE_END + 0.9) / 0.9)})`; ctx.fillRect(0, 0, w, h); }
+  }
+  function wrapText(ctx, s, x, y, mw, lh) {
+    const words = s.split(' '); let line = '';
+    for (const wd of words) { const tst = line ? line + ' ' + wd : wd; if (ctx.measureText(tst).width > mw && line) { ctx.fillText(line, x, y); y += lh; line = wd; } else line = tst; }
+    if (line) ctx.fillText(line, x, y);
+  }
+
+  // debug/screenshot hook: jump the film to a time (>= 100 means montage time - 100)
+  I._seek = function (tt) { if (tt >= 100) { phase = 'montage'; montageT = tt - 100; t = 60; } else { t = tt; phase = tt < 21 ? 'city' : tt < 36 ? 'void' : tt < 48.3 ? 'birth' : 'boot'; if (tt > 53.8) waitFist = true; } };
   I.phase = () => phase;
   AB.Intro = I;
 })();
