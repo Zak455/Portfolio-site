@@ -60,4 +60,25 @@ await writeFile(new URL('sitemap.xml', dist),
     .map((p) => `  <url><loc>${site.url}${p}</loc></url>`).join('\n')}\n</urlset>\n`);
 await writeFile(new URL('robots.txt', dist), `User-agent: *\nAllow: /\nSitemap: ${site.url}/sitemap.xml\n`);
 
-console.log(`Built ${pages.length} pages → dist/ (assets v${assetVersion})`);
+// Cache-bust images: browsers keep /assets/img for a week, so every image URL in
+// the generated HTML gets ?v=<content hash>. A replaced screenshot gets a new URL
+// and shows straight away; unchanged images stay cached.
+const imgHash = new Map();
+async function versioned(url) {
+  if (!imgHash.has(url)) {
+    try { imgHash.set(url, createHash('sha1').update(await readFile(new URL(`.${url}`, dist))).digest('hex').slice(0, 8)); }
+    catch { imgHash.set(url, null); }
+  }
+  const h = imgHash.get(url);
+  return h ? `${url}?v=${h}` : url;
+}
+for (const p of [...pages, '/404.html']) {
+  const file = new URL(`.${p}${p.endsWith('/') ? 'index.html' : ''}`, dist);
+  let html;
+  try { html = await readFile(file, 'utf8'); } catch { continue; }
+  const urls = [...new Set(html.match(/\/assets\/(?:img|video)\/[^"'\s,)?]+\.(?:webp|png|jpe?g|svg|avif|mp4)(?![?\w])/g) || [])];
+  for (const u of urls) html = html.split(u).join(await versioned(u));
+  await writeFile(file, html);
+}
+
+console.log(`Built ${pages.length} pages → dist/ (assets v${assetVersion}, ${imgHash.size} images versioned)`);
