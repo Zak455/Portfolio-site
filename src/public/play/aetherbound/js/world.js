@@ -77,6 +77,10 @@
     B(11, 27, 4, 3, '#43392d', 'House');
     B(36, 14, 4, 3, '#55372b', 'House');
     world.buildings.forEach(b => world.colliders.push({ type: 'rect', x: b.x + 4, y: b.y + 18, w: b.w - 8, h: b.h - 18 }));
+    // Bridge guardrails: keep walkers between the two rails (rails sit 1.36 tiles either side of the deck centre).
+    { const bx = riverX(21) * T, cy = 21.5 * T, half = 3.3 * T, inner = 0.72 * T + 9;
+      world.colliders.push({ type: 'rect', x: bx - half, y: cy - inner - 20, w: half * 2, h: 20 });
+      world.colliders.push({ type: 'rect', x: bx - half, y: cy + inner, w: half * 2, h: 20 }); }
 
     // Props.
     const P = (type, tx, ty, extra) => { const p = Object.assign({ type, x: tx * T, y: ty * T }, extra || {}); world.props.push(p); return p; };
