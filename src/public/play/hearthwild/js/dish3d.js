@@ -689,6 +689,7 @@ D.thumb = (r) => {
   } catch (e) { return null; }
 };
 
+D.stop = () => stop();
 D.ok = (() => { try { return init(); } catch (e) { console.warn('3D plating unavailable', e); return false; } })();
 window.Dish3D = D;
 window.dispatchEvent(new Event('dish3d'));
