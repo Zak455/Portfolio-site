@@ -8,7 +8,7 @@
   const map = {
     KeyW: 'up', ArrowUp: 'up', KeyS: 'down', ArrowDown: 'down', KeyA: 'left', ArrowLeft: 'left', KeyD: 'right', ArrowRight: 'right',
     KeyJ: 'attack', KeyK: 'cast', KeyH: 'heal', KeyE: 'use', KeyF: 'use', Enter: 'confirm', Space: 'dash', KeyQ: 'ability',
-    Tab: 'ledger', KeyI: 'ledger', KeyL: 'ledger', Escape: 'escape', KeyM: 'mute',
+    Tab: 'ledger', KeyI: 'ledger', KeyL: 'ledger', Escape: 'escape', KeyP: 'pause', KeyM: 'mute',
   };
 
   addEventListener('keydown', e => {
