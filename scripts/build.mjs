@@ -11,6 +11,7 @@ import { layout } from '../src/templates/layout.mjs';
 import { homePage } from '../src/templates/home.mjs';
 import { caseStudyPage, notFoundPage } from '../src/templates/case-study.mjs';
 import { cvPage } from '../src/templates/cv.mjs';
+import { cvAtsPage } from '../src/templates/cv-ats.mjs';
 
 const root = new URL('../', import.meta.url);
 const dist = new URL('dist/', root);
@@ -48,8 +49,9 @@ for (const [i, project] of projects.entries()) {
   }));
 }
 
-// Standalone CV page (own print styles; the PDF is printed from it).
+// Standalone CV pages (visual + ATS-safe single-column; PDFs are printed from them).
 await write('/cv/', cvPage({ site, about, experience, education, publications, certifications, capabilities, tools, projects, coreExpertise: additionalWork.coreExpertise }));
+await write('/cv/ats/', cvAtsPage({ site, experience, education, publications, certifications, capabilities, tools, coreExpertise: additionalWork.coreExpertise }));
 
 await writeFile(new URL('404.html', dist), layout({
   site, path: '/404', home: false, assetVersion, bodyClass: 'page-404', title: 'Not found', body: notFoundPage(),

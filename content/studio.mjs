@@ -55,31 +55,31 @@ export const services = [
   },
   {
     n: '03',
-    title: 'Move it.',
-    text: 'Micro-interactions, transitions and onboarding animations, handed over with the detail developers need to build them as designed.',
-    items: ['Motion & micro-interactions', 'Prototypes', 'Developer handoff'],
+    title: 'Move & prototype it.',
+    text: 'Micro-interactions, onboarding animations and working browser prototypes in HTML, CSS, JS, React and Three.js, handed over with engineering precision.',
+    items: ['Motion & micro-interactions', 'Code & AI prototypes', 'Developer handoff'],
   },
 ];
 
 export const faq = [
   {
-    q: 'Do you take on freelance projects?',
-    a: 'Yes. I’m open to selected freelance product, website and brand projects. Send a short brief and I’ll tell you honestly whether I’m the right fit.',
+    q: 'What roles are you looking for?',
+    a: 'Full-time Product Designer (IC3/Senior) and Design Engineer / Prototyping Designer roles on ambitious SaaS, mobile, AI or hardware-connected product teams.',
   },
   {
-    q: 'What do you need from me to get started?',
-    a: 'A short brief: what you’re building, who it’s for, your timeline, and any existing brand or product. If the scope is still fuzzy, we can shape it together first.',
+    q: 'Where are you based, and are you open to remote or relocation?',
+    a: 'Based in Goa, India (UTC+5:30). Remote roles from Goa are preferred, and I’m open to relocating anywhere in India for the right product team.',
   },
   {
-    q: 'What do you actually deliver?',
-    a: 'Depending on the project: research findings and competitor analysis, user flows, wireframes, high-fidelity Figma designs and prototypes, design systems, brand assets and motion specs.',
+    q: 'What is your notice period?',
+    a: '1 month (30 days). I can coordinate a smooth handover and start quickly.',
   },
   {
-    q: 'How do you work with developers?',
-    a: 'Closely. I share work early, document components and decisions, and stay involved through implementation, the same way I work with development and R&D teams every day.',
+    q: 'Do you build your own prototypes in code?',
+    a: 'Yes. Beyond Figma and After Effects, I build interactive web experiences and functional prototypes in HTML, CSS, JavaScript, React and Three.js—including this portfolio and the three playable browser prototypes on it.',
   },
   {
-    q: 'Where are you based?',
-    a: 'Goa, India (UTC+5:30). I’m happy to work remotely and keep overlap hours with your team.',
+    q: 'How do you work with product managers and engineers?',
+    a: 'Side by side from discovery to launch. With an engineering degree and 3+ years working directly with development and R&D teams, I share early, respect technical constraints and stay involved through implementation.',
   },
 ];

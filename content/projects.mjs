@@ -106,86 +106,155 @@ export const projects = [
     },
   },
   {
-    slug: 'optispaces-website',
+    slug: 'spintly-v3',
     // "At a glance" strip on the case study: real facts only (content, store listings).
-    glance: [{ n: '7', l: 'products told on a single page' }, { n: '5', l: 'AI use cases in one interaction' }, { n: '6', l: 'step deployment journey' }],
-    // Screenshot of the staging site, captured Nov 2026 in the browser pane (2x tiles, stitched).
-    shot: { base: '/assets/img/work/optispaces-website', alt: 'OptiSpaces.ai website hero: Securing the built world with AI', caption: 'Staging site: new OptiSpaces.ai website, captured Nov 2026' },
+    glance: [{ n: '3', l: 'tab navigation: Doors, Consoles, Help' }, { n: '2', l: 'stores: Google Play & App Store' }, { n: '100K+', l: 'Google Play downloads' }],
+    // Built from the Google Play listing screenshots (app version 3.0), Nov 2026.
+    shot: { base: '/assets/img/work/spintly-v3', alt: 'Three screens of the redesigned mobile app: access points, door unlocked and My Console', caption: 'V3 app screens from the Google Play listing (OptiSpaces.ai app, v3.0), Nov 2026' },
     number: '02',
-    name: 'OptiSpaces.ai Website',
-    category: 'Website Design / Product Storytelling',
+    name: 'Spintly V3',
+    category: 'Mobile Product Design',
     year: null,
-    summary:
-      'Designing the new OptiSpaces.ai website, which presents the platform as an AI operating system for physical security: access control, video intelligence, visitors, tenants and attendance on one intelligence layer.',
-    role: 'Website design: structure, UI & product storytelling',
-    teamNote: 'In progress: the new site is on staging and not yet public.',
-    contribution: [
-      'Website structure and page flow',
-      'UI design and interactive product moments',
-      'Product storytelling for the AI and video platform',
-      'Presenting seven software products on one page',
+    summary: 'Collaborating on the redesign of the Spintly V3 mobile app, with cleaner layouts, improved navigation and usability, and modern interaction patterns.',
+    role: 'Mobile UI/UX in a collaborative redesign',
+    contribution: ['Mobile UI/UX', 'Navigation and usability improvements', 'Interaction patterns', 'Product visual language and consistency'],
+    teamNote: 'A collaborative redesign: I worked on the mobile UI/UX alongside the wider product team.',
+    links: [
+      { label: 'Google Play', href: 'https://play.google.com/store/apps/details?id=com.mrinq.smartaccess' },
+      { label: 'App Store', href: 'https://apps.apple.com/in/app/optispaces-ai-by-spintly/id1462730510' },
     ],
-    tags: ['Website', 'AI Video Analytics', 'Access Control', 'Physical Security'],
-    object: 'globe',
-    theme: { accent: '#4f8cff', layout: 'split' },
+    tags: ['Mobile', 'Access Control', 'Mobile Credentialing', 'Visitor Management'],
+    object: 'device',
+    theme: { accent: '#e8e8e8', layout: 'split-reverse' },
     sections: {
-      introduction: {
-        body: [
-          'The new OptiSpaces.ai website tells the story of the platform as an AI operating system for physical security. Wireless access control, video intelligence, visitor, tenant and attendance management share one intelligence layer, so every event tells the whole story.',
-        ],
-      },
+      introduction: { body: ['Spintly V3 is the redesign of the Spintly mobile application, which I collaborated on. It brings cleaner layouts, improved navigation and usability, and modern interaction patterns.'] },
       context: {
         body: [
-          "OptiSpaces.ai grew from an access control suite into a platform that also understands video: Spintly EDGE AI turns existing IP cameras into smart cameras, with facial recognition, people counting, perimeter intrusion detection and licence plate recognition. The website needed to carry that shift without losing the access control story customers already knew.",
+          'The Spintly app is how employees, residents and admins open doors and manage access every day. With version 3, the app moved to the OptiSpaces.ai brand as Spintly’s software platform was rebranded, and it shipped on Google Play and the App Store.',
         ],
       },
       problem: {
         body: [
-          'Physical security used to mean separate systems: access panels, video recorders, sensors and building software, each with its own screen, and control rooms full of feeds and alert fatigue. The site had to make "one platform, one pane of glass" feel concrete, not abstract.',
+          'People use this app many times a day, often while walking up to a door. The redesign had to modernise the look and add new capabilities without breaking those habits: in the launch message’s words, “a new look, but same feel”.',
         ],
       },
       objectives: {
-        list: [
-          'Position OptiSpaces.ai as AI-based physical security, with access and video on one layer',
-          'Present seven connected software products clearly on one page',
-          'Make AI use cases tangible for admins, security officers and executives',
-          'Explain deployment, from first site survey to full commissioning',
-          'Build trust with certifications and a clear path to sales',
-        ],
+        list: ['Improve navigation and usability', 'Introduce cleaner layouts and modern interaction patterns', 'Keep the experience consistent across the app'],
       },
       role: { useContribution: true },
-      team: { body: tbd },
+      team: { body: ['The V3 redesign was a team effort; I collaborated on the mobile UI/UX within it.'] },
       research: { body: tbd },
       competitors: { body: tbd },
-      flows: {
-        body: [
-          'The page moves from the big idea to proof: one platform, then the seven-product software suite, then why the architecture is faster and cheaper to install, then integrations, AI capabilities, AI use cases, deployment, certifications and contact.',
-          'The platform idea is told as three verbs (Live, Understand, Remember): cameras, access events and alerts in real time; AI that detects, correlates and summarises incidents; and a searchable incident log with timelines and evidence.',
-        ],
-        media: [{ placeholder: 'Page structure: from platform idea to contact' }],
-      },
+      flows: { body: tbd, media: [{ placeholder: 'Core app flows' }] },
       explorations: { body: tbd },
       wireframes: { body: tbd },
-      visual: {
-        body: tbd,
-        media: [{ src: '/assets/img/work/optispaces-website/hero.webp', alt: 'OptiSpaces.ai website hero with the headline "Securing the built world with AI", a phone unlocking a Spintly reader and certification badges', caption: 'Hero: the platform idea, proof points and a product moment in one view', width: 1440, height: 900, wide: true }],
-      },
+      visual: { body: tbd },
       final: {
         body: [
-          'The AI use cases section lets visitors switch between Overcrowding, Zone violation, PPE compliance, Vehicle pass & parking and Person of interest. Each one shows the same chain (cameras, AI detection, response, intelligence) and who it helps: the admin who configures it, the officer who responds and the executive who reads the trends.',
-          'A six-step deployment timeline (approval, site survey, proposal, alignment, costing, execution) answers the "how do we get this?" question before a visitor has to ask sales.',
+          'V3 introduces a minimal design built for faster door operations. Access points are listed by site, and a successful unlock takes over the top of the screen with a clear green confirmation.',
+          'Around that core, V3 adds remote check-in with GPS attendance, visitor management with approve and reject actions right in the list, My Console for managing the organisation by role, and in-app help with FAQs and support requests.',
         ],
         media: [
-          { src: '/assets/img/work/optispaces-website/software-suite.webp', alt: 'Software suite section: seven OptiSpaces.ai products shown as photo cards', caption: 'Software suite: seven connected products on one platform', width: 1440, height: 900, wide: true },
-          { src: '/assets/img/work/optispaces-website/ai-use-cases.webp', alt: 'AI use cases section with tabs for overcrowding, zone violation, PPE compliance, vehicle pass and person of interest', caption: 'AI use cases: each one shown as cameras → detection → response → intelligence, and who it helps', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/spintly-v3/rebrand.webp', alt: 'Launch screens: Spintly app rebranded to OptiSpaces.ai, and "A new look but same feel"', caption: 'Launch: the Spintly app becomes OptiSpaces.ai, a new look with the same feel', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/spintly-v3/key-screens.webp', alt: 'Four V3 screens: remote GPS check-in, My Console, visitor management and help and support', caption: 'V3 key screens: remote check-in, My Console, visitor management and quick help (Google Play listing)', width: 1440, height: 820, wide: true },
         ],
       },
       decisions: {
         list: [
-          'Lead with one idea (access and video on one intelligence layer) before listing products',
-          'Show every use case through the same detection → response → intelligence chain, so they read as one system',
-          'Speak to three audiences (admin, officer, executive) inside each use case instead of one generic buyer',
-          'Group AI capabilities by what they protect: identity, vehicles, movement and policy',
+          'A new bottom navigation (Doors, Consoles, Help) so the most frequent task, opening a door, is always the home screen',
+          'Full-width success state on unlock, readable at a glance while walking',
+          'Role tabs (Admin, Manager, User) in My Console, so one app serves every role without clutter',
+          'Inline approve and reject on visitor cards, so hosts act without opening each request',
+          'GPS check-in in a bottom sheet, confirming the captured location before check-in',
+        ],
+      },
+      implementation: { body: tbd },
+      learnings: { body: tbd },
+    },
+  },
+  {
+    slug: 'apple-wallet-integration',
+    // "At a glance" strip on the case study: real facts only (content, store listings).
+    glance: [{ n: '2', l: 'devices, one badge: iPhone & Watch' }, { n: '5', l: 'hours of access with Power Reserve' }, { n: '4', l: 'steps to add a badge' }],
+    // Screenshot of the new Spintly site on staging (Scypher · Apple Wallet Access), captured Nov 2026 (2x tiles, stitched).
+    shot: { base: '/assets/img/work/apple-wallet-integration', alt: 'Apple Wallet Access page: Your iPhone Is Now Your Employee Badge, with a Spintly badge on iPhone and Apple Watch', caption: 'Scypher · Apple Wallet Access page on the live Spintly website (spintly.com), Nov 2026' },
+    number: '03',
+    name: 'Apple Wallet Integration',
+    category: 'Product Experience / Collaboration',
+    year: null,
+    summary:
+      'Working with development and R&D teams to support Apple Wallet integration within the Spintly ecosystem.',
+    role: 'Product experience & engineering collaboration',
+    links: [{ label: 'Apple Wallet at Spintly', href: 'https://spintly.com/apple-wallet-india/' }],
+    contribution: [
+      'Product experience considerations',
+      'Digital credential experience',
+      'Engineering and R&D collaboration',
+    ],
+    tags: ['Digital Credentials', 'Mobile Credentialing'],
+    object: 'cards',
+    theme: { accent: '#4f8cff', layout: 'wide' },
+    // Team project: the integration itself was engineered by development & R&D.
+    teamNote: 'A team effort. The integration was engineered by development and R&D; my part was the product and credential experience.',
+    sections: {
+      introduction: {
+        body: ['Bringing Apple Wallet integration to the product ecosystem, so credentials can live where people already keep their cards.'],
+      },
+      context: {
+        body: [
+          'Spintly already supported many credentials: the mobile app, cards, QR codes, PIN and face recognition. Apple Wallet adds an employee badge people already carry: hold an iPhone or Apple Watch near the reader to unlock, with no app to open and no physical badge.',
+          'Spintly launched employee badges in Apple Wallet for access control in India, and the badge is part of Scypher, Spintly’s credential management platform, alongside mobile credentials and QR visitor passes.',
+        ],
+      },
+      problem: {
+        body: [
+          'A badge in Apple Wallet is a new idea for most employees and admins, and it raises the same questions every time: is it secure, does it work when the phone is locked or out of charge, and what happens if the phone is lost?',
+          'The experience, and the way it is explained, had to answer those questions up front, so a badge in Wallet feels as dependable as the plastic card it replaces.',
+        ],
+      },
+      objectives: {
+        list: [
+          'Let employees unlock with iPhone or Apple Watch in one tap',
+          'Keep the built-in privacy and security of Apple Wallet',
+          'Let admins issue and revoke badges from the dashboard',
+          'Work alongside the app, card and QR credentials already in use',
+        ],
+      },
+      role: { useContribution: true },
+      team: {
+        body: [
+          'This was a cross-functional effort. Development and R&D teams engineered the integration; I contributed product experience considerations and the digital credential experience, working closely with them throughout.',
+        ],
+      },
+      research: { body: tbd },
+      competitors: { body: tbd },
+      flows: {
+        body: [
+          'Adding the badge takes four steps: sign in to the employer’s app with employee credentials, follow the in-app instructions, tap Add to Apple Wallet, and finish on screen. The badge added to iPhone is added to the paired Apple Watch too, and from then on either one is held near the reader to get in.',
+        ],
+        media: [
+          { src: '/assets/img/work/apple-wallet-integration/add-badge-and-card.webp', alt: 'Activating your employee badge on iPhone: four steps beside an iPhone and Apple Watch showing the Spintly badge added, and the branded badge card below', caption: 'Adding the badge: four steps, then the same badge on iPhone and Apple Watch, branded for the organisation', width: 1440, height: 900, wide: true },
+        ],
+      },
+      explorations: { body: tbd },
+      wireframes: { body: tbd },
+      visual: { body: tbd, media: [{ placeholder: 'Badge card design explorations' }] },
+      final: {
+        body: [
+          'The experience is built around five promises: access instantly from the Spintly app, badge in by holding iPhone or Apple Watch near the reader, keep working for up to five hours with Power Reserve, suspend the badge from Find My if a device is lost, and keep data private with the security of iPhone.',
+          'Express Mode means people don’t need to wake or unlock the device, and the same badge opens office doors, restricted areas, turnstiles and secure printing.',
+        ],
+        media: [
+          { src: '/assets/img/work/apple-wallet-integration/features.webp', alt: 'Employee Badge in Apple Wallet: five feature cards for instant access, easy badging, Power Reserve, Find My and iPhone security', caption: 'Five promises, each shown on the device it happens on', width: 1440, height: 738, wide: true },
+          { src: '/assets/img/work/apple-wallet-integration/homepage-section.webp', alt: 'Spintly homepage section: Your Employee Badge in Apple Wallet, with benefits and a phone and watch showing the badge', caption: 'On the Spintly homepage: Apple Wallet presented as one credential among many', width: 1440, height: 684, wide: true },
+        ],
+      },
+      decisions: {
+        list: [
+          'Answer the trust questions first: Express Mode, Power Reserve, Find My and privacy',
+          'Show the badge on both iPhone and Apple Watch, since one badge works on both',
+          'Make the badge card itself carry the organisation’s brand',
+          'Present Apple Wallet alongside the app, card and QR credentials, not as a replacement for them',
         ],
       },
       implementation: { body: tbd },
@@ -196,16 +265,16 @@ export const projects = [
     slug: 'spintly-global-website',
     // "At a glance" strip on the case study: real facts only (content, store listings).
     glance: [{ n: '2', l: 'audiences served by one site' }, { n: '7', l: 'credential types, one section' }, { n: '8', l: 'industries with their own path' }],
-    // Screenshot of the new site on staging, captured Nov 2026 in the browser pane (2x tiles, stitched).
-    shot: { base: '/assets/img/work/spintly-global-website', alt: 'New Spintly website hero: A Global Technology Platform for Access Control', caption: 'New Spintly website (staging), captured Nov 2026' },
-    number: '03',
+    // Screenshot of the live global site (www.spintly.com), captured Nov 2026 in the browser pane (2x tiles, stitched).
+    shot: { base: '/assets/img/work/spintly-global-website', alt: 'New Spintly website hero: A Global Technology Platform for Access Control', caption: 'Live Spintly global website (spintly.com), 2026' },
+    number: '04',
     name: 'Spintly Global Website',
     category: 'Website Design / UX Research',
-    year: null,
+    year: '2026',
     summary:
       "Leading the redesign of Spintly's website into a modern, global digital experience, grounded in UX research, competitor analysis and scalable UI systems.",
     role: 'Led the redesign: UX research, information architecture & UI',
-    links: [{ label: 'Visit the website', href: 'https://spintly.com/global-site-v2/' }],
+    links: [{ label: 'Visit spintly.com', href: 'https://www.spintly.com/' }],
     contribution: [
       'Competitor analysis',
       'UX research',
@@ -280,8 +349,8 @@ export const projects = [
     // "At a glance" strip on the case study: real facts only (content, store listings).
     glance: [{ n: '3', l: 'credential products: mobile, Wallet, QR' }, { n: '6', l: 'step credential flow, animated' }, { n: '0', l: 'rewiring for existing systems' }],
     // Screenshot of the new Spintly site on staging (Scypher · Mobile Credentials), captured Nov 2026 (2x tiles, stitched).
-    shot: { base: '/assets/img/work/scypher', alt: 'Scypher Mobile Credentials page: Mobile Access Control, Every Phone a Secure Key', caption: 'Scypher · Mobile Credentials page on the new Spintly website (staging), captured Nov 2026' },
-    number: '04',
+    shot: { base: '/assets/img/work/scypher', alt: 'Scypher Mobile Credentials page: Mobile Access Control, Every Phone a Secure Key', caption: 'Scypher · Mobile Credentials page on the live Spintly website (spintly.com), Nov 2026' },
+    number: '05',
     name: 'Scypher',
     category: 'Branding / Product Design',
     year: null,
@@ -361,155 +430,86 @@ export const projects = [
     },
   },
   {
-    slug: 'spintly-v3',
+    slug: 'optispaces-website',
     // "At a glance" strip on the case study: real facts only (content, store listings).
-    glance: [{ n: '3', l: 'tab navigation: Doors, Consoles, Help' }, { n: '2', l: 'stores: Google Play & App Store' }, { n: '100K+', l: 'Google Play downloads' }],
-    // Built from the Google Play listing screenshots (app version 3.0), Nov 2026.
-    shot: { base: '/assets/img/work/spintly-v3', alt: 'Three screens of the redesigned mobile app: access points, door unlocked and My Console', caption: 'V3 app screens from the Google Play listing (OptiSpaces.ai app, v3.0), Nov 2026' },
-    number: '05',
-    name: 'Spintly V3',
-    category: 'Mobile Product Design',
-    year: null,
-    summary: 'Collaborating on the redesign of the Spintly V3 mobile app, with cleaner layouts, improved navigation and usability, and modern interaction patterns.',
-    role: 'Mobile UI/UX in a collaborative redesign',
-    contribution: ['Mobile UI/UX', 'Navigation and usability improvements', 'Interaction patterns', 'Product visual language and consistency'],
-    teamNote: 'A collaborative redesign: I worked on the mobile UI/UX alongside the wider product team.',
-    links: [
-      { label: 'Google Play', href: 'https://play.google.com/store/apps/details?id=com.mrinq.smartaccess' },
-      { label: 'App Store', href: 'https://apps.apple.com/in/app/optispaces-ai-by-spintly/id1462730510' },
-    ],
-    tags: ['Mobile', 'Access Control', 'Mobile Credentialing', 'Visitor Management'],
-    object: 'device',
-    theme: { accent: '#e8e8e8', layout: 'split-reverse' },
-    sections: {
-      introduction: { body: ['Spintly V3 is the redesign of the Spintly mobile application, which I collaborated on. It brings cleaner layouts, improved navigation and usability, and modern interaction patterns.'] },
-      context: {
-        body: [
-          'The Spintly app is how employees, residents and admins open doors and manage access every day. With version 3, the app moved to the OptiSpaces.ai brand as Spintly’s software platform was rebranded, and it shipped on Google Play and the App Store.',
-        ],
-      },
-      problem: {
-        body: [
-          'People use this app many times a day, often while walking up to a door. The redesign had to modernise the look and add new capabilities without breaking those habits: in the launch message’s words, “a new look, but same feel”.',
-        ],
-      },
-      objectives: {
-        list: ['Improve navigation and usability', 'Introduce cleaner layouts and modern interaction patterns', 'Keep the experience consistent across the app'],
-      },
-      role: { useContribution: true },
-      team: { body: ['The V3 redesign was a team effort; I collaborated on the mobile UI/UX within it.'] },
-      research: { body: tbd },
-      competitors: { body: tbd },
-      flows: { body: tbd, media: [{ placeholder: 'Core app flows' }] },
-      explorations: { body: tbd },
-      wireframes: { body: tbd },
-      visual: { body: tbd },
-      final: {
-        body: [
-          'V3 introduces a minimal design built for faster door operations. Access points are listed by site, and a successful unlock takes over the top of the screen with a clear green confirmation.',
-          'Around that core, V3 adds remote check-in with GPS attendance, visitor management with approve and reject actions right in the list, My Console for managing the organisation by role, and in-app help with FAQs and support requests.',
-        ],
-        media: [
-          { src: '/assets/img/work/spintly-v3/rebrand.webp', alt: 'Launch screens: Spintly app rebranded to OptiSpaces.ai, and "A new look but same feel"', caption: 'Launch: the Spintly app becomes OptiSpaces.ai, a new look with the same feel', width: 1440, height: 900, wide: true },
-          { src: '/assets/img/work/spintly-v3/key-screens.webp', alt: 'Four V3 screens: remote GPS check-in, My Console, visitor management and help and support', caption: 'V3 key screens: remote check-in, My Console, visitor management and quick help (Google Play listing)', width: 1440, height: 820, wide: true },
-        ],
-      },
-      decisions: {
-        list: [
-          'A new bottom navigation (Doors, Consoles, Help) so the most frequent task, opening a door, is always the home screen',
-          'Full-width success state on unlock, readable at a glance while walking',
-          'Role tabs (Admin, Manager, User) in My Console, so one app serves every role without clutter',
-          'Inline approve and reject on visitor cards, so hosts act without opening each request',
-          'GPS check-in in a bottom sheet, confirming the captured location before check-in',
-        ],
-      },
-      implementation: { body: tbd },
-      learnings: { body: tbd },
-    },
-  },
-  {
-    slug: 'apple-wallet-integration',
-    // "At a glance" strip on the case study: real facts only (content, store listings).
-    glance: [{ n: '2', l: 'devices, one badge: iPhone & Watch' }, { n: '5', l: 'hours of access with Power Reserve' }, { n: '4', l: 'steps to add a badge' }],
-    // Screenshot of the new Spintly site on staging (Scypher · Apple Wallet Access), captured Nov 2026 (2x tiles, stitched).
-    shot: { base: '/assets/img/work/apple-wallet-integration', alt: 'Apple Wallet Access page: Your iPhone Is Now Your Employee Badge, with a Spintly badge on iPhone and Apple Watch', caption: 'Scypher · Apple Wallet Access page on the new Spintly website (staging), captured Nov 2026' },
+    glance: [{ n: '7', l: 'products told on a single page' }, { n: '5', l: 'AI use cases in one interaction' }, { n: '6', l: 'step deployment journey' }],
+    // Screenshot of the staging site, captured Nov 2026 in the browser pane (2x tiles, stitched).
+    shot: { base: '/assets/img/work/optispaces-website', alt: 'OptiSpaces.ai website hero: Securing the built world with AI', caption: 'Staging site: new OptiSpaces.ai website, captured Nov 2026' },
     number: '06',
-    name: 'Apple Wallet Integration',
-    category: 'Product Experience / Collaboration',
+    name: 'OptiSpaces.ai Website',
+    category: 'Website Design / Product Storytelling',
     year: null,
     summary:
-      'Working with development and R&D teams to support Apple Wallet integration within the Spintly ecosystem.',
-    role: 'Product experience & engineering collaboration',
-    links: [{ label: 'Apple Wallet at Spintly', href: 'https://spintly.com/apple-wallet-india/' }],
+      'Designing the new OptiSpaces.ai website, which presents the platform as an AI operating system for physical security: access control, video intelligence, visitors, tenants and attendance on one intelligence layer.',
+    role: 'Website design: structure, UI & product storytelling',
+    teamNote: 'In progress: the new site is on staging and not yet public.',
     contribution: [
-      'Product experience considerations',
-      'Digital credential experience',
-      'Engineering and R&D collaboration',
+      'Website structure and page flow',
+      'UI design and interactive product moments',
+      'Product storytelling for the AI and video platform',
+      'Presenting seven software products on one page',
     ],
-    tags: ['Digital Credentials', 'Mobile Credentialing'],
-    object: 'cards',
-    theme: { accent: '#4f8cff', layout: 'wide' },
-    // Team project: the integration itself was engineered by development & R&D.
-    teamNote: 'A team effort. The integration was engineered by development and R&D; my part was the product and credential experience.',
+    tags: ['Website', 'AI Video Analytics', 'Access Control', 'Physical Security'],
+    object: 'globe',
+    theme: { accent: '#4f8cff', layout: 'split' },
     sections: {
       introduction: {
-        body: ['Bringing Apple Wallet integration to the product ecosystem, so credentials can live where people already keep their cards.'],
+        body: [
+          'The new OptiSpaces.ai website tells the story of the platform as an AI operating system for physical security. Wireless access control, video intelligence, visitor, tenant and attendance management share one intelligence layer, so every event tells the whole story.',
+        ],
       },
       context: {
         body: [
-          'Spintly already supported many credentials: the mobile app, cards, QR codes, PIN and face recognition. Apple Wallet adds an employee badge people already carry: hold an iPhone or Apple Watch near the reader to unlock, with no app to open and no physical badge.',
-          'Spintly launched employee badges in Apple Wallet for access control in India, and the badge is part of Scypher, Spintly’s credential management platform, alongside mobile credentials and QR visitor passes.',
+          "OptiSpaces.ai grew from an access control suite into a platform that also understands video: Spintly EDGE AI turns existing IP cameras into smart cameras, with facial recognition, people counting, perimeter intrusion detection and licence plate recognition. The website needed to carry that shift without losing the access control story customers already knew.",
         ],
       },
       problem: {
         body: [
-          'A badge in Apple Wallet is a new idea for most employees and admins, and it raises the same questions every time: is it secure, does it work when the phone is locked or out of charge, and what happens if the phone is lost?',
-          'The experience, and the way it is explained, had to answer those questions up front, so a badge in Wallet feels as dependable as the plastic card it replaces.',
+          'Physical security used to mean separate systems: access panels, video recorders, sensors and building software, each with its own screen, and control rooms full of feeds and alert fatigue. The site had to make "one platform, one pane of glass" feel concrete, not abstract.',
         ],
       },
       objectives: {
         list: [
-          'Let employees unlock with iPhone or Apple Watch in one tap',
-          'Keep the built-in privacy and security of Apple Wallet',
-          'Let admins issue and revoke badges from the dashboard',
-          'Work alongside the app, card and QR credentials already in use',
+          'Position OptiSpaces.ai as AI-based physical security, with access and video on one layer',
+          'Present seven connected software products clearly on one page',
+          'Make AI use cases tangible for admins, security officers and executives',
+          'Explain deployment, from first site survey to full commissioning',
+          'Build trust with certifications and a clear path to sales',
         ],
       },
       role: { useContribution: true },
-      team: {
-        body: [
-          'This was a cross-functional effort. Development and R&D teams engineered the integration; I contributed product experience considerations and the digital credential experience, working closely with them throughout.',
-        ],
-      },
+      team: { body: tbd },
       research: { body: tbd },
       competitors: { body: tbd },
       flows: {
         body: [
-          'Adding the badge takes four steps: sign in to the employer’s app with employee credentials, follow the in-app instructions, tap Add to Apple Wallet, and finish on screen. The badge added to iPhone is added to the paired Apple Watch too, and from then on either one is held near the reader to get in.',
+          'The page moves from the big idea to proof: one platform, then the seven-product software suite, then why the architecture is faster and cheaper to install, then integrations, AI capabilities, AI use cases, deployment, certifications and contact.',
+          'The platform idea is told as three verbs (Live, Understand, Remember): cameras, access events and alerts in real time; AI that detects, correlates and summarises incidents; and a searchable incident log with timelines and evidence.',
         ],
-        media: [
-          { src: '/assets/img/work/apple-wallet-integration/add-badge-and-card.webp', alt: 'Activating your employee badge on iPhone: four steps beside an iPhone and Apple Watch showing the Spintly badge added, and the branded badge card below', caption: 'Adding the badge: four steps, then the same badge on iPhone and Apple Watch, branded for the organisation', width: 1440, height: 900, wide: true },
-        ],
+        media: [{ placeholder: 'Page structure: from platform idea to contact' }],
       },
       explorations: { body: tbd },
       wireframes: { body: tbd },
-      visual: { body: tbd, media: [{ placeholder: 'Badge card design explorations' }] },
+      visual: {
+        body: tbd,
+        media: [{ src: '/assets/img/work/optispaces-website/hero.webp', alt: 'OptiSpaces.ai website hero with the headline "Securing the built world with AI", a phone unlocking a Spintly reader and certification badges', caption: 'Hero: the platform idea, proof points and a product moment in one view', width: 1440, height: 900, wide: true }],
+      },
       final: {
         body: [
-          'The experience is built around five promises: access instantly from the Spintly app, badge in by holding iPhone or Apple Watch near the reader, keep working for up to five hours with Power Reserve, suspend the badge from Find My if a device is lost, and keep data private with the security of iPhone.',
-          'Express Mode means people don’t need to wake or unlock the device, and the same badge opens office doors, restricted areas, turnstiles and secure printing.',
+          'The AI use cases section lets visitors switch between Overcrowding, Zone violation, PPE compliance, Vehicle pass & parking and Person of interest. Each one shows the same chain (cameras, AI detection, response, intelligence) and who it helps: the admin who configures it, the officer who responds and the executive who reads the trends.',
+          'A six-step deployment timeline (approval, site survey, proposal, alignment, costing, execution) answers the "how do we get this?" question before a visitor has to ask sales.',
         ],
         media: [
-          { src: '/assets/img/work/apple-wallet-integration/features.webp', alt: 'Employee Badge in Apple Wallet: five feature cards for instant access, easy badging, Power Reserve, Find My and iPhone security', caption: 'Five promises, each shown on the device it happens on', width: 1440, height: 738, wide: true },
-          { src: '/assets/img/work/apple-wallet-integration/homepage-section.webp', alt: 'Spintly homepage section: Your Employee Badge in Apple Wallet, with benefits and a phone and watch showing the badge', caption: 'On the Spintly homepage: Apple Wallet presented as one credential among many', width: 1440, height: 684, wide: true },
+          { src: '/assets/img/work/optispaces-website/software-suite.webp', alt: 'Software suite section: seven OptiSpaces.ai products shown as photo cards', caption: 'Software suite: seven connected products on one platform', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/optispaces-website/ai-use-cases.webp', alt: 'AI use cases section with tabs for overcrowding, zone violation, PPE compliance, vehicle pass and person of interest', caption: 'AI use cases: each one shown as cameras → detection → response → intelligence, and who it helps', width: 1440, height: 900, wide: true },
         ],
       },
       decisions: {
         list: [
-          'Answer the trust questions first: Express Mode, Power Reserve, Find My and privacy',
-          'Show the badge on both iPhone and Apple Watch, since one badge works on both',
-          'Make the badge card itself carry the organisation’s brand',
-          'Present Apple Wallet alongside the app, card and QR credentials, not as a replacement for them',
+          'Lead with one idea (access and video on one intelligence layer) before listing products',
+          'Show every use case through the same detection → response → intelligence chain, so they read as one system',
+          'Speak to three audiences (admin, officer, executive) inside each use case instead of one generic buyer',
+          'Group AI capabilities by what they protect: identity, vehicles, movement and policy',
         ],
       },
       implementation: { body: tbd },
@@ -761,5 +761,7 @@ export const additionalWork = {
     'Branding',
     'Responsive Design',
     'SaaS Product Design',
+    'Design Engineering',
+    'Prototyping in Code',
   ],
 };

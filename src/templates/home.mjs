@@ -20,7 +20,7 @@ function hero(site, about) {
     <div class="hero-copy" data-fade>
       ${site.availability?.enabled ? `<p class="pill"><span class="pill-dot" aria-hidden="true"></span>${esc(site.availability.label)}</p>` : ''}
       <h1 class="hero-title" id="hero-title"><span class="line"><span>Designing</span></span> <span class="line"><span><span class="accent">beyond</span> the</span></span> <span class="line"><span>interface.</span></span></h1>
-      <p class="hero-lead">I’m ${esc(site.name)}, ${esc(site.title)} at Spintly. I turn research into clear, high-impact product experiences for enterprise SaaS, across web and mobile.</p>
+      <p class="hero-lead">I’m ${esc(site.name)}, ${esc(site.title)} at Spintly. I design enterprise SaaS and mobile products end to end—from UX research and systems to motion and working code prototypes.</p>
       <div class="btn-row">
         <a class="btn btn-primary" href="#work" data-magnetic>View my work ${arrowRight}</a>
         <a class="btn btn-secondary" href="${mail(site)}">Get in touch</a>
@@ -29,14 +29,14 @@ function hero(site, about) {
       <dl class="hero-facts">
         <div><dt>Designing since</dt><dd>${esc(site.designingSince)}</dd></div>
         <div><dt>Product design</dt><dd>${esc(site.experienceYears)}+ years</dd></div>
-        <div><dt>Based in</dt><dd>${esc(site.place.short)}</dd></div>
+        <div><dt>Location</dt><dd>${esc(site.place.short)}</dd></div>
       </dl>
     </div>
     <figure class="hero-photo" data-fade>
       ${picture({ base: '/assets/img/about/portrait-photo', widths: [560, 1000], sizes: '(min-width: 960px) 34vw, 88vw', alt: about.portrait.alt, ratio: [1000, 1501], className: 'hero-img', priority: true })}
       <figcaption class="hero-badge"><strong>${esc(site.name)}</strong><span>${esc(site.title)} · Spintly</span></figcaption>
       <p class="hero-chip hero-chip--time" aria-label="Local time in Goa"><span class="pill-dot" aria-hidden="true"></span>Goa · <time data-clock>IST</time></p>
-      <p class="hero-chip hero-chip--tag" aria-hidden="true">UX research → UI → motion</p>
+      <p class="hero-chip hero-chip--tag" aria-hidden="true">UX → UI → Motion → Code</p>
     </figure>
   </div>
 </section>`;
@@ -54,7 +54,8 @@ function areas(extra) {
 }
 
 /* ── Work ─────────────────────────────────────────────────────────────────── */
-// The first projects get the big stacking cards; the rest sit in a compact grid.
+// The first 4 enterprise/product projects get the big stacking cards; the remaining
+// product work sits in a compact grid; playable code builds get their own Design Engineering showcase.
 const FEATURED = 4;
 function moreCard(p) {
   return `<article class="more-card" aria-labelledby="m-${esc(p.slug)}" data-fade>
@@ -82,12 +83,22 @@ function workCard(p, i, all) {
 }
 
 function work(projects, extra) {
+  const product = projects.filter((p) => !p.personal);
+  const lab = projects.filter((p) => p.personal);
   return `<section class="section" id="work" aria-labelledby="work-title" data-section="work">
   <div class="wrap">
-    ${head({ eyebrow: 'Selected work', title: 'Products I’ve helped shape.', intro: 'Enterprise access-control products at Spintly, from brand and website to web portals and mobile apps. Screenshots are of the live products. Plus a playable side project.', id: 'work-title' })}
-    <div class="work-stack">${projects.slice(0, FEATURED).map((p, i) => workCard(p, i, projects)).join('')}</div>
-    ${projects.length > FEATURED ? `<h3 class="more-title" data-fade>More work</h3>
-    <div class="more-grid">${projects.slice(FEATURED).map(moreCard).join('')}</div>` : ''}
+    ${head({ eyebrow: 'Selected work', title: 'Products I’ve helped shape.', intro: 'Enterprise SaaS, mobile apps, hardware-connected credentials and live global web platforms shipped at Spintly. All screenshots are from the live products.', id: 'work-title' })}
+    <div class="work-stack">${product.slice(0, FEATURED).map((p, i) => workCard(p, i, product)).join('')}</div>
+    ${product.length > FEATURED ? `<h3 class="more-title" data-fade>More product &amp; brand work</h3>
+    <div class="more-grid">${product.slice(FEATURED).map(moreCard).join('')}</div>` : ''}
+    ${lab.length ? `<div class="lab-block" id="prototypes" data-fade>
+      <div class="lab-head">
+        <p class="eyebrow">Design engineering &amp; interactive prototypes</p>
+        <h3 class="lab-title">Beyond Figma: shipped in code.</h3>
+        <p class="lab-intro">Interactive browser builds engineered with React, Three.js, Canvas, Web Audio and AI-assisted workflows—exploring spatial UI, progression systems, motion and tactile feel directly in the browser.</p>
+      </div>
+      <div class="lab-grid">${lab.map(moreCard).join('')}</div>
+    </div>` : ''}
     <div class="archive" data-fade>
       <p class="eyebrow">Also in the archive</p>
       <p>${esc(extra.body)}</p>
@@ -186,7 +197,7 @@ function servicesSection(services, capabilities = [], tools = []) {
       </li>`)
       .join('')}</ol>
     <div class="kit" data-fade>
-      <div class="kit-row"><p class="kit-label">Tools <span>Advanced in all</span></p><ul class="chips chips--dark" role="list">${tools.map((t) => `<li>${esc(t.name)}</li>`).join('')}</ul></div>
+      <div class="kit-row"><p class="kit-label">Tools &amp; Tech <span>Design + code</span></p><ul class="chips chips--dark" role="list">${tools.map((t) => `<li>${esc(t.name)}</li>`).join('')}</ul></div>
       ${ai ? `<div class="kit-row"><p class="kit-label">AI in my workflow</p><ul class="chips chips--dark chips--ai" role="list">${ai.items.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></div>` : ''}
     </div>
   </div>
@@ -257,10 +268,10 @@ export function homePage({ site, projects, additionalWork, about, experience, ed
     areas(additionalWork),
     work(projects, additionalWork),
     aboutSection(site, about),
-    ctaBand(site, { eyebrow: 'Hiring?', title: 'Liked the work? Let’s talk about your product.', text: 'I design enterprise SaaS end to end, from research to shipped UI. Happy to walk you through any case study.' }),
+    ctaBand(site, { eyebrow: 'Hiring?', title: 'Liked the work? Let’s talk about your product.', text: 'I design enterprise SaaS and mobile products end to end—and prototype directly in code. Happy to walk through any case study live.' }),
     storySection(story, site),
     servicesSection(services, capabilities, tools),
-    ctaBand(site, { eyebrow: 'For recruiters', title: 'Hiring a Senior UI/UX Designer?', text: '3+ years designing enterprise SaaS across web and mobile. My one-page CV is a click away.', tone: 'tint' }),
+    ctaBand(site, { eyebrow: 'For recruiters', title: 'Hiring a Product Designer or Design Engineer?', text: '3+ years shipping enterprise SaaS & mobile products (100K+ installs). Remote from Goa or open across India · 1-month notice.', tone: 'tint' }),
     experienceSection(experience, learningColumn(education, publications, certifications)),
     faqSection(faq, site),
   ].join('\n');

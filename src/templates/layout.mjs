@@ -53,14 +53,15 @@ export function footer(site) {
     <div class="foot-grid">
       <div class="foot-col">
         <p class="foot-label">Based in</p>
-        <p>${esc(site.place.city)}, India<br>${esc(site.place.timezone)}</p>
+        <p>${esc(site.place.city)}, India<br>Remote preferred · Open across India<br>${esc(site.place.timezone)}</p>
       </div>
       <div class="foot-col">
         <p class="foot-label">Direct</p>
         ${c.email ? `<a href="mailto:${esc(c.email)}">${esc(c.email)}</a>` : ''}
         ${c.whatsapp ? `<a href="${waLink(c)}" target="_blank" rel="noopener">WhatsApp ↗<span class="sr-only"> (opens in a new tab)</span></a>` : ''}
         ${c.cv ? `<a href="${esc(c.cv)}">View CV</a>` : ''}
-        ${c.cvPdf ? `<a href="${esc(c.cvPdf)}" download>Download CV (PDF)</a>` : ''}
+        ${c.cvPdf ? `<a href="${esc(c.cvPdf)}" download>Download CV (Visual PDF)</a>` : ''}
+        ${c.cvAtsPdf ? `<a href="${esc(c.cvAtsPdf)}" download>Download CV (ATS PDF)</a>` : ''}
       </div>
       <div class="foot-col">
         <p class="foot-label">Elsewhere</p>

@@ -42,7 +42,7 @@ export const experience = [
       'Cross-functional collaboration with development and R&D',
     ],
     highlights: [
-      'Led the redesign of Spintly’s global website',
+      'Led the redesign of Spintly’s global website, shipped live at spintly.com',
       'Contributed to the ideation, branding, UX architecture and interface design of OptiSpaces.ai',
       'Rebranded and redesigned the Scypher credential management platform',
       'Collaborated on the redesign of the Spintly V3 mobile app',
@@ -120,8 +120,8 @@ export const capabilities = [
   },
   {
     index: '04',
-    title: 'Motion & Technology',
-    items: ['Micro-interactions', 'Transitions & UI Animations', 'Onboarding Animations', 'Motion Graphics', 'Web Development Collaboration'],
+    title: 'Motion & Design Engineering',
+    items: ['Micro-interactions', 'Transitions & UI Animations', 'Onboarding Animations', 'Interactive Code Prototypes', 'HTML / CSS / JS & React', 'Three.js & Web Audio'],
   },
   {
     index: '05',
@@ -142,8 +142,9 @@ export const capabilities = [
 // level: 3 = Advanced, 2 = Intermediate, 1 = Familiarity
 export const tools = [
   { name: 'Figma', level: 3, label: 'Advanced' },
-  { name: 'Canva', level: 3, label: 'Advanced' },
+  { name: 'After Effects', level: 3, label: 'Advanced' },
+  { name: 'HTML, CSS & JavaScript', level: 3, label: 'Advanced' },
+  { name: 'React & Three.js', level: 2, label: 'Intermediate' },
   { name: 'Adobe Photoshop', level: 3, label: 'Advanced' },
   { name: 'Adobe Illustrator', level: 3, label: 'Advanced' },
-  { name: 'After Effects', level: 3, label: 'Advanced' },
 ];
