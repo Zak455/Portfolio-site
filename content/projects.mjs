@@ -618,7 +618,9 @@ export const projects = [
           'The page moves from the big idea to proof: one platform, then the seven-product software suite, then why the architecture is faster and cheaper to install, then integrations, AI capabilities, AI use cases, deployment, certifications and contact.',
           'The platform idea is told as three verbs (Live, Understand, Remember): cameras, access events and alerts in real time; AI that detects, correlates and summarises incidents; and a searchable incident log with timelines and evidence.',
         ],
-        media: [{ placeholder: 'Page structure: from platform idea to contact' }],
+        media: [
+          { src: '/assets/img/work/optispaces-website/platform-layer.webp', alt: 'OptiSpaces.ai platform section: Access and video share one intelligence layer with Live, Understand and Remember pillars', caption: 'One intelligence layer: Live, Understand and Remember structured cleanly below the hero', width: 1440, height: 759, wide: true },
+        ],
       },
       explorations: { body: tbd },
       wireframes: { body: tbd },
@@ -626,16 +628,17 @@ export const projects = [
         body: [
           'Built directly on the OptiSpaces.ai design system—clearspace rules, component sizing, spacing and interactive product frames—so the marketing experience mirrors the product portal.',
         ],
-        media: [{ src: '/assets/img/work/optispaces-website/hero.webp', alt: 'OptiSpaces.ai website hero with the headline "Securing the built world with AI", a phone unlocking a Spintly reader and certification badges', caption: 'Hero: the platform idea, proof points and a product moment in one view', width: 1440, height: 900, wide: true }],
+        media: [{ src: '/assets/img/work/optispaces-website/hero.webp', alt: 'OptiSpaces.ai v3 website hero with the headline "Securing the built world with AI", a phone unlocking a Spintly reader, certification badges and enterprise customer logos', caption: 'V3 hero: the platform idea, proof points, live product moment and enterprise trust bar in one view', width: 1440, height: 759, wide: true }],
       },
       final: {
         body: [
           'The AI use cases section lets visitors switch between Overcrowding, Zone violation, PPE compliance, Vehicle pass & parking and Person of interest. Each one shows the same chain (cameras, AI detection, response, intelligence) and who it helps: the admin who configures it, the officer who responds and the executive who reads the trends.',
-          'A six-step deployment timeline (approval, site survey, proposal, alignment, costing, execution) answers the "how do we get this?" question before a visitor has to ask sales.',
+          'Beyond the homepage, the design system scales across dedicated landing pages for every module—Smart Access Control, Contactless Visitor Management, Tenant Management, Time & Attendance, Cisco Meraki Video Integration, Elevator Access and Locker Access.',
         ],
         media: [
-          { src: '/assets/img/work/optispaces-website/software-suite.webp', alt: 'Software suite section: seven OptiSpaces.ai products shown as photo cards', caption: 'Software suite: seven connected products on one platform', width: 1440, height: 900, wide: true },
-          { src: '/assets/img/work/optispaces-website/ai-use-cases.webp', alt: 'AI use cases section with tabs for overcrowding, zone violation, PPE compliance, vehicle pass and person of interest', caption: 'AI use cases: each one shown as cameras → detection → response → intelligence, and who it helps', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/optispaces-website/software-suite.webp', alt: 'Interactive tabbed software suite section covering Access Control, Visitors, Tenants, Attendance, Video, Elevators and Lockers', caption: 'Interactive software suite: seven connected products presented in a scannable tabbed section', width: 1440, height: 759, wide: true },
+          { src: '/assets/img/work/optispaces-website/ai-use-cases.webp', alt: 'AI use case breakdown (Cameras → AI detection → Response → Intelligence) for Admin, Officer and Executive, above the 4-pillar AI capabilities grid (Identity, Vehicles, Movement, Policy)', caption: 'AI storytelling: role-specific use cases above the 4-pillar Identity, Vehicles, Movement and Policy grid', width: 1440, height: 759, wide: true },
+          { src: '/assets/img/work/optispaces-website/product-pages-grid.webp', alt: 'Six dedicated OptiSpaces.ai product pages sharing one consistent layout system: Smart Access Control, Contactless Visitor Management, Tenant Management, Time & Attendance, Cisco Meraki Video Integration and Elevator Access', caption: 'Multi-page system scale: six dedicated product pages built from one modular design system', width: 1440, height: 1182, wide: true },
         ],
       },
       decisions: {
