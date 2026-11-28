@@ -97,7 +97,9 @@ export const projects = [
         body: [
           'All seven modules now share one persistent left-hand navigation and common object model (sites, users, doors, credentials and logs). Admins open straight onto live operational signals—hourly entry/exit access analytics, key counts and recent access events—with one-click paths into every module.',
         ],
-        media: [{ placeholder: 'User flows / information architecture of the OptiSpaces.ai platform' }],
+        media: [
+          { video: '/assets/video/spintly-to-optispaces.mp4', poster: '/assets/video/spintly-to-optispaces.webp', alt: 'Motion graphic transitioning Spintly into the all-in-one OptiSpaces.ai ecosystem with access, attendance, visitors, video, integrations and SDK modules orbiting the platform mark', caption: 'Platform unification motion: from standalone Spintly modules to the all-in-one OptiSpaces.ai suite', width: 1440, height: 810, wide: true },
+        ],
       },
       explorations: {
         body: [
@@ -109,20 +111,27 @@ export const projects = [
       wireframes: { body: tbd },
       visual: {
         body: [
-          'To keep web, brand and product aligned at scale, we built a new company-wide design system from scratch—defining everything from the OptiSpaces.ai logo and clearspace rules to colour tokens, typography, button sizing, spacing and padding standards.',
+          'To keep web, brand and product aligned at scale, we built a new company-wide design system from scratch—defining everything from the OptiSpaces.ai logo, motion reveal and clearspace rules to colour tokens, typography, button sizing, spacing and padding standards.',
         ],
-        media: [{ placeholder: 'Visual direction board: colour, type, components' }],
+        media: [
+          { video: '/assets/video/optispaces-logo-reveal.mp4', poster: '/assets/video/optispaces-logo-reveal.webp', alt: 'OptiSpaces.ai powered by Spintly animated logo reveal', caption: 'Brand identity in motion: OptiSpaces.ai powered by Spintly logo reveal', width: 1440, height: 810, wide: true },
+          { src: '/assets/img/work/spintly-v3/design-system-foundations.webp', alt: 'Spintly and OptiSpaces design system foundations: brand and semantic color ramps, Inter H1 to H7 typography scale, elevation shadows and brand marks', caption: 'Design system foundations: brand & state colour tokens, Inter type scale, elevation and logo rules', width: 1440, height: 900, wide: true },
+        ],
       },
       final: {
         body: [
           'OptiSpaces.ai ships as a web portal for admins and operators and a mobile app on iOS and Android for everyone who uses the building. Both carry the same identity and patterns, so moving from the dashboard to the phone feels like one product.',
           'The suite covers seven connected modules: Access Control, Time & Attendance, Visitor Management, Tenant Management, Video Management, Elevator Access and Locker Access.',
-          'The web dashboard opens on what an admin checks first: access analytics by hour, split into entry and exit and filterable by direction, period and door, beside cards for users, access points, today’s visitors and shifts. Below it, recent access history shows who came in or out, when, through which door and with which credential. Every module (activity logs, access, attendance, users, visitors, tenants, integrations, devices and settings) sits in one left-hand navigation.',
+          'The web dashboard opens on what an admin checks first: access analytics by hour, split into entry and exit and filterable by direction, period and door, beside cards for users, access points, today’s visitors and shifts. Every module (activity logs, access management, attendance & shift rosters, user directory, visitor check-in setup, tenants, integrations, devices and settings) sits inside one coherent left-hand navigation.',
           'On mobile, the app keeps everyday actions one tap away: unlock a door, check in remotely with GPS attendance, approve or reject visitors, and open My Console to manage the organisation by role (admin, manager or user).',
         ],
         media: [
-          { src: '/assets/img/work/optispaces/dashboard-overview.webp', alt: 'OptiSpaces.ai dashboard: hourly access analytics chart with entry and exit, and KPI cards for users, access points, visitors and shifts', caption: 'Web portal dashboard: access analytics and organisation overview (demo data)', width: 1440, height: 810, wide: true },
-          { src: '/assets/img/work/optispaces/dashboard-access-history.webp', alt: 'OptiSpaces.ai recent access history table with name, date, access type, event type, direction, location and photos', caption: 'Recent access history: credential type, direction and door for every event (demo data)', width: 1440, height: 810, wide: true },
+          { src: '/assets/img/work/optispaces/dashboard-overview.webp', alt: 'OptiSpaces.ai dashboard: hourly access analytics chart with entry and exit, and KPI cards for users, access points, visitors and shifts', caption: 'Web portal dashboard: hourly access analytics and organisation overview (demo data)', width: 1440, height: 810, wide: true },
+          { src: '/assets/img/work/optispaces/dashboard-access-history.webp', alt: 'OptiSpaces.ai Access Management expanded sidebar and live Access History table with inline filters, employee IDs, credential icons and Entry/Exit status', caption: 'Access Management: live access history with inline column filters and credential indicators (demo data)', width: 1440, height: 810, wide: true },
+          { src: '/assets/img/work/optispaces/shift-roster.webp', alt: 'OptiSpaces.ai Attendance Shift Management 31-day colour-coded roster matrix with bulk assignment, filters and shift legends', caption: 'Attendance & Shift Management: 31-day colour-coded roster matrix with bulk assignment (demo data)', width: 1440, height: 810, wide: true },
+          { src: '/assets/img/work/optispaces/visitor-setup.webp', alt: 'OptiSpaces.ai Visitor Management check-in setup with configurable fields, OTP verification and custom dropdown/text attribute builders', caption: 'Visitor Management: configurable check-in setup and custom attribute builder (demo data)', width: 1440, height: 810, wide: true },
+          { src: '/assets/img/work/optispaces/user-management.webp', alt: 'OptiSpaces.ai User Management directory showing active users, employee IDs, signup status, role filters and Add User CTA', caption: 'User Management: enterprise directory with status tracking and multi-field filtering (demo data)', width: 1440, height: 810, wide: true },
+          { src: '/assets/img/work/optispaces/overtime-policy.webp', alt: 'OptiSpaces.ai Overtime Policy three-step wizard: Basic Information, Over-time configuration and Assign Users', caption: 'Guided enterprise workflows: 3-step Overtime Policy setup wizard (demo data)', width: 1440, height: 810, wide: true },
           { src: '/assets/img/work/optispaces/mobile-app.webp', alt: 'Four OptiSpaces.ai mobile app screens: door unlock, GPS remote check-in, My Console and visitor management', caption: 'Mobile app: unlock, remote check-in, My Console and visitor management (Google Play listing)', width: 1440, height: 820, wide: true },
         ],
       },
@@ -203,7 +212,12 @@ export const projects = [
       wireframes: { body: tbd },
       visual: {
         body: [
-          'Rather than stretching web components onto phones, we designed a dedicated mobile design system for V3—standardising touch targets, card hierarchy, bottom sheets, status banners, spacing and padding across iOS and Android. Every component went through multiple functional iterations so it held up under real building-access conditions.',
+          'Rather than stretching web components onto phones, we designed a dedicated mobile design system for V3—standardising colour tokens, typography, elevation, touch targets, button states, input fields, badges, steppers, navigation bars and Lottie developer handoff specs across iOS and Android. Every component went through multiple functional iterations so it held up under real building-access conditions.',
+        ],
+        media: [
+          { src: '/assets/img/work/spintly-v3/design-system-foundations.webp', alt: 'Spintly V3 mobile design system foundations: brand and semantic color ramps, Inter typography scale, elevation shadows and brand logo usage', caption: 'V3 mobile foundations: brand & state colours, Inter typography scale, elevation tokens and logo usage', width: 1440, height: 900, wide: true },
+          { src: '/assets/img/work/spintly-v3/design-system-components.webp', alt: 'Spintly V3 core component matrices: multi-state buttons across semantic variants, input fields including OTP and combo prefixes, and status badges', caption: 'Core component matrices: multi-state buttons, input fields (OTP, combo, validation) and semantic badges', width: 1440, height: 980, wide: true },
+          { src: '/assets/img/work/spintly-v3/design-system-mobile-patterns.webp', alt: 'Spintly V3 mobile interaction patterns: bottom navigation bar, steppers, switches, top app bar, tabs, loading indicators and Lottie developer handoff card', caption: 'Mobile patterns & developer handoff: Doors/Consoles/Help nav bar, steppers, controls and Lottie handoff notes', width: 1440, height: 900, wide: true },
         ],
       },
       final: {
