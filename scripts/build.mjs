@@ -12,6 +12,7 @@ import { homePage } from '../src/templates/home.mjs';
 import { caseStudyPage, notFoundPage } from '../src/templates/case-study.mjs';
 import { cvPage } from '../src/templates/cv.mjs';
 import { cvAtsPage } from '../src/templates/cv-ats.mjs';
+import { deckPage } from '../src/templates/deck.mjs';
 
 const root = new URL('../', import.meta.url);
 const dist = new URL('dist/', root);
@@ -53,12 +54,16 @@ for (const [i, project] of projects.entries()) {
 await write('/cv/', cvPage({ site, about, experience, education, publications, certifications, capabilities, tools, projects, coreExpertise: additionalWork.coreExpertise }));
 await write('/cv/ats/', cvAtsPage({ site, experience, education, publications, certifications, capabilities, tools, coreExpertise: additionalWork.coreExpertise }));
 
+// Unlisted 45-minute Portfolio Interview Deck + Prep Kit (excluded from sitemap.xml).
+await write('/deck/', deckPage({ site }));
+
 await writeFile(new URL('404.html', dist), layout({
   site, path: '/404', home: false, assetVersion, bodyClass: 'page-404', title: 'Not found', body: notFoundPage(),
 }));
 
 await writeFile(new URL('sitemap.xml', dist),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages
+    .filter((p) => p !== '/deck/')
     .map((p) => `  <url><loc>${site.url}${p}</loc></url>`).join('\n')}\n</urlset>\n`);
 await writeFile(new URL('robots.txt', dist), `User-agent: *\nAllow: /\nSitemap: ${site.url}/sitemap.xml\n`);
 
