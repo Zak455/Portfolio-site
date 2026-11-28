@@ -26,11 +26,11 @@ export function cvPage({ site, about, experience, education, publications, certi
   const ai = capabilities.find((g) => /AI/.test(g.title));
 
   const highlights = [
-    ['optispaces', 'Shaped OptiSpaces.ai', 'from ideation, branding and UX architecture to web portal and mobile UI, unifying seven access & workspace modules under one platform.'],
-    ['spintly-v3', 'Co-designed the Spintly V3 mobile app', ' (iOS & Android, 100K+ Play Store downloads): streamlined navigation, faster door unlock, GPS attendance and inline visitor approvals.'],
-    ['apple-wallet-integration', 'Designed the Apple Wallet employee badge experience', ' alongside development and R&D—launched in India across iPhone & Apple Watch with Express Mode and Power Reserve.'],
-    ['spintly-global-website', 'Led the 2026 redesign of Spintly’s global website', ' (live at spintly.com), driven by UX research, competitor benchmarking, dual-audience IA and a scalable UI system.'],
-    ['scypher', 'Rebranded and redesigned Scypher', ', the enterprise credential management platform, aligning UI/UX, product positioning and animated architecture storytelling.'],
+    ['optispaces', 'Shaped OptiSpaces.ai', 'from legacy UX audit and branding to a company-wide design system and web/mobile UI unifying 7 enterprise modules.'],
+    ['spintly-v3', 'Co-designed Spintly V3 & its mobile design system', ' (100K+ Play Store downloads): iterated components directly with QA, taking months off delivery.'],
+    ['apple-wallet-integration', 'Designed the Apple Wallet employee badge experience', ' with development and R&D—launched in India across iPhone & Apple Watch (Express Mode, Power Reserve).'],
+    ['spintly-global-website', 'Led the 2026 Spintly global website redesign', ' (live at spintly.com), backed by competitor benchmarking (Verkada, Brivo, Kisi, HID, Apple) and reusable components.'],
+    ['scypher', 'Rebranded and redesigned Scypher', ', aligning enterprise UI/UX, product positioning and animated 6-step credential architecture storytelling.'],
     [null, 'Elevated product polish with motion & code', ': micro-interactions, onboarding animations and working browser prototypes in HTML/CSS/JS, React and Three.js.'],
   ];
 

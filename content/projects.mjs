@@ -31,7 +31,7 @@ export const projects = [
     number: '01',
     name: 'OptiSpaces.ai',
     category: 'SaaS Product Design / Rebranding',
-    year: null, // e.g. '2024'
+    year: '2026',
     summary:
       "Contributing to the ideation, branding, UX architecture and interface design of OptiSpaces.ai, which brings Spintly's software suite under one product identity, across web and mobile.",
     role: 'Ideation, branding, UX architecture & interface design',
@@ -41,11 +41,11 @@ export const projects = [
       { label: 'Google Play', href: 'https://play.google.com/store/apps/details?id=com.mrinq.smartaccess' },
     ],
     contribution: [
-      'Product ideation',
-      'Product identity, branding and visual direction',
-      'UX architecture',
+      'Product ideation and UX audit of the legacy dashboard',
+      'Product identity, branding and company-wide design system',
+      'UX architecture across seven unified SaaS modules',
       'Interface design for the web portal and mobile application',
-      'Product pages, experience and visual consistency',
+      'Cross-functional weekly iterations with engineering, QA and leadership',
     ],
     tags: ['Access Control', 'Time & Attendance', 'Visitor Management', 'Tenant Management', 'Locker Management', 'Elevator Access'],
     object: 'layers',
@@ -53,40 +53,66 @@ export const projects = [
     sections: {
       introduction: {
         body: [
-          "OptiSpaces.ai brings Spintly's software suite under a single, coherent product brand. I contributed to its ideation, branding, UX architecture and interface design across mobile and web.",
+          "OptiSpaces.ai brings Spintly's software suite under a single, coherent product brand. I contributed to its ideation, branding, UX architecture, company-wide design system and interface design across web and mobile.",
         ],
       },
       context: {
         body: [
-          "Spintly builds smart access and workspace products: access control, time & attendance, locker management, elevator access, visitor management and mobile credentials. The software suite needed an identity that could carry all of it.",
-          "OptiSpaces.ai is now the single platform for that suite: access control, visitor management, tenant management, video integration, locker access and elevator access run in one integrated product. The change spans both the mobile app (iOS and Android) and the web portal, so admins, operators, employees and residents get one consistent experience.",
+          "Spintly builds smart access and workspace products: access control, time & attendance, locker management, elevator access, visitor management and mobile credentials. Previously offered under a fragmented “SaaS solutions” model, the software suite needed one platform architecture and identity capable of carrying all of it.",
+          "OptiSpaces.ai unifies that suite into a single integrated platform—adding video management, locker management and elevator management alongside redesigned core modules across both the web portal and iOS/Android mobile app.",
         ],
       },
       problem: {
         body: [
-          "Each product had grown up on its own: access control, attendance, visitors, tenants, video, lockers and elevators each came with its own screens and habits. For admins running a building, that meant switching between tools for one job. For employees and residents, it meant the experience changed depending on which product they touched.",
-          'The opportunity was to make the suite feel like one platform: the same users, doors and credentials shared across every module, under one product name.',
+          "The legacy dashboard was primitive and fragmented: core modules for access, time & attendance, visitors and tenants had evolved separately, lacked clear in-product guidance and created steep friction for building admins.",
+          'Bundling seven operational modules into one platform meant solving two problems at once: modernising legacy workflows without breaking daily habits, and keeping complex enterprise controls clean and scannable.',
         ],
       },
       objectives: {
         list: [
-          'Define a product identity and visual direction for the suite',
-          'Design the SaaS product, mobile application and web portal',
-          'Keep the experience and visual language consistent across every surface',
+          'Replace the fragmented legacy “SaaS solutions” experience with one coherent platform identity',
+          'Unify seven modules—adding video, locker and elevator management—with clearer details and in-flow guidance',
+          'Establish a scalable company-wide design system from brand clearspace to UI components',
+          'Deliver a consistent, intent-focused experience across web portal, iOS and Android',
         ],
       },
       role: { useContribution: true },
       team: {
         body: [
-          'Delivered within Spintly’s product organisation, working with development and R&D teams who engineered the platform.',
+          'Delivered within Spintly’s product organisation, partnering weekly with product leadership, engineering, R&D and QA teams from audit through release.',
         ],
       },
-      research: { body: tbd },
-      competitors: { body: tbd },
-      flows: { body: tbd, media: [{ placeholder: 'User flows / information architecture of the OptiSpaces.ai platform' }] },
-      explorations: { body: tbd, media: [{ placeholder: 'Early identity explorations: wordmark and visual direction sketches' }, { placeholder: 'Alternative directions considered' }] },
+      research: {
+        body: [
+          'I started with a hands-on UX audit of Spintly’s legacy dashboard and core workflows across access control, time & attendance, visitor management and tenant management. The audit exposed inconsistent layouts, sparse contextual instructions and disconnected navigation patterns that made routine admin tasks slower than they needed to be.',
+          'Bundling the suite into OptiSpaces.ai gave us the mandate to rethink the information architecture from first principles so existing core modules and new additions—video, locker and elevator management—felt native to one system.',
+        ],
+      },
+      competitors: {
+        body: [
+          'I benchmarked leading physical-security, access-control and hardware-ecosystem brands—Verkada, Brivo, Kisi, HID, Avigilon, Swiftlane and Apple—evaluating how they structure multi-module navigation, balance enterprise data density with visual calm, and explain technical hardware-to-cloud workflows clearly.',
+        ],
+      },
+      flows: {
+        body: [
+          'All seven modules now share one persistent left-hand navigation and common object model (sites, users, doors, credentials and logs). Admins open straight onto live operational signals—hourly entry/exit access analytics, key counts and recent access events—with one-click paths into every module.',
+        ],
+        media: [{ placeholder: 'User flows / information architecture of the OptiSpaces.ai platform' }],
+      },
+      explorations: {
+        body: [
+          'Early on, we explored two contrasting directions and deliberately tabled both: a heavily graphical, visual-first direction that added visual noise to high-frequency admin tasks, and a dense, technical approach packed with lengthy instructions inside an already complex SaaS portal.',
+          'We converged on an intent-focused middle ground—combining clean visual hierarchy with concise, contextual guidance exactly where admins configure rules, devices or permissions—and carried that principle across the entire software portal.',
+        ],
+        media: [{ placeholder: 'Early identity explorations: wordmark and visual direction sketches' }, { placeholder: 'Alternative directions considered' }],
+      },
       wireframes: { body: tbd },
-      visual: { body: tbd, media: [{ placeholder: 'Visual direction board: colour, type, components' }] },
+      visual: {
+        body: [
+          'To keep web, brand and product aligned at scale, we built a new company-wide design system from scratch—defining everything from the OptiSpaces.ai logo and clearspace rules to colour tokens, typography, button sizing, spacing and padding standards.',
+        ],
+        media: [{ placeholder: 'Visual direction board: colour, type, components' }],
+      },
       final: {
         body: [
           'OptiSpaces.ai ships as a web portal for admins and operators and a mobile app on iOS and Android for everyone who uses the building. Both carry the same identity and patterns, so moving from the dashboard to the phone feels like one product.',
@@ -100,9 +126,27 @@ export const projects = [
           { src: '/assets/img/work/optispaces/mobile-app.webp', alt: 'Four OptiSpaces.ai mobile app screens: door unlock, GPS remote check-in, My Console and visitor management', caption: 'Mobile app: unlock, remote check-in, My Console and visitor management (Google Play listing)', width: 1440, height: 820, wide: true },
         ],
       },
-      decisions: { body: tbd },
-      implementation: { body: tbd },
-      learnings: { body: tbd },
+      decisions: {
+        list: [
+          'Reject both extremes (overly graphical UI vs. congested instruction-heavy screens) in favour of a clean, intent-focused enterprise layout',
+          'Bundle seven previously fragmented tools under one shared left-hand navigation and consistent mental model',
+          'Lead the portal home with hourly entry/exit analytics, live KPI cards and recent access logs—what building admins check first',
+          'Build a company-wide design system covering logo clearspace, button sizing, spacing and padding so every module scales consistently',
+          'Carry unified role-based workflows across both web portal and iOS/Android apps',
+        ],
+      },
+      implementation: {
+        body: [
+          'Shipping an enterprise platform redesign meant working through real-world constraints simultaneously: legacy product flows, existing tech stack limits, leadership alignment and tight delivery timelines.',
+          'We stayed ahead of bottlenecks through weekly cross-functional iteration loops with engineering, QA and leadership, using AI-assisted rapid prototyping to explore and validate interface adjustments quickly before committing engineering effort.',
+        ],
+      },
+      learnings: {
+        body: [
+          'Enterprise UX improves most when clarity replaces clutter: admins do not need walls of instructions if visual hierarchy, component consistency and intent-focused layouts make the next action obvious.',
+          'Investing early in a real design system and running weekly reviews directly with engineering and QA prevented late-stage drift and turned a multi-module consolidation into a coherent live platform.',
+        ],
+      },
     },
   },
   {
@@ -114,41 +158,54 @@ export const projects = [
     number: '02',
     name: 'Spintly V3',
     category: 'Mobile Product Design',
-    year: null,
-    summary: 'Collaborating on the redesign of the Spintly V3 mobile app, with cleaner layouts, improved navigation and usability, and modern interaction patterns.',
-    role: 'Mobile UI/UX in a collaborative redesign',
-    contribution: ['Mobile UI/UX', 'Navigation and usability improvements', 'Interaction patterns', 'Product visual language and consistency'],
-    teamNote: 'A collaborative redesign: I worked on the mobile UI/UX alongside the wider product team.',
+    year: '2025',
+    summary: 'Collaborating on the redesign and dedicated mobile design system for the Spintly V3 app (100K+ downloads), with cleaner layouts, streamlined navigation and faster everyday interactions.',
+    role: 'Mobile UI/UX & dedicated mobile design system',
+    contribution: ['Mobile UI/UX', 'Dedicated V3 mobile design system', 'Navigation and usability improvements', 'Component iteration with QA and engineering'],
+    teamNote: 'A collaborative redesign: I worked on the mobile UI/UX and V3 design system alongside the product, engineering and QA teams.',
     links: [
       { label: 'Google Play', href: 'https://play.google.com/store/apps/details?id=com.mrinq.smartaccess' },
       { label: 'App Store', href: 'https://apps.apple.com/in/app/optispaces-ai-by-spintly/id1462730510' },
     ],
-    tags: ['Mobile', 'Access Control', 'Mobile Credentialing', 'Visitor Management'],
+    tags: ['Mobile', 'Design Systems', 'Access Control', 'Mobile Credentialing', 'Visitor Management'],
     object: 'device',
     theme: { accent: '#e8e8e8', layout: 'split-reverse' },
     sections: {
-      introduction: { body: ['Spintly V3 is the redesign of the Spintly mobile application, which I collaborated on. It brings cleaner layouts, improved navigation and usability, and modern interaction patterns.'] },
+      introduction: { body: ['Spintly V3 is the full redesign of Spintly’s mobile application on iOS and Android, backed by a dedicated mobile design system that now powers the live OptiSpaces.ai app across both app stores.'] },
       context: {
         body: [
-          'The Spintly app is how employees, residents and admins open doors and manage access every day. With version 3, the app moved to the OptiSpaces.ai brand as Spintly’s software platform was rebranded, and it shipped on Google Play and the App Store.',
+          'The Spintly app is how employees, residents and admins open doors and manage access every day. With version 3, the app transitioned to the OptiSpaces.ai brand as Spintly’s software platform unified, shipping across Google Play (100K+ downloads) and the Apple App Store.',
         ],
       },
       problem: {
         body: [
-          'People use this app many times a day, often while walking up to a door. The redesign had to modernise the look and add new capabilities without breaking those habits: in the launch message’s words, “a new look, but same feel”.',
+          'People use this app many times a day, often one-handed while walking up to a door. The redesign had to modernise the interface, establish consistent mobile components and add new capabilities without breaking established user habits: in the launch message’s words, “a new look, but same feel”.',
         ],
       },
       objectives: {
-        list: ['Improve navigation and usability', 'Introduce cleaner layouts and modern interaction patterns', 'Keep the experience consistent across the app'],
+        list: [
+          'Simplify primary navigation around the highest-frequency daily action: unlocking a door',
+          'Build a dedicated mobile design system with functional, battle-tested components',
+          'Support Admin, Manager and User workflows cleanly in one app',
+          'Partner closely with QA and engineering to eliminate rework before release',
+        ],
       },
       role: { useContribution: true },
-      team: { body: ['The V3 redesign was a team effort; I collaborated on the mobile UI/UX within it.'] },
-      research: { body: tbd },
+      team: { body: ['The V3 redesign was a cross-functional effort across product, mobile engineering and QA; I collaborated on the mobile UI/UX and dedicated mobile component system within it.'] },
+      research: {
+        body: [
+          'We audited everyday usage patterns in the legacy mobile app—focusing on door-unlock latency perception, visitor approval friction and role clutter—while benchmarking consumer-grade mobile clarity from Apple, Swiftlane, Kisi and Verkada.',
+        ],
+      },
       competitors: { body: tbd },
       flows: { body: tbd, media: [{ placeholder: 'Core app flows' }] },
       explorations: { body: tbd },
       wireframes: { body: tbd },
-      visual: { body: tbd },
+      visual: {
+        body: [
+          'Rather than stretching web components onto phones, we designed a dedicated mobile design system for V3—standardising touch targets, card hierarchy, bottom sheets, status banners, spacing and padding across iOS and Android. Every component went through multiple functional iterations so it held up under real building-access conditions.',
+        ],
+      },
       final: {
         body: [
           'V3 introduces a minimal design built for faster door operations. Access points are listed by site, and a successful unlock takes over the top of the screen with a clear green confirmation.',
@@ -168,20 +225,29 @@ export const projects = [
           'GPS check-in in a bottom sheet, confirming the captured location before check-in',
         ],
       },
-      implementation: { body: tbd },
-      learnings: { body: tbd },
+      implementation: {
+        body: [
+          'We treated QA as a design partner rather than a final gate. Iterating directly on individual V3 components alongside the QA team surfaced edge cases, layout states and functional gaps early—taking months off the overall delivery timeline and helping the redesigned app ship cleanly to both the App Store and Google Play.',
+        ],
+      },
+      learnings: {
+        body: [
+          'A dedicated mobile design system pays for itself fastest when QA is in the loop during component iteration, not after full screens are coded.',
+          'For high-frequency utility apps, preserving muscle memory (“a new look, same feel”) matters just as much as visual polish.',
+        ],
+      },
     },
   },
   {
     slug: 'apple-wallet-integration',
     // "At a glance" strip on the case study: real facts only (content, store listings).
     glance: [{ n: '2', l: 'devices, one badge: iPhone & Watch' }, { n: '5', l: 'hours of access with Power Reserve' }, { n: '4', l: 'steps to add a badge' }],
-    // Screenshot of the new Spintly site on staging (Scypher · Apple Wallet Access), captured Nov 2026 (2x tiles, stitched).
+    // Screenshot of the live Spintly site (Scypher · Apple Wallet Access), captured Nov 2026 (2x tiles, stitched).
     shot: { base: '/assets/img/work/apple-wallet-integration', alt: 'Apple Wallet Access page: Your iPhone Is Now Your Employee Badge, with a Spintly badge on iPhone and Apple Watch', caption: 'Scypher · Apple Wallet Access page on the live Spintly website (spintly.com), Nov 2026' },
     number: '03',
     name: 'Apple Wallet Integration',
     category: 'Product Experience / Collaboration',
-    year: null,
+    year: '2024',
     summary:
       'Working with development and R&D teams to support Apple Wallet integration within the Spintly ecosystem.',
     role: 'Product experience & engineering collaboration',
@@ -226,7 +292,11 @@ export const projects = [
           'This was a cross-functional effort. Development and R&D teams engineered the integration; I contributed product experience considerations and the digital credential experience, working closely with them throughout.',
         ],
       },
-      research: { body: tbd },
+      research: {
+        body: [
+          'I studied Apple’s Wallet conventions alongside enterprise access-control peers (HID, Brivo, Kisi and Swiftlane) to understand how employees adopt digital badges and which reliability questions—locked phones, dead batteries and lost devices—must be answered before users trust leaving plastic cards behind.',
+        ],
+      },
       competitors: { body: tbd },
       flows: {
         body: [
@@ -257,8 +327,16 @@ export const projects = [
           'Present Apple Wallet alongside the app, card and QR credentials, not as a replacement for them',
         ],
       },
-      implementation: { body: tbd },
-      learnings: { body: tbd },
+      implementation: {
+        body: [
+          'Because Apple Wallet employee badges operate within strict platform, NFC/BLE hardware and security boundaries, I collaborated continuously with development and R&D so every onboarding step, badge visual and fallback promise (Power Reserve, Express Mode, Find My) matched the real engineered behaviour.',
+        ],
+      },
+      learnings: {
+        body: [
+          'When designing around hardware and OS-level ecosystems, trust is a UX feature—explaining edge cases like dead batteries and lost devices clearly is what drives real enterprise adoption.',
+        ],
+      },
     },
   },
   {
@@ -309,9 +387,23 @@ export const projects = [
         ],
       },
       role: { useContribution: true },
-      team: { body: tbd },
-      research: { body: tbd, media: [{ placeholder: 'UX research synthesis' }] },
-      competitors: { body: tbd, media: [{ placeholder: 'Competitor analysis matrix' }] },
+      team: {
+        body: [
+          'Shipped live at spintly.com in close weekly collaboration with leadership, product, web development and QA teams.',
+        ],
+      },
+      research: {
+        body: [
+          'I audited the existing Spintly website alongside product and sales conversations to understand where enterprise visitors got lost between hardware readers, cloud software (OptiSpaces.ai), credentialing (Scypher) and OEM technology services.',
+        ],
+        media: [{ placeholder: 'UX research synthesis' }],
+      },
+      competitors: {
+        body: [
+          'I benchmarked Verkada, Brivo, Kisi, HID, Avigilon, Swiftlane and Apple—studying how leading hardware-plus-SaaS companies organise wide product lines, surface enterprise trust signals (certifications and deployments) and turn complex technical stories into scannable interactive moments.',
+        ],
+        media: [{ placeholder: 'Competitor analysis matrix' }],
+      },
       flows: {
         body: [
           'The homepage opens with a choice: Physical Security for teams who run buildings, or Technology Services for companies who build devices. Physical Security breaks down into Hardware, Software and Platform.',
@@ -321,7 +413,11 @@ export const projects = [
       },
       explorations: { body: tbd },
       wireframes: { body: tbd, media: [{ placeholder: 'Key page wireframes' }] },
-      visual: { body: tbd },
+      visual: {
+        body: [
+          'Built on Spintly’s new company-wide design system—standardising brand clearspace, typography scales, button sizes, spacing, padding and modular section templates so every hardware, OptiSpaces.ai and Scypher page shares one coherent visual language.',
+        ],
+      },
       final: {
         body: [
           'The product is shown working rather than described. A live feed of access events (meeting room, floor, loading dock, each with the credential used) sits beside the BLE mesh story. A phone mock-up walks through a mobile unlock, from "Tap to unlock" to "Access granted".',
@@ -338,22 +434,31 @@ export const projects = [
           'Show live product moments (access events, mobile unlock) rather than static feature lists',
           'Use tabs for credentials, solutions and integrations to keep a broad product range scannable',
           'Put certifications (SOC 2 Type II, ISO/IEC 27001, ISO 9001, FCC) close to the decision point for enterprise buyers',
+          'Systematise every section on a shared company design system so future pages ship faster without visual drift',
         ],
       },
-      implementation: { body: tbd },
-      learnings: { body: tbd },
+      implementation: {
+        body: [
+          'Working under tight timelines, tech stack constraints and iterative leadership feedback, I delivered reusable design-system components and ran weekly handoff and QA cycles with developers—using AI-assisted rapid iteration to test copy, layouts and responsive behaviour before going live at www.spintly.com.',
+        ],
+      },
+      learnings: {
+        body: [
+          'A scalable component system turns a complex, multi-audience enterprise website into a platform teams can keep extending cleanly—and weekly QA and engineering reviews keep visual polish intact all the way to launch.',
+        ],
+      },
     },
   },
   {
     slug: 'scypher',
     // "At a glance" strip on the case study: real facts only (content, store listings).
     glance: [{ n: '3', l: 'credential products: mobile, Wallet, QR' }, { n: '6', l: 'step credential flow, animated' }, { n: '0', l: 'rewiring for existing systems' }],
-    // Screenshot of the new Spintly site on staging (Scypher · Mobile Credentials), captured Nov 2026 (2x tiles, stitched).
+    // Screenshot of the live Spintly site (Scypher · Mobile Credentials), captured Nov 2026 (2x tiles, stitched).
     shot: { base: '/assets/img/work/scypher', alt: 'Scypher Mobile Credentials page: Mobile Access Control, Every Phone a Secure Key', caption: 'Scypher · Mobile Credentials page on the live Spintly website (spintly.com), Nov 2026' },
     number: '05',
     name: 'Scypher',
     category: 'Branding / Product Design',
-    year: null,
+    year: '2026',
     summary:
       "Rebranding and redesigning Spintly's credential management platform as Scypher, aligning UI/UX, product positioning and marketing visuals.",
     role: 'Rebrand & redesign: UI/UX, positioning & marketing visuals',
@@ -393,7 +498,11 @@ export const projects = [
       role: { useContribution: true },
       team: { body: tbd },
       research: { body: tbd },
-      competitors: { body: tbd },
+      competitors: {
+        body: [
+          'Benchmarked HID, Brivo, Kisi and Verkada to see how enterprise credentialing products differentiate standalone mobile credentials from full building-management SaaS—shaping Scypher’s positioning and the direct OptiSpaces.ai vs. Scypher comparison.',
+        ],
+      },
       flows: {
         body: [
           'Scypher’s credential flow has six steps: the customer sets permissions in their access control system; the system requests credentials from the Spintly Credential Server; the controller is updated with them; the mobile app, built on the Spintly Mobile SDK, fetches the user’s credential; the user taps in over NFC, Bluetooth or QR; and the controller makes the access decision as it always has.',
@@ -405,10 +514,15 @@ export const projects = [
       },
       explorations: { body: tbd, media: [{ placeholder: 'Logo and identity explorations' }] },
       wireframes: { body: tbd },
-      visual: { body: tbd, media: [{ placeholder: 'Brand system: logo, colour, typography', wide: true }] },
+      visual: {
+        body: [
+          'Built within Spintly’s new company-wide design system—reusing consistent button scales, spacing and typography while giving Scypher a distinct enterprise identity beside OptiSpaces.ai.',
+        ],
+        media: [{ placeholder: 'Brand system: logo, colour, typography', wide: true }],
+      },
       final: {
         body: [
-          'On the new Spintly website, Scypher has its own place in the Products menu beside OptiSpaces.ai, with three credential products under it: Mobile Credentials, Apple Wallet Access, and QR & Visitor Passes.',
+          'On the live Spintly website, Scypher has its own place in the Products menu beside OptiSpaces.ai, with three credential products under it: Mobile Credentials, Apple Wallet Access, and QR & Visitor Passes.',
           'Each product page leads with the outcome (“Every phone a secure key”) and backs it with the proof enterprise buyers look for: BLE and NFC, credentials issued or revoked in seconds, and no rewiring. A side-by-side comparison then answers the question every visitor asks: OptiSpaces.ai or Scypher?',
         ],
         media: [
@@ -438,7 +552,7 @@ export const projects = [
     number: '06',
     name: 'OptiSpaces.ai Website',
     category: 'Website Design / Product Storytelling',
-    year: null,
+    year: '2026 – Present',
     summary:
       'Designing the new OptiSpaces.ai website, which presents the platform as an AI operating system for physical security: access control, video intelligence, visitors, tenants and attendance on one intelligence layer.',
     role: 'Website design: structure, UI & product storytelling',
@@ -480,7 +594,11 @@ export const projects = [
       role: { useContribution: true },
       team: { body: tbd },
       research: { body: tbd },
-      competitors: { body: tbd },
+      competitors: {
+        body: [
+          'Benchmarked Verkada, Avigilon, Swiftlane, Brivo and Apple to study how modern AI security and hardware-software brands pair crisp visual storytelling with concrete operational use cases.',
+        ],
+      },
       flows: {
         body: [
           'The page moves from the big idea to proof: one platform, then the seven-product software suite, then why the architecture is faster and cheaper to install, then integrations, AI capabilities, AI use cases, deployment, certifications and contact.',
@@ -491,7 +609,9 @@ export const projects = [
       explorations: { body: tbd },
       wireframes: { body: tbd },
       visual: {
-        body: tbd,
+        body: [
+          'Built directly on the OptiSpaces.ai design system—clearspace rules, component sizing, spacing and interactive product frames—so the marketing experience mirrors the product portal.',
+        ],
         media: [{ src: '/assets/img/work/optispaces-website/hero.webp', alt: 'OptiSpaces.ai website hero with the headline "Securing the built world with AI", a phone unlocking a Spintly reader and certification badges', caption: 'Hero: the platform idea, proof points and a product moment in one view', width: 1440, height: 900, wide: true }],
       },
       final: {
